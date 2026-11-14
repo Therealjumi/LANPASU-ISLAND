@@ -1,15 +1,15 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"><title>LANPASU — Developer Test v017</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"><title>LANPASU — Developer Test v018</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#d2e8ef;color:#233e49;font:15px system-ui,sans-serif;overflow:hidden}canvas{display:block;touch-action:none}#setup{position:fixed;inset:0;overflow:auto;padding:22px max(18px,env(safe-area-inset-left));background:linear-gradient(150deg,#eaf6f8,#e9d7b7);z-index:10}h1{font-size:24px;margin:0 0 6px}p{line-height:1.45}#setup section{max-width:580px;margin:auto}label{display:block;margin:9px 0;background:#ffffffb0;padding:10px;border-radius:12px;font-weight:600}input{display:block;width:100%;margin-top:5px;font:inherit;font-size:13px}button{font:inherit;border:0;border-radius:14px;padding:12px 18px;background:#294f60;color:white;touch-action:none}button:disabled{opacity:.45}#status{white-space:pre-wrap;font-size:13px}#hud{position:fixed;left:12px;top:max(12px,env(safe-area-inset-top));background:#ffffffe0;padding:8px 12px;border-radius:12px;font-size:12px;pointer-events:none;white-space:pre-line}#controls{position:fixed;inset:0;pointer-events:none;display:none}#joy{position:absolute;bottom:max(25px,env(safe-area-inset-bottom));left:24px;border:2px solid #fff9;background:#ffffff44;border-radius:50%;width:116px;height:116px;pointer-events:auto;touch-action:none}#knob{position:absolute;left:36px;top:36px;width:40px;height:40px;background:#ffffffbd;border-radius:50%;pointer-events:none}#actions{position:absolute;right:20px;bottom:max(25px,env(safe-area-inset-bottom));display:flex;gap:10px;pointer-events:auto}#actions button{border:1px solid #fff9;background:#31566ec9;min-width:65px;min-height:56px}#top{position:fixed;right:12px;top:max(12px,env(safe-area-inset-top));display:flex;gap:6px;pointer-events:auto}#top button{padding:9px;font-size:12px}small{font-weight:400}#hint{font-size:12px;color:#45616b}
 
 #devToggle{position:absolute;right:12px;top:calc(max(12px,env(safe-area-inset-top)) + 44px);pointer-events:auto;background:#a56b32;font-size:12px;padding:9px 12px}#devPanel{position:fixed;inset:0;z-index:20;background:#102832c9;overflow:auto;padding:max(12px,env(safe-area-inset-top)) 12px max(16px,env(safe-area-inset-bottom));color:#233e49;overscroll-behavior:contain}#devPanel[hidden]{display:none}#devPanel section{max-width:600px;margin:0 auto;background:#f0f7f8;border-radius:18px;padding:16px}#devPanel h2{margin:0;font-size:21px}#devPanel h3{margin:18px 0 8px;font-size:16px}#devPanel p{margin:6px 0 12px;font-size:13px}#devPanel button{padding:10px 12px;font-size:13px;min-height:42px}#devPanel select,#devPanel textarea{width:100%;font:inherit;padding:8px;border:1px solid #a9bec5;border-radius:8px;background:white;color:#233e49}#devPanel textarea{min-height:68px;resize:vertical}#devPanel label{background:none;padding:0;margin:8px 0;font-size:13px}#devPanel input[type=checkbox]{display:inline-block;width:auto;margin-right:8px}#devPanel .devGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#devPanel .devRow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}#devPanel .devRow>*{flex:1}#devPanel .devHeader{display:flex;align-items:center;justify-content:space-between;gap:8px}#devPanel .devBox{background:#dcebf0;border-radius:10px;padding:10px;white-space:pre-wrap;font:12px ui-monospace,monospace;overflow-wrap:anywhere}#devMessage{color:#91501c;font-weight:600}#devReport[hidden]{display:none}#devReport{min-height:160px!important}#devPanel .secondary{background:#537280}#devPanel .go{background:#a56b32}#devPanel .pass{background:#356b58}
 </style><script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/","three-mesh-bvh":"https://cdn.jsdelivr.net/npm/three-mesh-bvh@0.8.3/build/index.module.js"}}</script></head><body>
-<div id="setup"><section><h1>LANPASU</h1><b>Developer Test v017 · World refinement · B3 physical step potential</b><p>DEVELOPER TEST ONLY — main v008 stays unchanged. Select island v014C2, collision v010C2, routes v010, and water v006. Use Ladar v116 Smooth Back and the four existing animations. The models stay on your device; only the 3D engine is downloaded from the internet.</p>
+<div id="setup"><section><h1>LANPASU</h1><b>Developer Test v018 · World refinement · B3.1 physical step + woven dress clearance</b><p>DEVELOPER TEST ONLY — main v008 stays unchanged. Select island v014C2, collision v010C2, routes v010, and water v006. Use Ladar v116 Smooth Back and the four existing animations. The models stay on your device; only the 3D engine is downloaded from the internet.</p>
 <label>Complete island<input type="file" id="island" accept=".glb"></label><label>Collision model<input type="file" id="collision" accept=".glb"></label><label>Routes & spawn JSON<input type="file" id="routes" accept=".json,application/json"></label><label>Ladar v116 rig<input type="file" id="ladar" accept=".glb"></label><label>Idle animation<input type="file" id="idle" accept=".glb"></label><label>Walk animation<input type="file" id="walk" accept=".glb"></label><label>Run animation<input type="file" id="run" accept=".glb"></label><label>Jump animation<input type="file" id="jump" accept=".glb"></label><label>Water model <small>(optional)</small><input type="file" id="water" accept=".glb"></label><label>Visual quality<select id="visualQuality" style="display:block;width:100%;margin-top:6px;padding:7px"><option value="sunny">Sunny — local environmental shadows</option><option value="light">Lightweight — no environmental shadow map</option></select><small>Both modes include the new ocean, sky, waterfall flow and mist.</small></label><label>Movement pace<select id="movementPace" style="display:block;width:100%;margin-top:6px;padding:7px"><option value="travel">Natural / Travel — original island exploration</option><option value="measured">Relaxed — slower, deliberate exploration</option></select><small>Natural / Travel restores the original v006 pace. Relaxed is a comfortable slower alternative; both retain the refined animation blending.</small></label><button id="start" disabled>Start test</button><p id="status">Loading 3D engine…</p><p id="hint">Use Safari on an HTTPS-hosted page. Rotate your phone to landscape for a wider view. All four movement clips are required. Ocean is built in; select the optional water GLB for animated waterfalls and hot springs. Joystick: move. RUN: toggle pace. JUMP: tap. Swipe the scene to orbit; pinch to zoom; Center returns behind Ladar. Keyboard: Q/E orbit, C center, +/− zoom. Collision: show/hide physical meshes. Reset: return to Solavren. Keyboard: WASD, Shift, Space.</p></section></div>
 <div id="hud"></div><div id="controls"><div id="joy"><div id="knob"></div></div><div id="actions"><button id="runBtn" aria-pressed="false">RUN</button><button id="jumpBtn">JUMP</button></div><div id="top"><button id="centerCam" aria-label="Center camera behind Ladar">Center</button><button id="reset">Reset</button><button id="debug">Collision</button></div><button id="devToggle" aria-label="Open developer testing tools">TEST TOOLS</button></div>
 <div id="devPanel" hidden role="dialog" aria-modal="true" aria-labelledby="devTitle"><section>
 <div class="devHeader"><h2 id="devTitle">LANPASU Test Tools</h2><button id="devClose">Resume</button></div>
-<p>v017 · Developer-only fast travel. HUD location is the last test arrival, not automatic district detection. Gameplay pauses while this menu is open. No changes to the main game.</p>
+<p>v018 · Developer-only fast travel. HUD location is the last test arrival, not automatic district detection. Gameplay pauses while this menu is open. No changes to the main game.</p>
 <div id="devMessage" role="status" aria-live="polite"></div>
 <h3>Fast travel · seven districts</h3><div id="devDistricts" class="devGrid"></div>
 <p>Destinations are checked against collision ground and body clearance. If blocked, Ladar stays at her current position.</p>
@@ -19,7 +19,7 @@
 <div class="devRow" style="margin-top:8px"><button id="devPrev" class="secondary">Previous</button><button id="devNext" class="secondary">Next</button><button id="devGo" class="go">Travel</button></div>
 <label><input id="devMarkers" type="checkbox">Show selected route and checkpoint markers</label>
 <p>Walk a route continuously to verify it. Teleporting does not count as passing traversal.</p>
-<h3>B3 · Adaptive stepping</h3><label><input id="b3Toggle" type="checkbox" checked>Adaptive stair movement and foot placement</label><p>Compare on/off at the same staircase. Flat-ground travel speed stays 1.65 / 4.1 m/s. Stair gait slows locally; higher obstacles still require a jump. Detailed HUD shows the active mode.</p><h3>Performance & collision</h3><div id="devStats" class="devBox">Play for a few seconds to collect readings.</div>
+<h3>B3 · Adaptive stepping</h3><label><input id="b3Toggle" type="checkbox" checked>Adaptive stair movement and foot placement</label><p>Compare on/off at the same staircase. Flat-ground travel speed stays 1.65 / 4.1 m/s. Stair gait slows locally; higher obstacles still require a jump. Detailed HUD shows the active mode. Woven skirt clearance follows the actual post-IK leg pose; the original dress and animation files are unchanged.</p><h3>Performance & collision</h3><div id="devStats" class="devBox">Play for a few seconds to collect readings.</div>
 <label><input id="devDetail" type="checkbox">Show detailed performance in game HUD</label>
 <label><input id="devCollision" type="checkbox">Show collision wireframe</label>
 <label for="devScale">Render resolution (test only)</label><select id="devScale"><option value="1.4">Original v008 (up to 1.4×)</option><option value="1.2">Balanced (up to 1.2×)</option><option value="1">Light (up to 1.0×)</option></select>
@@ -124,6 +124,125 @@ function floorProbe(p,above,below){
 let b3Enabled=true,b3Legs=[],b3Pelvis=null,b3Scale=1,b3MaxStep=.30,b3Transit=null,b3Steps=0,b3Mode='flat',b3Strength=0,b3Cycle=0,b3LastFoot=null,b3HipDrop=0,b3Saved=null,b3Surface=null,b3StairNear=false,b3TerrainGrade=0;
 const b3Ray=new THREE.Raycaster();b3Ray.firstHitOnly=false;
 const b3Clamp=THREE.MathUtils.clamp;
+// B3.1 — post-IK woven skirt clearance. Uses the actual v116 skirt bands and leg skin.
+// Mesh, UVs, texture, armature and authored animation files are unchanged.
+// Each ellipse is an inscribed conservative cross-section of the bind-pose skirt ring.
+// [local Y centre (mesh space), Z centre, outer X radius, outer Z radius, inner ratio]
+const b3ClothRings=[
+ [.0525,0,.148,.1111,.9037],[.0753,0,.1466,.1091,.9111],[.1153,0,.1442,.1075,.9078],
+ [.1517,0,.1402,.1056,.9165],[.1759,0,.1382,.1046,.9167],[.2068,0,.135,.1026,.9171],
+ [.2378,0,.1318,.1006,.9164],[.2687,0,.1286,.0985,.9158],[.2996,0,.1254,.0965,.9144],
+ [.3314,0,.1222,.0947,.9147],[.3632,0,.119,.0928,.9151],[.3949,0,.1157,.091,.9154],
+ [.4267,0,.1125,.0891,.9158],[.4591,-.001,.1141,.0886,.9177],[.4915,-.0036,.1156,.0897,.921],
+ [.5239,-.007,.1171,.0916,.9188],[.5563,-.0102,.1187,.0932,.9117],[.5875,-.0133,.1233,.0953,.9065],
+ [.6187,-.0164,.128,.0973,.9016],[.6499,-.0199,.1327,.0998,.8992],[.6811,-.0231,.1373,.102,.8991],
+ [.7194,-.0261,.1329,.1039,.869]
+];
+const clothIdleZ=[1.152,1.119,1.158,1.147,1.096,1.063,1.050,1.047,1.050,1.058,1.073,1.090,1.096,1.089,1.094,1.089,1.081,1.079,1.078,1.096,1.121,1.196];
+const clothIdleP=[.027,.022,.017,.015,.018,.021,.024,.028,.032,.035,.038,.039,.038,.035,.033,.032,.031,.031,.030,.029,.027,.023];
+let b3ClothBands=[],b3ClothSources=[],b3ClothSaved=null,b3ClothPeak=0;
+const clothClamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const clothMargin=.007; // model m, ~8 mm after v116 scale
+function clothInside(points,cx,cz,rx,rz,margin=clothMargin){
+ return points.every(p=>((Math.abs(p[0]-cx)+margin)/rx)**2+((Math.abs(p[1]-cz)+margin)/rz)**2<=1+1e-8);
+}
+// Smallest-area conservative ellipse of the same family, preserving the original width/depth floors.
+// Axis choice favours a forward/back fabric drape instead of a uniformly inflated skirt.
+function clothFit(points,cx,cz,rx,rz,margin=clothMargin){
+ if(!points.length||clothInside(points,cx,cz,rx,rz,margin))return [rx,rz];
+ let mx=0;for(const p of points)mx=Math.max(mx,Math.abs(p[0]-cx)+margin);
+ const lo=Math.max(rx,mx*1.025),hi=Math.max(lo*1.43,rx*1.35);
+ let best=[lo,rz],score=Infinity;
+ for(let i=0;i<=10;i++){
+  const x=lo+(hi-lo)*i/10;let z=rz;
+  for(const p of points){const a=(Math.abs(p[0]-cx)+margin)/x;z=Math.max(z,(Math.abs(p[1]-cz)+margin)/Math.sqrt(Math.max(.0001,1-a*a)));}
+  const sx=x/rx,sz=z/rz,s=sx*sz+.18*(sx-1)**2+.025*(sz-1)**2;
+  if(s<score){score=s;best=[x,z];}
+ }
+ return best;
+}
+function clothSource(mesh,exact){
+ const g=mesh.geometry,p=g.getAttribute('position'),idx=g.index,ids=[],map=new Int32Array(p.count).fill(-1),seen=new Map();
+ for(let i=0;i<p.count;i++){
+  const x=p.getX(i),y=p.getY(i),z=p.getZ(i);
+  if(!exact&&(y>.18||y<-.01||Math.abs(x)>.19))continue; // lower skin/feet only, not face, torso or hands
+  const q=exact?100000:125,key=Math.round(x*q)+','+Math.round(y*q)+','+Math.round(z*q);
+  let n=seen.get(key);if(n===undefined){n=ids.length;seen.set(key,n);ids.push(i);}map[i]=n;
+ }
+ const edges=[],pairs=new Set();
+ if(exact){const n=idx?idx.count:p.count;for(let i=0;i+2<n;i+=3){const a=map[idx?idx.getX(i):i],b=map[idx?idx.getX(i+1):i+1],c=map[idx?idx.getX(i+2):i+2];for(const [u,v] of [[a,b],[b,c],[c,a]]){if(u<0||v<0||u===v)continue;const k=Math.min(u,v)*ids.length+Math.max(u,v);if(!pairs.has(k)){pairs.add(k);edges.push([u,v]);}}}}
+ return {mesh,ids,edges,posed:ids.map(()=>new V())};
+}
+function initB3Cloth(rig){
+ const legs=rig.getObjectByName('Ladar_Legs');
+ b3ClothBands=b3ClothRings.map((r,i)=>{
+  const bone=rig.getObjectByName('SkirtBand_'+String(i).padStart(2,'0'));
+  if(!bone||bone.parent!==b3Pelvis)return null;
+  return {bone,dy:r[0]-(.72+bone.position.y),cz:r[1],rx:r[2]*r[4]*.985,rz:r[3]*r[4]*.985,dx:0,dz:0,sx:0,sz:0};
+ });
+ if(!legs?.isSkinnedMesh||b3ClothBands.some(x=>!x)){b3ClothBands=[];console.warn('B3 cloth: matching v116 skirt/leg rig unavailable');return;}
+ b3ClothSources=[clothSource(legs,true)];
+ // Separate foot/shin skin belongs to Part_0 in v116. A coarse surface sample covers a lifted ankle/toes.
+ const body=rig.getObjectByName('Part_0');if(body)body.traverse(o=>{if(o.isSkinnedMesh&&o.geometry.getAttribute('position')?.count>10000)b3ClothSources.push(clothSource(o,false));});
+ console.info('B3 cloth: '+b3ClothBands.length+' bands, '+b3ClothSources.reduce((n,s)=>n+s.ids.length,0)+' skin samples');
+}
+function b3ClothRestore(){if(!b3ClothSaved)return;for(const [bone,p,s] of b3ClothSaved){bone.position.copy(p);bone.scale.copy(s);}b3ClothSaved=null;}
+function b3ClothReset(){b3ClothRestore();for(const b of b3ClothBands){b.dx=b.dz=b.sx=b.sz=0;}b3ClothPeak=0;}
+function b3ClothPose(dt){
+ if(!b3ClothBands.length)return;
+ if(!b3Enabled||jumpPhase!=='none'){b3ClothReset();return;}
+ const active=b3Strength>.015&&grounded;
+ if(!active&&!b3ClothBands.some(b=>Math.abs(b.dx)+Math.abs(b.dz)+b.sx+b.sz>.0005)){b3ClothReset();return;}
+ // Animation mixer and IK have already run. Sample actual deformed leg skin in pelvis space.
+ player.updateMatrixWorld(true);const inv=new THREE.Matrix4().copy(b3Pelvis.matrixWorld).invert();
+ const rows=b3ClothBands.map((b,i)=>{
+  // On stairs replace the old gait's baked front/back stretch with its neutral woven drape.
+  // It is restored before the next mixer update; the actual posed legs determine extra room.
+  const w=active?Math.min(1,b3Strength)*.92:0;
+  const baseZ=b.bone.position.z+(clothIdleP[i]-b.bone.position.z)*w;
+  const baseScaleZ=b.bone.scale.z+(clothIdleZ[i]-b.bone.scale.z)*w;
+  return {b,baseZ,baseScaleZ,y:b.bone.position.y+b.dy*b.bone.scale.y,cx:b.bone.position.x,cz:baseZ+b.cz*baseScaleZ,rx:b.rx*b.bone.scale.x,rz:b.rz*baseScaleZ,points:[],dx:0,dz:0,sx:0,sz:0};
+ });
+ if(active){
+  for(const source of b3ClothSources){const {mesh,ids,posed,edges}=source,local=new THREE.Matrix4().multiplyMatrices(inv,mesh.matrixWorld),p=mesh.geometry.getAttribute('position');
+   for(let i=0;i<ids.length;i++){const id=ids[i],v=posed[i];v.fromBufferAttribute(p,id);mesh.applyBoneTransform(id,v);v.applyMatrix4(local);}
+   for(const r of rows){
+    // Include cross sections over each ring's actual width, not only the centre plane.
+    const h=.021;for(const v of posed)if(Math.abs(v.y-r.y)<=h)r.points.push([v.x,v.z]);
+    // Exact intersections with edges of the skinned leg triangles cover the spaces between vertex rings.
+    for(const [i,j] of edges){const a=posed[i],b=posed[j],dy=b.y-a.y;if(Math.abs(dy)<1e-7)continue;
+     if(Math.max(a.y,b.y)<r.y-h||Math.min(a.y,b.y)>r.y+h)continue;
+     for(const y of [r.y-h,r.y,r.y+h]){const t=(y-a.y)/dy;if(t>0&&t<1)r.points.push([a.x+(b.x-a.x)*t,a.z+(b.z-a.z)*t]);}
+    }
+   }
+  }
+  // Move the cloth towards the actual knee envelope. Waist stays anchored.
+  rows.forEach((r,i)=>{
+   if(!r.points.length||clothInside(r.points,r.cx,r.cz,r.rx,r.rz))return;
+   let x0=Infinity,x1=-Infinity,z0=Infinity,z1=-Infinity;for(const [x,z] of r.points){x0=Math.min(x0,x);x1=Math.max(x1,x);z0=Math.min(z0,z);z1=Math.max(z1,z);}
+   const freedom=1-.82*Math.max(0,(i-15)/6);
+   r.dx=clothClamp(((x0+x1)/2-r.cx)*.8,-.040*freedom,.040*freedom);
+   r.dz=clothClamp((z0+z1)/2-r.cz,-.23*freedom,.23*freedom);
+  });
+  // Continuous woven drape across adjacent rings; no isolated knee-sized spikes.
+  for(let pass=0;pass<2;pass++){const smooth=rows.map((r,i)=>{const a=rows[Math.max(0,i-1)],c=rows[Math.min(21,i+1)];return [(a.dx+2*r.dx+c.dx)/4,(a.dz+2*r.dz+c.dz)/4];});rows.forEach((r,i)=>{r.dx=smooth[i][0];r.dz=smooth[i][1];});}
+ }
+ // Spatially smooth centre movement first, then fit clearance at the current centre.
+ rows.forEach(r=>{const b=r.b;b.dx=active?r.dx:damp(b.dx,0,15,dt);b.dz=active?r.dz:damp(b.dz,0,15,dt);
+  if(active){const [x,z]=clothFit(r.points,r.cx+b.dx,r.cz+b.dz,r.rx,r.rz);r.sx=Math.max(0,(x-r.rx)/b.rx);r.sz=Math.max(0,(z-r.rz)/b.rz);}
+ });
+ const spreads=rows.map((r,i)=>{let sx=r.sx,sz=r.sz;for(let j=Math.max(0,i-2);j<=Math.min(21,i+2);j++){const f=j===i?1:Math.abs(i-j)===1?.60:.25;sx=Math.max(sx,rows[j].sx*f);sz=Math.max(sz,rows[j].sz*f);}return [sx,sz];});
+ b3ClothSaved=[];b3ClothPeak=0;
+ rows.forEach((r,i)=>{const b=r.b,bone=b.bone,[sx,sz]=spreads[i];
+  // Fast contact response, gentle release, no residual pose baked into the authored clip.
+  b.sx=Math.max(sx,damp(b.sx,sx,13,dt));b.sz=Math.max(sz,damp(b.sz,sz,13,dt));
+  b3ClothSaved.push([bone,bone.position.clone(),bone.scale.clone()]);
+  bone.position.x+=b.dx;bone.position.z=r.baseZ+b.dz-b.cz*b.sz;bone.scale.x+=b.sx;bone.scale.z=r.baseScaleZ+b.sz;
+  b3ClothPeak=Math.max(b3ClothPeak,b.sx,b.sz);
+ });
+ b3Pelvis.updateMatrixWorld(true);
+}
+
 function initB3Rig(rig){
  rig.updateMatrixWorld(true);b3Pelvis=rig.getObjectByName('Pelvis');b3Legs=['L','R'].map(side=>{
  const hip=rig.getObjectByName(side+'_Thigh'),knee=rig.getObjectByName(side+'_Shin'),ankle=rig.getObjectByName(side+'_Foot');
@@ -132,7 +251,7 @@ function initB3Rig(rig){
  return {hip,knee,ankle,a,b,sole:ankle.getWorldPosition(new V()).y,restQ:ankle.getWorldQuaternion(new THREE.Quaternion()),side};});
  if(!b3Pelvis)throw Error('Missing pelvis');b3Scale=b3Pelvis.getWorldScale(new V()).y;
  const leg=Math.min(...b3Legs.map(l=>l.a+l.b));b3MaxStep=b3Clamp(leg*.416,.20,.30);
- console.info('B3 measured leg',leg,'auto step limit',b3MaxStep,'ankle heights',b3Legs.map(l=>l.sole));
+ console.info('B3 measured leg',leg,'auto step limit',b3MaxStep,'ankle heights',b3Legs.map(l=>l.sole));initB3Cloth(rig);
 }
 // Dedicated lightweight render-surface BVH: walkable decks, treads and entrance floors only.
 // Physics remains on the existing collision BVH. Never add the pose mesh to the scene.
@@ -150,7 +269,7 @@ function b3VisualFloor(x,z,reference){
  const hits=b3Ray.intersectObject(b3Surface,false);for(const h of hits){if(h.face&&h.face.normal.y>.60&&Math.abs(h.point.y-reference)<.39)return h.point.y;}return null;
 }
 function b3Floor(x,z,reference){const y=b3VisualFloor(x,z,reference);if(y!==null)return y;const h=groundAt(x,z,reference+.39,.82);return h&&h.face&&h.face.normal.y>=MIN_GROUND?h.point.y:null;}
-function b3Reset(){b3Transit=null;b3Strength=0;b3Cycle=0;b3LastFoot=null;b3HipDrop=0;b3StairNear=false;b3TerrainGrade=0;b3Mode='flat';b3Restore();}
+function b3Reset(){b3Transit=null;b3Strength=0;b3Cycle=0;b3LastFoot=null;b3HipDrop=0;b3StairNear=false;b3TerrainGrade=0;b3Mode='flat';b3Restore();b3ClothReset();}
 // Candidate test uses a full capsule at every 4 cm, not just a ray through a wall.
 // The supported top must be reachable from the current position without crossing a gap.
 function b3TryStep(dx,dz,start,direct,progress){
@@ -345,7 +464,7 @@ function updateMotion(dt){
   for(const k of ['walk','run']){const cap=k==='walk'?1.7:1.65;actions[k].setEffectiveTimeScale(THREE.MathUtils.clamp(visualSpeed/STRIDE[k],.15,cap));}
   // The authored jump is sampled at the physical phase. Long falls hold a falling pose.
   actions.jump.time=jumpPose;actions.jump.paused=true;
-  b3Restore();mixer.update(dt);b3Pose(dt);
+  b3ClothRestore();b3Restore();mixer.update(dt);b3Pose(dt);b3ClothPose(dt);
 }
 function clipFor(g,id,rig){
   const clips=g.animations;if(!clips?.length)throw Error(id+' file contains no animation');
@@ -451,7 +570,7 @@ $('start').onclick=async()=>{ $('start').disabled=true;try{say('Reading route da
  reset();animation('idle');$('setup').style.display='none';$('controls').style.display='block';active=true;attachCameraInput();initDeveloper(data);renderer.setAnimationLoop(frame);
  }catch(e){console.error(e);say('Could not start: '+e.message+'\nCheck that you selected the matching LANPASU files. Reload the page before trying again.');if(renderer){renderer.dispose();renderer.domElement.remove();} $('start').disabled=true;}};
 let prev=0,acc=0,frames=0,lastHud=0,fps=0;
-function frame(t){if(!active)return;if(devOpen){prev=t;return;}const realGap=prev?t-prev:0;let dt=Math.min((t-(prev||t))/1000,.05);prev=t;let mx=joy.x+(keys.has('d')||keys.has('arrowright')?1:0)-(keys.has('a')||keys.has('arrowleft')?1:0),mz=joy.y+(keys.has('s')||keys.has('arrowdown')?1:0)-(keys.has('w')||keys.has('arrowup')?1:0);if(keys.has('q'))yaw+=dt*1.8;if(keys.has('e'))yaw-=dt*1.8;acc+=dt;while(acc>=1/120){step(1/120,mx,mz);acc-=1/120;}player.position.copy(foot);const moving=moveVelocity.lengthSq()>.0064;if(moving){const angle=Math.atan2(direction.x,direction.z);let d=angleDelta(angle,player.rotation.y);player.rotation.y+=d*(1-Math.exp(-dt*(grounded?11:7)));}updateMotion(dt);updateCamera(dt);updateAtmosphere(dt);renderer.render(scene,camera);sampleDeveloper(t,realGap);frames++;if(!lastHud)lastHud=t;if(t-lastHud>500){fps=Math.round(frames*1000/(t-lastHud));frames=0;lastHud=t;$('hud').textContent=`DEV v017 · ${devLocation}\n${fps} FPS · ${actionName} · ${grounded?'grounded':'airborne'}${jumpPhase==='none'?'':' · '+jumpPhase}\nCamera ${cameraArm.toFixed(1)} m · ${cameraArm<cameraZoom-.3?"obstructed":"clear"}\nVertical ${velocityY.toFixed(2)} m/s\nX ${foot.x.toFixed(1)}  Y ${foot.y.toFixed(2)}  Z ${foot.z.toFixed(1)}${recoveryCount?"\nShore recovery: "+recoveryCount:""}${devDetailed?"\n"+developerStats(true):""}`;}}
+function frame(t){if(!active)return;if(devOpen){prev=t;return;}const realGap=prev?t-prev:0;let dt=Math.min((t-(prev||t))/1000,.05);prev=t;let mx=joy.x+(keys.has('d')||keys.has('arrowright')?1:0)-(keys.has('a')||keys.has('arrowleft')?1:0),mz=joy.y+(keys.has('s')||keys.has('arrowdown')?1:0)-(keys.has('w')||keys.has('arrowup')?1:0);if(keys.has('q'))yaw+=dt*1.8;if(keys.has('e'))yaw-=dt*1.8;acc+=dt;while(acc>=1/120){step(1/120,mx,mz);acc-=1/120;}player.position.copy(foot);const moving=moveVelocity.lengthSq()>.0064;if(moving){const angle=Math.atan2(direction.x,direction.z);let d=angleDelta(angle,player.rotation.y);player.rotation.y+=d*(1-Math.exp(-dt*(grounded?11:7)));}updateMotion(dt);updateCamera(dt);updateAtmosphere(dt);renderer.render(scene,camera);sampleDeveloper(t,realGap);frames++;if(!lastHud)lastHud=t;if(t-lastHud>500){fps=Math.round(frames*1000/(t-lastHud));frames=0;lastHud=t;$('hud').textContent=`DEV v018 · ${devLocation}\n${fps} FPS · ${actionName} · ${grounded?'grounded':'airborne'}${jumpPhase==='none'?'':' · '+jumpPhase}\nCamera ${cameraArm.toFixed(1)} m · ${cameraArm<cameraZoom-.3?"obstructed":"clear"}\nVertical ${velocityY.toFixed(2)} m/s\nX ${foot.x.toFixed(1)}  Y ${foot.y.toFixed(2)}  Z ${foot.z.toFixed(1)}${recoveryCount?"\nShore recovery: "+recoveryCount:""}${devDetailed?"\n"+developerStats(true):""}`;}}
 let joyID=null;function jmove(e){const b=$('joy').getBoundingClientRect(),x=e.clientX-b.left-b.width/2,y=e.clientY-b.top-b.height/2;joy.set(x/42,y/42);if(joy.length()>1)joy.normalize();$('knob').style.transform=`translate(${joy.x*36}px,${joy.y*36}px)`;}
 $('joy').onpointerdown=e=>{if(joyID!==null)return;joyID=e.pointerId;e.currentTarget.setPointerCapture(joyID);jmove(e)};
 $('joy').onpointermove=e=>{if(e.pointerId===joyID)jmove(e)};
@@ -513,7 +632,7 @@ function refreshProgress(){const r=selectedRoute(),reviewed=devRoutes.filter(x=>
 function persistDev(){try{localStorage.setItem(DEV_KEY,JSON.stringify(devResults));}catch(e){/* Private browsing may restrict storage; report export remains available. */}}
 function storeNote(){const r=selectedRoute();if(!r)return;const note=$('devNote').value.slice(0,3000);devResults[r.id]={...(devResults[r.id]||{}),note};persistDev();}
 function markRoute(status){const r=selectedRoute();if(!r)return;storeNote();devResults[r.id]={...devResults[r.id],status,at:new Date().toISOString(),position:[foot.x,foot.y,foot.z].map(v=>Number(v.toFixed(2)))};persistDev();refreshProgress();devMsg(status==='PASS'?'Marked pass (manual review).':'Marked issue. Export your report when ready.');}
-function reportText(){storeNote();return ['LANPASU — Developer Test v017','Generated '+new Date().toISOString(),'Main game: v008 (unchanged)','Last test arrival: '+devLocation,'Dry-ground recoveries: '+recoveryCount,'Movement: '+WALK_SPEED+' / '+RUN_SPEED+' m/s','PERFORMANCE SNAPSHOT', $('devStats').textContent,'','ROUTE RESULTS (manual)',...devRoutes.map(r=>{const e=devResults[r.id]||{};return `${r.id}: ${e.status||'UNTESTED'}${e.position?' @ '+e.position.join(', '):''}${e.note?' — '+e.note:''}`;}),'','Fast travel is not a continuous route test.'].join('\n');}
+function reportText(){storeNote();return ['LANPASU — Developer Test v018','Generated '+new Date().toISOString(),'Main game: v008 (unchanged)','Last test arrival: '+devLocation,'Dry-ground recoveries: '+recoveryCount,'Movement: '+WALK_SPEED+' / '+RUN_SPEED+' m/s','PERFORMANCE SNAPSHOT', $('devStats').textContent,'','ROUTE RESULTS (manual)',...devRoutes.map(r=>{const e=devResults[r.id]||{};return `${r.id}: ${e.status||'UNTESTED'}${e.position?' @ '+e.position.join(', '):''}${e.note?' — '+e.note:''}`;}),'','Fast travel is not a continuous route test.'].join('\n');}
 function openDev(){if(!active||devOpen)return;$('devStats').textContent=developerStats();clearInput();devOpen=true;$('devCollision').checked=debugMesh.visible;$('devPanel').hidden=false;$('controls').style.display='none';$('devClose').focus();}
 function closeDev(){storeNote();devOpen=false;$('devPanel').hidden=true;$('controls').style.display='block';prev=0;acc=0;devFrames=[];lastHud=0;frames=0;$('devToggle').focus();}
 const fixSpots=[
@@ -566,7 +685,7 @@ function initDeveloper(data){devData=data;devRoutes=(data.routes||[]).filter(r=>
  $('devScale').onchange=()=>{renderer.setPixelRatio(Math.min(devicePixelRatio,Number($('devScale').value)));renderer.setSize(innerWidth,innerHeight);devFrames=[];devLastStats=null;devMsg('Resolution changed. Resume and play for 10 seconds to compare.');};
  $('devNote').oninput=storeNote;$('devPass').onclick=()=>markRoute('PASS');$('devIssue').onclick=()=>markRoute('ISSUE');$('devClear').onclick=()=>{const r=selectedRoute();if(r){delete devResults[r.id];$('devNote').value='';persistDev();refreshProgress();}};
  $('devCopy').onclick=async()=>{const report=reportText();$('devReport').hidden=false;$('devReport').value=report;try{await navigator.clipboard.writeText(report);devMsg('Report copied.');}catch(e){$('devReport').focus();$('devReport').select();devMsg('Select and copy the report below.');}};
- $('devDownload').onclick=()=>{const report=reportText();const url=URL.createObjectURL(new Blob([report],{type:'text/plain'}));const a=document.createElement('a');a.href=url;a.download='LANPASU_Test_Report_v017.txt';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);$('devReport').hidden=false;$('devReport').value=report;devMsg('Report export requested. Save in Files, or copy the text below.');};
+ $('devDownload').onclick=()=>{const report=reportText();const url=URL.createObjectURL(new Blob([report],{type:'text/plain'}));const a=document.createElement('a');a.href=url;a.download='LANPASU_Test_Report_v018.txt';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);$('devReport').hidden=false;$('devReport').value=report;devMsg('Report export requested. Save in Files, or copy the text below.');};
  $('reset').onclick=()=>{clearInput();reset();devLocation='Solavren';devFrames=[];};
 }
 
