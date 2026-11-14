@@ -1,10 +1,11 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"><title>LANPASU — Environment Test v008</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"><title>LANPASU — Island Adventure</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#d2e8ef;color:#233e49;font:15px system-ui,sans-serif;overflow:hidden}canvas{display:block;touch-action:none}#setup{position:fixed;inset:0;overflow:auto;padding:22px max(18px,env(safe-area-inset-left));background:linear-gradient(150deg,#eaf6f8,#e9d7b7);z-index:10}h1{font-size:24px;margin:0 0 6px}p{line-height:1.45}#setup section{max-width:580px;margin:auto}label{display:block;margin:9px 0;background:#ffffffb0;padding:10px;border-radius:12px;font-weight:600}input{display:block;width:100%;margin-top:5px;font:inherit;font-size:13px}button{font:inherit;border:0;border-radius:14px;padding:12px 18px;background:#294f60;color:white;touch-action:none}button:disabled{opacity:.45}#status{white-space:pre-wrap;font-size:13px}#hud{position:fixed;left:12px;top:max(12px,env(safe-area-inset-top));background:#ffffffe0;padding:8px 12px;border-radius:12px;font-size:12px;pointer-events:none;white-space:pre-line}#controls{position:fixed;inset:0;pointer-events:none;display:none}#joy{position:absolute;bottom:max(25px,env(safe-area-inset-bottom));left:24px;border:2px solid #fff9;background:#ffffff44;border-radius:50%;width:116px;height:116px;pointer-events:auto;touch-action:none}#knob{position:absolute;left:36px;top:36px;width:40px;height:40px;background:#ffffffbd;border-radius:50%;pointer-events:none}#actions{position:absolute;right:20px;bottom:max(25px,env(safe-area-inset-bottom));display:flex;gap:10px;pointer-events:auto}#actions button{border:1px solid #fff9;background:#31566ec9;min-width:65px;min-height:56px}#top{position:fixed;right:12px;top:max(12px,env(safe-area-inset-top));display:flex;gap:6px;pointer-events:auto}#top button{padding:9px;font-size:12px}small{font-weight:400}#hint{font-size:12px;color:#45616b}
+
 </style><script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/","three-mesh-bvh":"https://cdn.jsdelivr.net/npm/three-mesh-bvh@0.8.3/build/index.module.js"}}</script></head><body>
-<div id="setup"><section><h1>LANPASU</h1><b>Environment Test v008 · Stair & movement correction</b><p>Select your existing files from Files. The models stay on your device; only the 3D engine is downloaded from the internet.</p>
-<label>Complete island<input type="file" id="island" accept=".glb"></label><label>Collision model<input type="file" id="collision" accept=".glb"></label><label>Routes & spawn JSON<input type="file" id="routes" accept=".json,application/json"></label><label>Ladar v108 rig<input type="file" id="ladar" accept=".glb"></label><label>Idle animation<input type="file" id="idle" accept=".glb"></label><label>Walk animation<input type="file" id="walk" accept=".glb"></label><label>Run animation<input type="file" id="run" accept=".glb"></label><label>Jump animation<input type="file" id="jump" accept=".glb"></label><label>Water model <small>(optional)</small><input type="file" id="water" accept=".glb"></label><label>Visual quality<select id="visualQuality" style="display:block;width:100%;margin-top:6px;padding:7px"><option value="sunny">Sunny — local environmental shadows</option><option value="light">Lightweight — no environmental shadow map</option></select><small>Both modes include the new ocean, sky, waterfall flow and mist.</small></label><label>Movement pace<select id="movementPace" style="display:block;width:100%;margin-top:6px;padding:7px"><option value="travel">Natural / Travel — original island exploration</option><option value="measured">Relaxed — slower, deliberate exploration</option></select><small>Natural / Travel restores the original v006 pace. Relaxed is a comfortable slower alternative; both retain the refined animation blending.</small></label><button id="start" disabled>Start test</button><p id="status">Loading 3D engine…</p><p id="hint">Use Safari on an HTTPS-hosted page. Rotate your phone to landscape for a wider view. All four movement clips are required. Ocean is built in; select the optional water GLB for animated waterfalls and hot springs. Joystick: move. RUN: toggle pace. JUMP: tap. Swipe the scene to orbit; pinch to zoom; Center returns behind Ladar. Keyboard: Q/E orbit, C center, +/− zoom. Collision: show/hide physical meshes. Reset: return to Solavren. Keyboard: WASD, Shift, Space.</p></section></div>
-<div id="hud"></div><div id="controls"><div id="joy"><div id="knob"></div></div><div id="actions"><button id="runBtn" aria-pressed="false">RUN</button><button id="jumpBtn">JUMP</button></div><div id="top"><button id="centerCam" aria-label="Center camera behind Ladar">Center</button><button id="reset">Reset</button><button id="debug">Collision</button></div></div>
+<div id="setup"><section><h1>LANPASU</h1><b>World Foundation · Official v019 (1.0)</b><p>Explore LANPASU with Ladar. Choose the matching game files from your iPhone’s Files app: island v014C2, collision v010C2, routes v010, Ladar v116 and her four animations. Add Water v006 for the complete island experience. Your models stay on your device.</p>
+<label>Complete island<input type="file" id="island" accept=".glb"></label><label>Collision model<input type="file" id="collision" accept=".glb"></label><label>Routes & spawn JSON<input type="file" id="routes" accept=".json,application/json"></label><label>Ladar v116 rig<input type="file" id="ladar" accept=".glb"></label><label>Idle animation<input type="file" id="idle" accept=".glb"></label><label>Walk animation<input type="file" id="walk" accept=".glb"></label><label>Run animation<input type="file" id="run" accept=".glb"></label><label>Jump animation<input type="file" id="jump" accept=".glb"></label><label>Water model <small>(optional)</small><input type="file" id="water" accept=".glb"></label><label>Visual quality<select id="visualQuality" style="display:block;width:100%;margin-top:6px;padding:7px"><option value="sunny">Sunny — local environmental shadows</option><option value="light">Lightweight — no environmental shadow map</option></select><small>Both modes include the ocean and sky. Water v006 adds waterfalls, hot springs and mist.</small></label><label>Movement pace<select id="movementPace" style="display:block;width:100%;margin-top:6px;padding:7px"><option value="travel">Natural / Travel — original island exploration</option><option value="measured">Relaxed — slower, deliberate exploration</option></select><small>Natural / Travel is the standard exploration pace. Relaxed is a slower alternative. Both use Ladar’s adaptive stair movement.</small></label><button id="start" disabled>Play LANPASU</button><p id="status">Loading 3D engine…</p><p id="hint">Use Safari on an HTTPS-hosted page. Rotate your phone to landscape for a wider view. All four movement clips are required. Ocean is built in; select the optional water GLB for animated waterfalls and hot springs. Joystick: move. RUN: toggle pace. JUMP: tap. Swipe the scene to orbit; pinch to zoom; Center returns behind Ladar. Keyboard: Q/E orbit, C center, +/− zoom. Home: return to Solavren. Keyboard: WASD, Shift, Space.</p></section></div>
+<div id="hud"></div><div id="controls"><div id="joy"><div id="knob"></div></div><div id="actions"><button id="runBtn" aria-pressed="false">RUN</button><button id="jumpBtn">JUMP</button></div><div id="top"><button id="centerCam" aria-label="Center camera behind Ladar">Center</button><button id="reset" aria-label="Return to Solavren">Home</button></div></div>
 <script type="module">
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -12,12 +13,12 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { MeshBVH, acceleratedRaycast } from 'three-mesh-bvh';
 const $=id=>document.getElementById(id), loader=new GLTFLoader(), V=THREE.Vector3;
 const ids=['island','collision','routes','ladar','idle','walk','run','jump'];
-let renderer,scene,camera,collider,tree,player,mixer,actions={},actionName='',spawn,debugMesh;
+let renderer,scene,camera,collider,tree,player,mixer,actions={},actionName='',spawn;
 let running=false,grounded=false,velocityY=0,yaw=0,pitch=.22,active=false;
 let jumpBuffer=0,coyote=0,actualSpeed=0,fallTime=0;
 
 // The source walk repeats three 1.4-second strides in 4.2 s; run is one .86 s cycle.
-// Measured stance travel on the v108 rig is roughly .29 m/s walk and .87 m/s run at 1x.
+// Measured stance travel on the v108/v116 skeleton is roughly .29 m/s walk and .87 m/s run at 1x.
 let WALK_SPEED=1.65,RUN_SPEED=4.1;
 const DEAD_ZONE=.14,ACCEL=11,BRAKE=16,JUMP_SPEED=5.0,GRAVITY=14;
 const STRIDE={walk:.29,run:.87}, CYCLE={walk:1.4,run:.86};
@@ -40,7 +41,7 @@ function refresh(){ $('start').disabled= !ids.every(id=>$(id).files.length); }
 ids.forEach(id=>$(id).addEventListener('change',refresh));say('Engine ready. Select the eight required files.');refresh();
 async function glb(id){const file=$(id).files[0]; if(!file)throw Error('Missing '+id); return loader.parseAsync(await file.arrayBuffer(),'');}
 function staticInstances(root){root.updateMatrixWorld(true);const groups=new Map();root.traverse(o=>{if(!o.isMesh||o.isSkinnedMesh||!o.name.startsWith('Veg_')||Array.isArray(o.material))return;let k=o.geometry.uuid+':'+o.material.uuid;if(!groups.has(k))groups.set(k,[]);groups.get(k).push(o)});const result=new THREE.Group();for(const a of groups.values()){if(a.length<2)continue;const inst=new THREE.InstancedMesh(a[0].geometry,a[0].material,a.length);a.forEach((o,i)=>{inst.setMatrixAt(i,o.matrixWorld);o.visible=false});inst.computeBoundingSphere();result.add(inst)}return result;}
-function buildCollider(root){root.updateMatrixWorld(true);const list=[];root.traverse(o=>{if(!o.isMesh)return;const g=o.geometry;let p=g.index?g.toNonIndexed():g.clone();const simple=new THREE.BufferGeometry();simple.setAttribute('position',p.getAttribute('position').clone());simple.applyMatrix4(o.matrixWorld);list.push(simple);p.dispose()});if(!list.length)throw Error('Collision file has no meshes');const geometry=mergeGeometries(list,false);list.forEach(g=>g.dispose());if(!geometry)throw Error('Unable to merge collision meshes');tree=new MeshBVH(geometry,{maxLeafTris:12});geometry.boundsTree=tree;collider=new THREE.Mesh(geometry,new THREE.MeshBasicMaterial({side:THREE.DoubleSide}));collider.raycast=acceleratedRaycast;collider.updateMatrixWorld(true);debugMesh=new THREE.Mesh(geometry,new THREE.MeshBasicMaterial({color:0xff3675,wireframe:true,transparent:true,opacity:.24}));debugMesh.visible=false;scene.add(debugMesh);}
+function buildCollider(root){root.updateMatrixWorld(true);const list=[];root.traverse(o=>{if(!o.isMesh)return;const g=o.geometry;let p=g.index?g.toNonIndexed():g.clone();const simple=new THREE.BufferGeometry();simple.setAttribute('position',p.getAttribute('position').clone());simple.applyMatrix4(o.matrixWorld);list.push(simple);p.dispose()});if(!list.length)throw Error('Collision file has no meshes');const geometry=mergeGeometries(list,false);list.forEach(g=>g.dispose());if(!geometry)throw Error('Unable to merge collision meshes');tree=new MeshBVH(geometry,{maxLeafTris:12});geometry.boundsTree=tree;collider=new THREE.Mesh(geometry,new THREE.MeshBasicMaterial({side:THREE.DoubleSide}));collider.raycast=acceleratedRaycast;collider.updateMatrixWorld(true);}
 const raycaster=new THREE.Raycaster();raycaster.firstHitOnly=true;
 function cast(origin,dir,far){raycaster.set(origin,dir);raycaster.far=far;return raycaster.intersectObject(collider,false)[0];}
 function groundAt(x,z,y,range=3){return cast(new V(x,y,z),new V(0,-1,0),range);}
@@ -97,9 +98,237 @@ function floorProbe(p,above,below){
   const y=hit.point.y+R*(1/hit.face.normal.y-1)+SKIN;
   return y<=p.y+above+.015&&y>=p.y-below?{y,normal:hit.face.normal.clone()}:null;
 }
+// B3: bounded step negotiation and an optional, post-animation two-bone stair pose.
+let b3Enabled=true,b3Legs=[],b3Pelvis=null,b3Scale=1,b3MaxStep=.30,b3Transit=null,b3Steps=0,b3Mode='flat',b3Strength=0,b3Cycle=0,b3LastFoot=null,b3HipDrop=0,b3Saved=null,b3Surface=null,b3StairNear=false,b3TerrainGrade=0;
+const b3Ray=new THREE.Raycaster();b3Ray.firstHitOnly=false;
+const b3Clamp=THREE.MathUtils.clamp;
+// B3.1 — post-IK woven skirt clearance. Uses the actual v116 skirt bands and leg skin.
+// Mesh, UVs, texture, armature and authored animation files are unchanged.
+// Each ellipse is an inscribed conservative cross-section of the bind-pose skirt ring.
+// [local Y centre (mesh space), Z centre, outer X radius, outer Z radius, inner ratio]
+const b3ClothRings=[
+ [.0525,0,.148,.1111,.9037],[.0753,0,.1466,.1091,.9111],[.1153,0,.1442,.1075,.9078],
+ [.1517,0,.1402,.1056,.9165],[.1759,0,.1382,.1046,.9167],[.2068,0,.135,.1026,.9171],
+ [.2378,0,.1318,.1006,.9164],[.2687,0,.1286,.0985,.9158],[.2996,0,.1254,.0965,.9144],
+ [.3314,0,.1222,.0947,.9147],[.3632,0,.119,.0928,.9151],[.3949,0,.1157,.091,.9154],
+ [.4267,0,.1125,.0891,.9158],[.4591,-.001,.1141,.0886,.9177],[.4915,-.0036,.1156,.0897,.921],
+ [.5239,-.007,.1171,.0916,.9188],[.5563,-.0102,.1187,.0932,.9117],[.5875,-.0133,.1233,.0953,.9065],
+ [.6187,-.0164,.128,.0973,.9016],[.6499,-.0199,.1327,.0998,.8992],[.6811,-.0231,.1373,.102,.8991],
+ [.7194,-.0261,.1329,.1039,.869]
+];
+const clothIdleZ=[1.152,1.119,1.158,1.147,1.096,1.063,1.050,1.047,1.050,1.058,1.073,1.090,1.096,1.089,1.094,1.089,1.081,1.079,1.078,1.096,1.121,1.196];
+const clothIdleP=[.027,.022,.017,.015,.018,.021,.024,.028,.032,.035,.038,.039,.038,.035,.033,.032,.031,.031,.030,.029,.027,.023];
+let b3ClothBands=[],b3ClothSources=[],b3ClothSaved=null,b3ClothPeak=0;
+const clothClamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const clothMargin=.007; // model m, ~8 mm after v116 scale
+function clothInside(points,cx,cz,rx,rz,margin=clothMargin){
+ return points.every(p=>((Math.abs(p[0]-cx)+margin)/rx)**2+((Math.abs(p[1]-cz)+margin)/rz)**2<=1+1e-8);
+}
+// Smallest-area conservative ellipse of the same family, preserving the original width/depth floors.
+// Axis choice favours a forward/back fabric drape instead of a uniformly inflated skirt.
+function clothFit(points,cx,cz,rx,rz,margin=clothMargin){
+ if(!points.length||clothInside(points,cx,cz,rx,rz,margin))return [rx,rz];
+ let mx=0;for(const p of points)mx=Math.max(mx,Math.abs(p[0]-cx)+margin);
+ const lo=Math.max(rx,mx*1.025),hi=Math.max(lo*1.43,rx*1.35);
+ let best=[lo,rz],score=Infinity;
+ for(let i=0;i<=10;i++){
+  const x=lo+(hi-lo)*i/10;let z=rz;
+  for(const p of points){const a=(Math.abs(p[0]-cx)+margin)/x;z=Math.max(z,(Math.abs(p[1]-cz)+margin)/Math.sqrt(Math.max(.0001,1-a*a)));}
+  const sx=x/rx,sz=z/rz,s=sx*sz+.18*(sx-1)**2+.025*(sz-1)**2;
+  if(s<score){score=s;best=[x,z];}
+ }
+ return best;
+}
+function clothSource(mesh,exact){
+ const g=mesh.geometry,p=g.getAttribute('position'),idx=g.index,ids=[],map=new Int32Array(p.count).fill(-1),seen=new Map();
+ for(let i=0;i<p.count;i++){
+  const x=p.getX(i),y=p.getY(i),z=p.getZ(i);
+  if(!exact&&(y>.18||y<-.01||Math.abs(x)>.19))continue; // lower skin/feet only, not face, torso or hands
+  const q=exact?100000:125,key=Math.round(x*q)+','+Math.round(y*q)+','+Math.round(z*q);
+  let n=seen.get(key);if(n===undefined){n=ids.length;seen.set(key,n);ids.push(i);}map[i]=n;
+ }
+ const edges=[],pairs=new Set();
+ if(exact){const n=idx?idx.count:p.count;for(let i=0;i+2<n;i+=3){const a=map[idx?idx.getX(i):i],b=map[idx?idx.getX(i+1):i+1],c=map[idx?idx.getX(i+2):i+2];for(const [u,v] of [[a,b],[b,c],[c,a]]){if(u<0||v<0||u===v)continue;const k=Math.min(u,v)*ids.length+Math.max(u,v);if(!pairs.has(k)){pairs.add(k);edges.push([u,v]);}}}}
+ return {mesh,ids,edges,posed:ids.map(()=>new V())};
+}
+function initB3Cloth(rig){
+ const legs=rig.getObjectByName('Ladar_Legs');
+ b3ClothBands=b3ClothRings.map((r,i)=>{
+  const bone=rig.getObjectByName('SkirtBand_'+String(i).padStart(2,'0'));
+  if(!bone||bone.parent!==b3Pelvis)return null;
+  return {bone,dy:r[0]-(.72+bone.position.y),cz:r[1],rx:r[2]*r[4]*.985,rz:r[3]*r[4]*.985,dx:0,dz:0,sx:0,sz:0};
+ });
+ if(!legs?.isSkinnedMesh||b3ClothBands.some(x=>!x)){b3ClothBands=[];console.warn('B3 cloth: matching v116 skirt/leg rig unavailable');return;}
+ b3ClothSources=[clothSource(legs,true)];
+ // Separate foot/shin skin belongs to Part_0 in v116. A coarse surface sample covers a lifted ankle/toes.
+ const body=rig.getObjectByName('Part_0');if(body)body.traverse(o=>{if(o.isSkinnedMesh&&o.geometry.getAttribute('position')?.count>10000)b3ClothSources.push(clothSource(o,false));});
+ console.info('B3 cloth: '+b3ClothBands.length+' bands, '+b3ClothSources.reduce((n,s)=>n+s.ids.length,0)+' skin samples');
+}
+function b3ClothRestore(){if(!b3ClothSaved)return;for(const [bone,p,s] of b3ClothSaved){bone.position.copy(p);bone.scale.copy(s);}b3ClothSaved=null;}
+function b3ClothReset(){b3ClothRestore();for(const b of b3ClothBands){b.dx=b.dz=b.sx=b.sz=0;}b3ClothPeak=0;}
+function b3ClothPose(dt){
+ if(!b3ClothBands.length)return;
+ if(!b3Enabled||jumpPhase!=='none'){b3ClothReset();return;}
+ const active=b3Strength>.015&&grounded;
+ if(!active&&!b3ClothBands.some(b=>Math.abs(b.dx)+Math.abs(b.dz)+b.sx+b.sz>.0005)){b3ClothReset();return;}
+ // Animation mixer and IK have already run. Sample actual deformed leg skin in pelvis space.
+ player.updateMatrixWorld(true);const inv=new THREE.Matrix4().copy(b3Pelvis.matrixWorld).invert();
+ const rows=b3ClothBands.map((b,i)=>{
+  // On stairs replace the old gait's baked front/back stretch with its neutral woven drape.
+  // It is restored before the next mixer update; the actual posed legs determine extra room.
+  const w=active?Math.min(1,b3Strength)*.92:0;
+  const baseZ=b.bone.position.z+(clothIdleP[i]-b.bone.position.z)*w;
+  const baseScaleZ=b.bone.scale.z+(clothIdleZ[i]-b.bone.scale.z)*w;
+  return {b,baseZ,baseScaleZ,y:b.bone.position.y+b.dy*b.bone.scale.y,cx:b.bone.position.x,cz:baseZ+b.cz*baseScaleZ,rx:b.rx*b.bone.scale.x,rz:b.rz*baseScaleZ,points:[],dx:0,dz:0,sx:0,sz:0};
+ });
+ if(active){
+  for(const source of b3ClothSources){const {mesh,ids,posed,edges}=source,local=new THREE.Matrix4().multiplyMatrices(inv,mesh.matrixWorld),p=mesh.geometry.getAttribute('position');
+   for(let i=0;i<ids.length;i++){const id=ids[i],v=posed[i];v.fromBufferAttribute(p,id);mesh.applyBoneTransform(id,v);v.applyMatrix4(local);}
+   for(const r of rows){
+    // Include cross sections over each ring's actual width, not only the centre plane.
+    const h=.021;for(const v of posed)if(Math.abs(v.y-r.y)<=h)r.points.push([v.x,v.z]);
+    // Exact intersections with edges of the skinned leg triangles cover the spaces between vertex rings.
+    for(const [i,j] of edges){const a=posed[i],b=posed[j],dy=b.y-a.y;if(Math.abs(dy)<1e-7)continue;
+     if(Math.max(a.y,b.y)<r.y-h||Math.min(a.y,b.y)>r.y+h)continue;
+     for(const y of [r.y-h,r.y,r.y+h]){const t=(y-a.y)/dy;if(t>0&&t<1)r.points.push([a.x+(b.x-a.x)*t,a.z+(b.z-a.z)*t]);}
+    }
+   }
+  }
+  // Move the cloth towards the actual knee envelope. Waist stays anchored.
+  rows.forEach((r,i)=>{
+   if(!r.points.length||clothInside(r.points,r.cx,r.cz,r.rx,r.rz))return;
+   let x0=Infinity,x1=-Infinity,z0=Infinity,z1=-Infinity;for(const [x,z] of r.points){x0=Math.min(x0,x);x1=Math.max(x1,x);z0=Math.min(z0,z);z1=Math.max(z1,z);}
+   const freedom=1-.82*Math.max(0,(i-15)/6);
+   r.dx=clothClamp(((x0+x1)/2-r.cx)*.8,-.040*freedom,.040*freedom);
+   r.dz=clothClamp((z0+z1)/2-r.cz,-.23*freedom,.23*freedom);
+  });
+  // Continuous woven drape across adjacent rings; no isolated knee-sized spikes.
+  for(let pass=0;pass<2;pass++){const smooth=rows.map((r,i)=>{const a=rows[Math.max(0,i-1)],c=rows[Math.min(21,i+1)];return [(a.dx+2*r.dx+c.dx)/4,(a.dz+2*r.dz+c.dz)/4];});rows.forEach((r,i)=>{r.dx=smooth[i][0];r.dz=smooth[i][1];});}
+ }
+ // Spatially smooth centre movement first, then fit clearance at the current centre.
+ rows.forEach(r=>{const b=r.b;b.dx=active?r.dx:damp(b.dx,0,15,dt);b.dz=active?r.dz:damp(b.dz,0,15,dt);
+  if(active){const [x,z]=clothFit(r.points,r.cx+b.dx,r.cz+b.dz,r.rx,r.rz);r.sx=Math.max(0,(x-r.rx)/b.rx);r.sz=Math.max(0,(z-r.rz)/b.rz);}
+ });
+ const spreads=rows.map((r,i)=>{let sx=r.sx,sz=r.sz;for(let j=Math.max(0,i-2);j<=Math.min(21,i+2);j++){const f=j===i?1:Math.abs(i-j)===1?.60:.25;sx=Math.max(sx,rows[j].sx*f);sz=Math.max(sz,rows[j].sz*f);}return [sx,sz];});
+ b3ClothSaved=[];b3ClothPeak=0;
+ rows.forEach((r,i)=>{const b=r.b,bone=b.bone,[sx,sz]=spreads[i];
+  // Fast contact response, gentle release, no residual pose baked into the authored clip.
+  b.sx=Math.max(sx,damp(b.sx,sx,13,dt));b.sz=Math.max(sz,damp(b.sz,sz,13,dt));
+  b3ClothSaved.push([bone,bone.position.clone(),bone.scale.clone()]);
+  bone.position.x+=b.dx;bone.position.z=r.baseZ+b.dz-b.cz*b.sz;bone.scale.x+=b.sx;bone.scale.z=r.baseScaleZ+b.sz;
+  b3ClothPeak=Math.max(b3ClothPeak,b.sx,b.sz);
+ });
+ b3Pelvis.updateMatrixWorld(true);
+}
+
+function initB3Rig(rig){
+ rig.updateMatrixWorld(true);b3Pelvis=rig.getObjectByName('Pelvis');b3Legs=['L','R'].map(side=>{
+ const hip=rig.getObjectByName(side+'_Thigh'),knee=rig.getObjectByName(side+'_Shin'),ankle=rig.getObjectByName(side+'_Foot');
+ if(!hip||!knee||!ankle||knee.parent!==hip||ankle.parent!==knee)throw Error('B3 needs Ladar thigh, shin and foot hierarchy');
+ const a=hip.getWorldPosition(new V()).distanceTo(knee.getWorldPosition(new V())),b=knee.getWorldPosition(new V()).distanceTo(ankle.getWorldPosition(new V()));
+ return {hip,knee,ankle,a,b,sole:ankle.getWorldPosition(new V()).y,restQ:ankle.getWorldQuaternion(new THREE.Quaternion()),side};});
+ if(!b3Pelvis)throw Error('Missing pelvis');b3Scale=b3Pelvis.getWorldScale(new V()).y;
+ const leg=Math.min(...b3Legs.map(l=>l.a+l.b));b3MaxStep=b3Clamp(leg*.416,.20,.30);
+ console.info('B3 measured leg',leg,'auto step limit',b3MaxStep,'ankle heights',b3Legs.map(l=>l.sole));initB3Cloth(rig);
+}
+// Dedicated lightweight render-surface BVH: walkable decks, treads and entrance floors only.
+// Physics remains on the existing collision BVH. Never add the pose mesh to the scene.
+function buildB3Surface(world){
+ world.updateMatrixWorld(true);const chunks=[];
+ world.traverse(o=>{if(!o.isMesh||o.isSkinnedMesh)return;const n=o.name||'';
+ if(!(/_Deck(?:_\d+)?$|TimberJoin|StairTreads|LowerTread_Cap|Entrance_Walkway|^Architecture_(wood|wood2|wood3|woodlight|floor|floor2|floor3|stone|Lanpasu_Entrance_Ramp)(?:_\d+)?$|StoneSpa_floor|Market_Square_Paving|Market_Access_Ramps/.test(n)))return;
+ const g=o.geometry,p=g.index?g.toNonIndexed():g.clone();const pos=p.getAttribute('position');if(!pos){p.dispose();return;}
+ const a=new THREE.BufferGeometry();a.setAttribute('position',pos.clone());a.applyMatrix4(o.matrixWorld);chunks.push(a);p.dispose();});
+ if(!chunks.length)return;const g=mergeGeometries(chunks,false);chunks.forEach(x=>x.dispose());if(!g)return;
+ g.boundsTree=new MeshBVH(g,{maxLeafTris:12});b3Surface=new THREE.Mesh(g,new THREE.MeshBasicMaterial({side:THREE.DoubleSide}));b3Surface.raycast=acceleratedRaycast;b3Surface.updateMatrixWorld(true);
+}
+function b3VisualFloor(x,z,reference){
+ if(!b3Surface)return null;b3Ray.set(new V(x,reference+.42,z),down);b3Ray.far=.88;
+ const hits=b3Ray.intersectObject(b3Surface,false);for(const h of hits){if(h.face&&h.face.normal.y>.60&&Math.abs(h.point.y-reference)<.39)return h.point.y;}return null;
+}
+function b3Floor(x,z,reference){const y=b3VisualFloor(x,z,reference);if(y!==null)return y;const h=groundAt(x,z,reference+.39,.82);return h&&h.face&&h.face.normal.y>=MIN_GROUND?h.point.y:null;}
+function b3Reset(){b3Transit=null;b3Strength=0;b3Cycle=0;b3LastFoot=null;b3HipDrop=0;b3StairNear=false;b3TerrainGrade=0;b3Mode='flat';b3Restore();b3ClothReset();}
+// Candidate test uses a full capsule at every 4 cm, not just a ray through a wall.
+// The supported top must be reachable from the current position without crossing a gap.
+function b3TryStep(dx,dz,start,direct,progress){
+ if(!b3Enabled)return false;const len=Math.hypot(dx,dz);if(len<.0001)return false;
+ const ux=dx/len,uz=dz/len,limit=b3MaxStep;
+ for(const dist of [R+.025,R+.085,R+.145]){
+  const target=start.clone();target.x+=ux*dist;target.z+=uz*dist;const top=floorProbe(target,limit+.018,.03);
+  if(!top)continue;const rise=top.y-start.y;if(rise<.035||rise>limit+.001)continue;
+  // Require a small landing strip across the direction of travel.
+  let widthOK=true;for(const side of [-.12,.12]){const q=target.clone();q.x+=-uz*side;q.z+=ux*side;q.y=top.y;const h=floorProbe(q,.045,.075);if(!h||Math.abs(h.y-top.y)>.075)widthOK=false;}if(!widthOK)continue;
+  let ok=true;const lift=top.y+.012;
+  // Test vertical lift incrementally, then sweep at the new tread height.
+  for(let t=.04;t<rise;t+=.04){foot.copy(start);foot.y+=t;const expected=foot.clone();const c=solveCapsule();if(c.ceiling||Math.hypot(foot.x-expected.x,foot.z-expected.z)>.025||Math.abs(foot.y-expected.y)>.035){ok=false;break;}}
+  if(!ok){foot.copy(direct);continue;}
+  const count=Math.ceil(dist/.04);for(let i=0;i<=count;i++){const q=i/count;foot.copy(start);foot.x+=ux*dist*q;foot.z+=uz*dist*q;foot.y=lift;const expected=foot.clone();const c=solveCapsule(true);if(c.ceiling||Math.hypot(foot.x-expected.x,foot.z-expected.z)>.025||Math.abs(foot.y-lift)>.035){ok=false;break;}}
+  if(!ok){foot.copy(direct);continue;}
+  foot.copy(start);foot.x+=dx;foot.z+=dz;foot.y=lift;const c=solveCapsule(true);const advance=(foot.x-start.x)*ux+(foot.z-start.z)*uz;
+  if(c.ceiling||advance<=progress+.0001||Math.abs(foot.y-lift)>.035){foot.copy(direct);continue;}
+  b3Transit={ux,uz,y:lift,x:target.x,z:target.z,remaining:.48};b3Steps++;b3Mode='step up';return true;
+ }
+ foot.copy(direct);return false;
+}
+function b3Continue(dx,dz,dt){
+ const p=b3Transit;if(!p)return false;const along=dx*p.ux+dz*p.uz;p.remaining-=dt;
+ if(!b3Enabled||p.remaining<=0||along<=.00005||along<Math.hypot(dx,dz)*.88||jumpBuffer>0||jumpPhase==='flight'){b3Transit=null;return false;}
+ const old=foot.clone();foot.x+=dx;foot.z+=dz;foot.y=p.y;const intended=foot.clone();const c=solveCapsule(true);
+ if(c.ceiling||Math.hypot(foot.x-intended.x,foot.z-intended.z)>.035||Math.abs(foot.y-p.y)>.045){foot.copy(old);b3Transit=null;return false;}
+ const h=floorProbe(foot,.025,.055);if(h){foot.y=h.y;const settle=foot.clone(),contact=solveCapsule();if(contact.ceiling||Math.hypot(foot.x-settle.x,foot.z-settle.z)>.04||Math.abs(foot.y-settle.y)>.04){foot.copy(old);b3Transit=null;return false;}b3Transit=null;}
+ // Hard bound: never hold a character past the verified landing point.
+ else if((p.x-foot.x)*p.ux+(p.z-foot.z)*p.uz<-.015){foot.copy(old);b3Transit=null;return false;}
+ grounded=true;velocityY=0;return true;
+}
+function b3Restore(){if(!b3Saved)return;for(const [n,q] of b3Saved.q)n.quaternion.copy(q);b3Pelvis.position.copy(b3Saved.p);b3Saved=null;}
+function b3AimBone(bone,from,to){if(from.lengthSq()<1e-8||to.lengthSq()<1e-8)return;const delta=new THREE.Quaternion().setFromUnitVectors(from.normalize(),to.normalize());const world=bone.getWorldQuaternion(new THREE.Quaternion());const parent=bone.parent.getWorldQuaternion(new THREE.Quaternion());bone.quaternion.copy(parent.invert().multiply(delta.multiply(world)));bone.updateMatrixWorld(true);}
+// Analytic two-link solution with forward knee pole; lengths remain exactly the bind lengths.
+function b3SolveLeg(l,target,forward,weight){
+ const h=l.hip.getWorldPosition(new V()),k=l.knee.getWorldPosition(new V()),a=l.ankle.getWorldPosition(new V());const q0=l.hip.quaternion.clone(),q1=l.knee.quaternion.clone(),q2=l.ankle.quaternion.clone();
+ const d=target.clone().sub(h);const len=b3Clamp(d.length(),Math.abs(l.a-l.b)+.025,l.a+l.b-.012);if(d.lengthSq()<1e-8)return;d.normalize();
+ const pole=forward.clone().addScaledVector(d,-forward.dot(d));if(pole.lengthSq()<.001)return;pole.normalize();
+ const along=(l.a*l.a-l.b*l.b+len*len)/(2*len),bend=Math.sqrt(Math.max(0,l.a*l.a-along*along));const knee=h.clone().addScaledVector(d,along).addScaledVector(pole,bend),end=h.clone().addScaledVector(d,len);
+ b3AimBone(l.hip,k.clone().sub(h),knee.clone().sub(h));
+ const nk=l.knee.getWorldPosition(new V()),na=l.ankle.getWorldPosition(new V());b3AimBone(l.knee,na.sub(nk),end.sub(nk));
+ // Restore level ankle orientation (rig's bind orientation plus player yaw), blended on stairs only.
+ const desired=new THREE.Quaternion().setFromAxisAngle(UP,player.rotation.y).multiply(l.restQ);const pq=l.ankle.parent.getWorldQuaternion(new THREE.Quaternion());l.ankle.quaternion.copy(pq.invert().multiply(desired));
+ l.hip.quaternion.copy(q0.slerp(l.hip.quaternion.clone(),weight));l.knee.quaternion.copy(q1.slerp(l.knee.quaternion.clone(),weight));l.ankle.quaternion.copy(q2.slerp(l.ankle.quaternion.clone(),weight*.8));l.hip.updateMatrixWorld(true);
+}
+function b3Pose(dt){
+ if(!b3Legs.length)return;const forward=new V(0,0,1).applyAxisAngle(UP,player.rotation.y),right=new V(1,0,0).applyAxisAngle(UP,player.rotation.y);
+ const f=b3Floor(foot.x+forward.x*.32,foot.z+forward.z*.32,foot.y),b=b3Floor(foot.x-forward.x*.28,foot.z-forward.z*.28,foot.y);
+ const diff=f!==null&&b!==null?f-b:0;b3TerrainGrade=diff/.60;
+ const near=!!b3Transit||Math.abs(diff)>.065;b3StairNear=b3Enabled&&grounded&&near;
+ const targetWeight=b3Enabled&&grounded&&jumpPhase==='none'&&near?1:0;b3Strength=damp(b3Strength,targetWeight,12,dt);
+ if(!grounded||jumpPhase!=='none')b3Strength=0;
+ const travel=b3LastFoot?Math.hypot(foot.x-b3LastFoot.x,foot.z-b3LastFoot.z):0;b3LastFoot=foot.clone();
+ if(!b3Enabled||b3Strength<.015){b3Mode='flat';return;}
+ b3Mode=b3Transit||diff>.065?'step up':diff<-.065?'step down':'stair balance';
+ player.updateMatrixWorld(true);b3Saved={p:b3Pelvis.position.clone(),q:b3Legs.flatMap(l=>[l.hip,l.knee,l.ankle].map(n=>[n,n.quaternion.clone()]))};
+ const moving=actualSpeed>.07;const cycleLength=.72;b3Cycle=(b3Cycle+Math.min(travel,.18)/cycleLength)%1;
+ const goals=[];
+ for(let i=0;i<2;i++){
+  const l=b3Legs[i],p=(b3Cycle+i*.5)%1,stance=.60;let stride=0,lift=0;
+  if(moving){if(p<stance)stride=.17*(1-2*p/stance);else{const u=(p-stance)/(1-stance);stride=.17*(-1+2*u);lift=Math.sin(Math.PI*u)*(.075+Math.min(.065,Math.abs(diff)*.35));}}
+  const ankle=l.ankle.getWorldPosition(new V());const dest=foot.clone().addScaledVector(right,(i===0?1:-1)*.073).addScaledVector(forward,stride);
+  const surface=b3Floor(dest.x,dest.z,foot.y);if(surface===null){goals.push(null);continue;}
+  // Avoid lifting to a rail top or reaching an entirely different floor.
+  if(Math.abs(surface-foot.y)>.34){goals.push(null);continue;}
+  dest.y=surface+l.sole+lift+.008;goals.push(dest);
+ }
+ let drop=0;for(let i=0;i<2;i++){if(!goals[i])continue;const l=b3Legs[i],h=l.hip.getWorldPosition(new V());const horizontal=Math.hypot(h.x-goals[i].x,h.z-goals[i].z);const maxVert=Math.sqrt(Math.max(.01,(l.a+l.b-.018)**2-horizontal**2));drop=Math.max(drop,h.y-goals[i].y-maxVert);}
+ b3HipDrop=damp(b3HipDrop,b3Clamp(drop,0,.13),16,dt);b3Pelvis.position.y-=b3HipDrop*b3Strength/b3Scale;
+ // A restrained lateral transfer follows the loaded leg; no body/mesh scaling.
+ if(moving)b3Pelvis.position.x+=.014*Math.cos(2*Math.PI*b3Cycle)*b3Strength/b3Scale;
+ b3Pelvis.updateMatrixWorld(true);
+ for(let i=0;i<2;i++)if(goals[i])b3SolveLeg(b3Legs[i],goals[i],forward,b3Strength*.93);
+}
+
+let dryAnchor=null,dryAge=0,recoveryCount=0;
 function reset(){
+  b3Reset();
   const hit=floorProbe(spawn,1,3);foot.copy(spawn);if(hit)foot.y=hit.y;
-  player.position.copy(foot);velocityY=0;grounded=!!hit;jumpBuffer=0;coyote=0;fallTime=0;moveVelocity.set(0,0,0);actualSpeed=0;visualSpeed=0;jumpPhase='none';phaseTime=0;jumpPose=0;locomotion='idle';for(const k of Object.keys(actions)){animWeights[k]=k==='idle'?1:0;actions[k].time=0;actions[k].setEffectiveWeight(animWeights[k]);}actionName='idle';yaw=0;pitch=.22;player.rotation.y=Math.PI;resetCamera();
+  player.position.copy(foot);velocityY=0;grounded=!!hit;jumpBuffer=0;coyote=0;fallTime=0;moveVelocity.set(0,0,0);actualSpeed=0;visualSpeed=0;jumpPhase='none';phaseTime=0;jumpPose=0;locomotion='idle';for(const k of Object.keys(actions)){animWeights[k]=k==='idle'?1:0;actions[k].time=0;actions[k].setEffectiveWeight(animWeights[k]);}actionName='idle';yaw=0;pitch=.22;player.rotation.y=Math.PI;resetCamera();dryAnchor=foot.y>.45?foot.clone():null;dryAge=0;
 }
 function solveCapsule(horizontal=false){
   segment.start.copy(foot).addScaledVector(UP,R);segment.end.copy(foot).addScaledVector(UP,H-R);
@@ -126,6 +355,7 @@ function moveHorizontal(dx,dz,wasGrounded){
   const len=Math.hypot(dx,dz);if(len<1e-6)return;
   const progress=((foot.x-startFoot.x)*dx+(foot.z-startFoot.z)*dz)/len;
   // Try a bounded curb/step lift only when supported and blocked; never teleport through a wall.
+  if(wasGrounded&&progress<len*.80&&direct.wall&&b3TryStep(dx,dz,startFoot.clone(),directFoot.clone(),progress))return;
   if(wasGrounded&&progress<len*.65&&direct.wall){
     foot.copy(startFoot);foot.y+=MAX_STEP;const up=solveCapsule();
     if(!up.ceiling&&foot.y>=startFoot.y+MAX_STEP-.035&&Math.hypot(foot.x-startFoot.x,foot.z-startFoot.z)<.035){
@@ -139,7 +369,7 @@ function moveHorizontal(dx,dz,wasGrounded){
   }
 }
 function step(dt,mx,mz){
-  updateInput(mx,mz);wanted.set(input.x,0,input.y).applyAxisAngle(UP,cameraYaw).multiplyScalar(running?RUN_SPEED:WALK_SPEED);
+  updateInput(mx,mz);wanted.set(input.x,0,input.y).applyAxisAngle(UP,cameraYaw).multiplyScalar(b3Enabled&&b3StairNear?(running?Math.min(RUN_SPEED,2.1):Math.min(WALK_SPEED,1.35)):(running?RUN_SPEED:WALK_SPEED));
   horizontalDelta.copy(wanted).sub(moveVelocity);const limit=(input.lengthSq()?(grounded?ACCEL:ACCEL*.42):BRAKE)*dt;
   if(horizontalDelta.length()>limit)horizontalDelta.setLength(limit);moveVelocity.add(horizontalDelta);
   direction.copy(moveVelocity);if(direction.lengthSq()>.0001)direction.normalize();
@@ -162,14 +392,17 @@ function step(dt,mx,mz){
   const sub=dt/pieces;grounded=false;
   for(let i=0;i<pieces;i++){
     const supported=wasGrounded||grounded;
+    if(b3Transit&&!jumped&&b3Continue(moveVelocity.x*sub,moveVelocity.z*sub,sub))continue;
+    if(jumped)b3Transit=null;
     moveHorizontal(moveVelocity.x*sub,moveVelocity.z*sub,supported&&!jumped);
+    if(b3Transit){grounded=true;velocityY=0;continue;}
     foot.y+=velocityY*sub;const contact=solveCapsule();
     if(contact.ceiling&&velocityY>0)velocityY=0;
     grounded=contact.support&&velocityY<=0;
     if(grounded)velocityY=0;
     else if(velocityY<=0){
       // Snap only within the local floor band; do not bridge a drop or snap upward onto an overhead bridge.
-      const floor=floorProbe(foot,.035,supported&&!jumped?SNAP:.035);
+      const floor=floorProbe(foot,.035,supported&&!jumped?(b3Enabled&&b3StairNear?.26:SNAP):.035);
       if(floor&&floor.y<=foot.y+.035){foot.y=floor.y;solveCapsule();grounded=true;velocityY=0;}
     }
   }
@@ -185,7 +418,13 @@ function step(dt,mx,mz){
     else {phaseTime+=dt;jumpPose=.86+.39*Math.min(1,phaseTime/.24);if(phaseTime>=.24)jumpPhase='none';}
   }
   
-  if(foot.y<-5||!Number.isFinite(foot.y)||fallTime>9)reset();
+  // Swimming is not implemented: recover at last dry grounded position, never underneath the ocean.
+  dryAge+=dt;
+  if(grounded&&foot.y>.55&&dryAge>.50){dryAnchor=foot.clone();dryAge=0;}
+  if(foot.y<-.08||!Number.isFinite(foot.y)||fallTime>9){
+    const home=spawn, safe=dryAnchor&&Number.isFinite(dryAnchor.y)&&dryAnchor.y>.45?dryAnchor.clone():home.clone();
+    clearInput();try{spawn=safe;reset();}finally{spawn=home;}recoveryCount++;
+  }
 }
 function animation(name){actionName=name;}
 function updateMotion(dt){
@@ -203,7 +442,7 @@ function updateMotion(dt){
   for(const k of ['walk','run']){const cap=k==='walk'?1.7:1.65;actions[k].setEffectiveTimeScale(THREE.MathUtils.clamp(visualSpeed/STRIDE[k],.15,cap));}
   // The authored jump is sampled at the physical phase. Long falls hold a falling pose.
   actions.jump.time=jumpPose;actions.jump.paused=true;
-  mixer.update(dt);
+  b3ClothRestore();b3Restore();mixer.update(dt);b3Pose(dt);b3ClothPose(dt);
 }
 function clipFor(g,id,rig){
   const clips=g.animations;if(!clips?.length)throw Error(id+' file contains no animation');
@@ -212,7 +451,7 @@ function clipFor(g,id,rig){
   const tracks=clip.tracks.filter(t=>{
     const p=THREE.PropertyBinding.parseTrackName(t.name),node=THREE.PropertyBinding.findNode(rig,p.nodeName);
     if(!node){unmatched.push(t.name);return false;}
-    // Physics owns world movement. Do not overwrite the v108 calibration or root translation.
+    // Physics owns world movement. Do not overwrite the v116 calibration or root translation.
     const rootName=(node.name||'').replace(/[^a-z0-9]/gi,'').toLowerCase();
     const rootLike=node===rig||rootName==='root'||rootName==='ladarv069';
     if(rootLike&&(p.propertyName==='position'||p.propertyName==='scale')){protectedCount++;return false;}
@@ -304,18 +543,18 @@ function updateAtmosphere(dt){worldTime+=dt;skyDome.position.copy(camera.positio
  const hit=groundAt(foot.x,foot.z,foot.y+.35,3.4);contactShadow.visible=!!(hit&&hit.face&&hit.face.normal.y>.67);if(contactShadow.visible){const lift=Math.max(0,foot.y-hit.point.y);contactShadow.position.copy(hit.point).addScaledVector(hit.face.normal,.018);contactShadow.quaternion.setFromUnitVectors(new V(0,0,1),hit.face.normal);contactShadow.material.opacity=Math.max(.12,.85-lift*.23);contactShadow.scale.setScalar(1+lift*.16);}}
 
 $('start').onclick=async()=>{ $('start').disabled=true;try{say('Reading route data…');const data=JSON.parse(await $('routes').files[0].text());if(!Array.isArray(data.spawn_xyz)||data.spawn_xyz.length!==3||!data.spawn_xyz.every(Number.isFinite))throw Error('Invalid spawn_xyz in routes JSON');spawn=new V(...data.spawn_xyz);const travel=$('movementPace').value==='travel';WALK_SPEED=travel?1.65:1.15;RUN_SPEED=travel?4.1:3.0;scene=new THREE.Scene();scene.background=new THREE.Color('#b6dff4');scene.fog=new THREE.FogExp2('#c7e7f4',.003);camera=new THREE.PerspectiveCamera(62,innerWidth/innerHeight,.04,520);renderer=new THREE.WebGLRenderer({antialias:false,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio,1.4));renderer.setSize(innerWidth,innerHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.12;document.body.prepend(renderer.domElement);createIslandAtmosphere();
- say('Loading island…');const world=(await glb('island')).scene;scene.add(world);const instances=staticInstances(world);scene.add(instances);markShadowMeshes(world);markShadowMeshes(instances);say('Building collision acceleration structure…');await new Promise(r=>setTimeout(r,30));buildCollider((await glb('collision')).scene);const ground=floorProbe(spawn,1,3);if(!ground)throw Error('No collision ground found near the saved spawn');
- if($('water').files.length){say('Loading water…');animateWater((await glb('water')).scene)}say('Loading Ladar…');const rig=(await glb('ladar')).scene;player=new THREE.Group();player.add(rig);scene.add(player);rig.traverse(o=>{if(o.isMesh)o.receiveShadow=shadowQuality;});mixer=new THREE.AnimationMixer(rig);for(const id of ['idle','walk','run','jump']){say('Checking '+id+' animation…');const g=await glb(id);const clip=clipFor(g,id,rig);actions[id]=mixer.clipAction(clip,rig);actions[id].setEffectiveWeight(id==='idle'?1:0).play();if(id==='jump'){actions[id].setLoop(THREE.LoopOnce,1);actions[id].clampWhenFinished=true;actions[id].paused=true;}}
+ say('Loading island…');const world=(await glb('island')).scene;scene.add(world);const instances=staticInstances(world);scene.add(instances);markShadowMeshes(world);markShadowMeshes(instances);buildB3Surface(world);say('Building collision acceleration structure…');await new Promise(r=>setTimeout(r,30));buildCollider((await glb('collision')).scene);const ground=floorProbe(spawn,1,3);if(!ground)throw Error('No collision ground found near the saved spawn');
+ if($('water').files.length){say('Loading water…');animateWater((await glb('water')).scene)}say('Loading Ladar…');const rig=(await glb('ladar')).scene;player=new THREE.Group();player.add(rig);scene.add(player);rig.traverse(o=>{if(o.isMesh)o.receiveShadow=shadowQuality;});initB3Rig(rig);mixer=new THREE.AnimationMixer(rig);for(const id of ['idle','walk','run','jump']){say('Checking '+id+' animation…');const g=await glb(id);const clip=clipFor(g,id,rig);actions[id]=mixer.clipAction(clip,rig);actions[id].setEffectiveWeight(id==='idle'?1:0).play();if(id==='jump'){actions[id].setLoop(THREE.LoopOnce,1);actions[id].clampWhenFinished=true;actions[id].paused=true;}}
  reset();animation('idle');$('setup').style.display='none';$('controls').style.display='block';active=true;attachCameraInput();renderer.setAnimationLoop(frame);
  }catch(e){console.error(e);say('Could not start: '+e.message+'\nCheck that you selected the matching LANPASU files. Reload the page before trying again.');if(renderer){renderer.dispose();renderer.domElement.remove();} $('start').disabled=true;}};
-let prev=0,acc=0,frames=0,lastHud=0,fps=0;
-function frame(t){if(!active)return;let dt=Math.min((t-(prev||t))/1000,.05);prev=t;let mx=joy.x+(keys.has('d')||keys.has('arrowright')?1:0)-(keys.has('a')||keys.has('arrowleft')?1:0),mz=joy.y+(keys.has('s')||keys.has('arrowdown')?1:0)-(keys.has('w')||keys.has('arrowup')?1:0);if(keys.has('q'))yaw+=dt*1.8;if(keys.has('e'))yaw-=dt*1.8;acc+=dt;while(acc>=1/120){step(1/120,mx,mz);acc-=1/120;}player.position.copy(foot);const moving=moveVelocity.lengthSq()>.0064;if(moving){const angle=Math.atan2(direction.x,direction.z);let d=angleDelta(angle,player.rotation.y);player.rotation.y+=d*(1-Math.exp(-dt*(grounded?11:7)));}updateMotion(dt);updateCamera(dt);updateAtmosphere(dt);renderer.render(scene,camera);frames++;if(t-lastHud>500){fps=Math.round(frames*1000/(t-lastHud));frames=0;lastHud=t;$('hud').textContent=`SOLAVREN · ENV TEST v008\n${fps} FPS · ${actionName} · ${grounded?'grounded':'airborne'}${jumpPhase==='none'?'':' · '+jumpPhase}\nCamera ${cameraArm.toFixed(1)} m · ${cameraArm<cameraZoom-.3?"obstructed":"clear"}\nVertical ${velocityY.toFixed(2)} m/s\nX ${foot.x.toFixed(1)}  Y ${foot.y.toFixed(2)}  Z ${foot.z.toFixed(1)}`;}}
+let prev=0,acc=0,lastHud=0;
+function frame(t){if(!active)return;let dt=Math.min((t-(prev||t))/1000,.05);prev=t;let mx=joy.x+(keys.has('d')||keys.has('arrowright')?1:0)-(keys.has('a')||keys.has('arrowleft')?1:0),mz=joy.y+(keys.has('s')||keys.has('arrowdown')?1:0)-(keys.has('w')||keys.has('arrowup')?1:0);if(keys.has('q'))yaw+=dt*1.8;if(keys.has('e'))yaw-=dt*1.8;acc+=dt;while(acc>=1/120){step(1/120,mx,mz);acc-=1/120;}player.position.copy(foot);const moving=moveVelocity.lengthSq()>.0064;if(moving){const angle=Math.atan2(direction.x,direction.z);let d=angleDelta(angle,player.rotation.y);player.rotation.y+=d*(1-Math.exp(-dt*(grounded?11:7)));}updateMotion(dt);updateCamera(dt);updateAtmosphere(dt);renderer.render(scene,camera);if(!lastHud||t-lastHud>500){lastHud=t;$('hud').textContent=`LANPASU · Ladar\n${running?'Run':'Walk'}${jumpPhase==='none'?'':' · Jump'}`;}}
 let joyID=null;function jmove(e){const b=$('joy').getBoundingClientRect(),x=e.clientX-b.left-b.width/2,y=e.clientY-b.top-b.height/2;joy.set(x/42,y/42);if(joy.length()>1)joy.normalize();$('knob').style.transform=`translate(${joy.x*36}px,${joy.y*36}px)`;}
 $('joy').onpointerdown=e=>{if(joyID!==null)return;joyID=e.pointerId;e.currentTarget.setPointerCapture(joyID);jmove(e)};
 $('joy').onpointermove=e=>{if(e.pointerId===joyID)jmove(e)};
 function jend(e){if(e&&e.pointerId!==joyID)return;joyID=null;joy.set(0,0);$('knob').style.transform='none';}
 $('joy').onpointerup=jend;$('joy').onpointercancel=jend;$('joy').onlostpointercapture=jend;
-$('runBtn').onclick=()=>setRun(!running);$('jumpBtn').onpointerdown=e=>{e.preventDefault();requestJump();};$('jumpBtn').onclick=e=>{if(e.detail===0)requestJump();};$('reset').onclick=reset;$('debug').onclick=()=>{debugMesh.visible=!debugMesh.visible};
+$('runBtn').onclick=()=>setRun(!running);$('jumpBtn').onpointerdown=e=>{e.preventDefault();requestJump();};$('jumpBtn').onclick=e=>{if(e.detail===0)requestJump();};$('reset').onclick=()=>{if(active){clearInput();reset();}};
 $('centerCam').onclick=centerCamera;
 const orbitPointers=new Map();let pinchDistance=0,pinchZoom=4.4;
 function pointerPair(){return [...orbitPointers.values()];}
@@ -327,5 +566,7 @@ function attachCameraInput(){const canvas=renderer.domElement;
   for(const event of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(event,end);
   canvas.addEventListener('wheel',e=>{if(!active)return;e.preventDefault();setZoom(zoomGoal*Math.exp(e.deltaY*.001));},{passive:false});
 }
-addEventListener('keydown',e=>{if(!active)return;keys.add(e.key.toLowerCase());if(!e.repeat){if(e.key.toLowerCase()==='c')centerCamera();if(e.key==='+'||e.key==='=')setZoom(zoomGoal-.5);if(e.key==='-')setZoom(zoomGoal+.5);}if(e.code==='Space'){e.preventDefault();if(!e.repeat)requestJump();}if(e.key==='Shift')setRun(true)});addEventListener('keyup',e=>{keys.delete(e.key.toLowerCase());if(e.key==='Shift')setRun(false)});function clearInput(){keys.clear();jend();orbitPointers.clear();pinchDistance=0;setRun(false);jumpBuffer=0;if(jumpPhase==='prep'){jumpPhase='none';phaseTime=0;jumpPose=0;}moveVelocity.set(0,0,0);acc=0;prev=0;}addEventListener('blur',clearInput);document.addEventListener('visibilitychange',()=>{if(document.hidden)clearInput();});addEventListener('resize',()=>{if(renderer){renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix()}});
+addEventListener('keydown',e=>{if(!active)return;keys.add(e.key.toLowerCase());if(!e.repeat){if(e.key.toLowerCase()==='c')centerCamera();if(e.key==='+'||e.key==='=')setZoom(zoomGoal-.5);if(e.key==='-')setZoom(zoomGoal+.5);}if(e.code==='Space'){e.preventDefault();if(!e.repeat)requestJump();}if(e.key==='Shift')setRun(true)});addEventListener('keyup',e=>{if(!active)return;keys.delete(e.key.toLowerCase());if(e.key==='Shift')setRun(false)});function clearInput(){keys.clear();jend();orbitPointers.clear();pinchDistance=0;setRun(false);jumpBuffer=0;if(jumpPhase==='prep'){jumpPhase='none';phaseTime=0;jumpPose=0;}moveVelocity.set(0,0,0);acc=0;prev=0;}addEventListener('blur',clearInput);document.addEventListener('visibilitychange',()=>{if(document.hidden)clearInput();});addEventListener('resize',()=>{if(renderer){renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix()}});
+
+
 </script></body></html>
