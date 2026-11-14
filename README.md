@@ -1,2 +1,0 @@
-# LANPASU-ISLAND
-Test
