@@ -1,0 +1,71 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#182725"><title>LANPASU · E.1-A Newborn Endpoint v006</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,sans-serif}*{box-sizing:border-box}body{margin:0;background:#12201e;color:#ebf3ed;font-size:14px}main{max-width:1050px;margin:auto;padding:10px 12px max(25px,env(safe-area-inset-bottom))}header{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:8px}h1{font-size:20px;line-height:1.1;margin:0}header p{font-size:11px;color:#a9c4b6;margin:5px 0 0}.pick,button{font:inherit;color:#eef4e9;background:#2a4640;border:1px solid #66897a;padding:9px 12px;border-radius:9px;cursor:pointer;min-height:42px;touch-action:manipulation}.pick{display:inline-flex;align-items:center;white-space:nowrap}input[type=file]{display:none}button.active{background:#547e67;border-color:#b9d8a3;color:white}button:disabled{opacity:.45;cursor:not-allowed}#view{height:clamp(380px,63dvh,750px);position:relative;background:linear-gradient(#dfe9de,#c2d4c8);border:1px solid #577c6b;border-radius:16px;overflow:hidden}canvas{width:100%;height:100%;display:block;touch-action:none}#hud{position:absolute;top:10px;left:10px;padding:10px 12px;border-radius:10px;background:#16312be5;color:#f4fbf3;max-width:70%;pointer-events:none}#hud strong{display:block;font-size:16px}#hud small{color:#c5e2ce;display:block;margin-top:3px}#status{position:absolute;bottom:8px;left:8px;right:8px;background:#152b26db;border-radius:8px;padding:7px;font-size:12px;line-height:1.4;pointer-events:none}section{background:#1b302a;border:1px solid #3c6354;border-radius:13px;padding:12px;margin-top:9px}h2{font-size:14px;margin:0 0 9px}.buttons{display:flex;gap:7px;flex-wrap:wrap}.buttons button{flex:1 1 95px;font-size:12px;min-height:38px}.line{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px}input[type=range]{width:100%;accent-color:#a4ca9d}#warning{font-size:12px;color:#bed8c5;line-height:1.5;margin:9px 0 0}.note{font-size:11px;color:#a1bdb0;line-height:1.45;margin:7px 0 0}.metric{font-size:15px;font-weight:700;color:#d9f4d3}footer{text-align:center;color:#98b1a4;font-size:11px;padding:10px}#loadingOverlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;background:#233e34c9;pointer-events:none;font-size:16px;font-weight:650;letter-spacing:.01em}#loadingOverlay.hidden{display:none}@media(min-width:800px){.panels{display:grid;grid-template-columns:1fr 1fr;gap:10px}#view{height:65vh}}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script></head>
+<body><main>
+<header><div><h1>LANPASU · E.1-A <span style="color:#b6d6aa">v006</span></h1><p>Newborn padded diaper with full seat coverage review curvature review · face unchanged · adult preserved</p></div><label class="pick" for="modelFile">📂 Select E1-A GLB</label><input type="file" id="modelFile" accept=".glb,model/gltf-binary"></header>
+<div id="view"><div id="hud"><strong id="ageReadout">Newborn · 0 Kimah</strong><small id="heightReadout">Approx. 1'8" at the newborn endpoint</small></div><div id="loadingOverlay">Select the E1-A v016 newborn GLB from Files</div><div id="status">Waiting for model. On iPhone, unzip the model ZIP first.</div></div>
+<div class="panels"><section><h2>Developmental endpoint test</h2><div class="buttons"><button id="newborn" class="active" disabled>Newborn · 0</button><button id="adult" disabled>Original · 21</button><button id="half" disabled>Halfway blend</button></div><div class="line" style="margin-top:11px"><label for="ageSlider">Newborn morph strength</label><span class="metric" id="blendReadout">100%</span></div><input type="range" id="ageSlider" min="0" max="100" value="100" step="1" disabled><p class="note">0% = unchanged 21-Kimah adult. 100% = designed newborn. Values between are an exploratory morph blend, <b>not</b> approved life-stage growth curves.</p></section>
+<section><h2>Inspect the actual geometry</h2><div class="buttons"><button id="front" disabled>Front</button><button id="profile" disabled>Profile</button><button id="rear" disabled>Rear</button><button id="threequarter" disabled>¾ view</button></div><div class="buttons" style="margin-top:6px"><button id="full" disabled>Full body</button><button id="head" disabled>Head close-up</button><button id="zoomIn" disabled>＋ Zoom</button><button id="zoomOut" disabled>－ Zoom</button></div><p class="note">Drag to orbit; pinch to zoom. Newborn hair remains hidden under a fitted baby beanie. Newborn wears the separately fitted diaper and baby beanie, while the 21-Kimah adult retains the approved clothing. The original body rig and morph targets remain. Infant posture needs later rigging.</p></section></div>
+<section><h2>Endpoint scope / review notes</h2><p id="warning">LANPASU E.1-A v016 is a LIVELIER DIAPER &amp; FURTHER-BACK BEANIE REVIEW built from v015. The diaper keeps the higher-cut leg openings from v015, but now has more life through a slightly fuller padded front, rounder rear seat, and softer side fullness so it reads more like a real baby diaper instead of a flat garment. The leg elastic and fastening tabs were moved with the shell. The beanie and its rib are tilted farther backward again and shifted slightly more toward the back of the head. The body, face, rig, genetics, morph targets, adult endpoint and prior newborn body corrections remain unchanged. Static renders verified; animation collision and Safari runtime not tested.</p></section>
+<footer>LANPASU · E.1-A v016 · offline local model selection; Three.js requires internet for viewer library loading</footer></main>
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+const el=id=>document.getElementById(id),view=el('view');let model=null,objects=[],clothes=[],babyWear=[],urls=[],value=1,mode='full',angle='front',baseCameraDist=2,loadGeneration=0;
+const scene=new THREE.Scene();scene.background=new THREE.Color('#dce7dd');
+const camera=new THREE.PerspectiveCamera(34,1,.002,200);
+const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.25;view.insertBefore(renderer.domElement,view.firstChild);
+const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.11;controls.minDistance=.08;controls.maxDistance=15;
+scene.add(new THREE.HemisphereLight(0xf3fff8,0x9ead91,2.05));const key=new THREE.DirectionalLight(0xffffff,2.25);key.position.set(2.8,4.2,5);scene.add(key);const fill=new THREE.DirectionalLight(0xdfe7ff,.7);fill.position.set(-3,2,-3);scene.add(fill);
+const loader=new GLTFLoader();const setStatus=t=>el('status').textContent=t;
+const showOverlay=v=>el('loadingOverlay').classList.toggle('hidden',!v);
+function ftin(m){const inches=m/0.0254;let total=Math.round(inches);return `${Math.floor(total/12)}'${total%12}"`}
+function getHeight(){return (1.6764*(1-value)+.5034*value)}
+function setView(reset=false){if(!model)return;const adult=1-value,headCenterY=adult*1.47+value*.380,bodyCenterY=getHeight()*.5;
+ const center=mode==='head'?new THREE.Vector3(0,headCenterY,0):new THREE.Vector3(0,bodyCenterY,0);
+ const extent=mode==='head'?(adult*.34+value*.145):getHeight();const dist=extent*(mode==='head'?3.2:2.15);
+ const sign=angle==='profile'?[1,0]:angle==='rear'?[0,-1]:angle==='threequarter'?[.72,.96]:[0,1];const norm=Math.hypot(...sign);
+ const direction=new THREE.Vector3(sign[0]/norm,.04,sign[1]/norm);
+ const newPos=center.clone().addScaledVector(direction,dist);
+ controls.target.copy(center);camera.position.copy(newPos);camera.near=Math.max(.001,dist/800);camera.far=200;camera.updateProjectionMatrix();controls.minDistance=Math.max(.02,dist*.20);controls.maxDistance=Math.max(2,dist*8);controls.update();}
+function update(){if(!model)return;for(const o of objects){if(o.mesh.morphTargetInfluences&&o.index>=0)o.mesh.morphTargetInfluences[o.index]=value;
+ if(o.isBrow){o.mesh.material.opacity=1-.86*value;}
+ if(o.isLash){o.mesh.material.opacity=1-.78*value;}
+}
+ for(const c of (window.__e1aClothes||[])){c.mesh.visible=/^EC_(TShirt|Shorts)/.test(c.name)?value<.5:false;}
+ const babyAlpha=Math.max(0,Math.min(1,(value-.78)/.22));for(const b of babyWear){b.mesh.visible=babyAlpha>.001;b.mesh.material.opacity=babyAlpha;}
+ el('blendReadout').textContent=`${Math.round(value*100)}%`;
+ const which=value>=.999?'Newborn · 0 Kimah':value<.001?'Young Adult · 21 Kimah':'Morph interpolation preview';
+ el('ageReadout').textContent=which;
+ el('heightReadout').textContent=`${ftin(getHeight())} · ${Math.round(getHeight()*100)} cm (approx.)`;
+ for(const [id,target] of [['newborn',1],['adult',0],['half',.5]])el(id).classList.toggle('active',Math.abs(value-target)<.001);
+ setView();}
+const allButtonIds=['newborn','adult','half','front','profile','rear','threequarter','full','head','zoomIn','zoomOut'];
+function resize(){const w=view.clientWidth,h=view.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/Math.max(h,1);camera.updateProjectionMatrix()};new ResizeObserver(resize).observe(view);resize();
+el('modelFile').addEventListener('change',async e=>{const f=e.target.files?.[0];e.target.value='';if(!f)return;const token=++loadGeneration;showOverlay(true);setStatus(`Loading ${f.name} (${(f.size/1048576).toFixed(1)} MB)…`);if(model){scene.remove(model);model.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material){(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.dispose())}});model=null;objects=[];clothes=[];babyWear=[]}
+ const url=URL.createObjectURL(f);try{const gltf=await loader.loadAsync(url);if(token!==loadGeneration)return;model=gltf.scene;const found=[];const clothes=[];const infantMeshes=[];
+ model.traverse(o=>{if(!o.isMesh)return;const index=o.morphTargetDictionary?.Age_Newborn;
+  if(index!==undefined)found.push({mesh:o,index,isBrow:/^Eyebrows/.test(o.name),isLash:/^(Lashes|Lash_Detail)/.test(o.name)});
+  if(/^EC_(SportsBra|Briefs|TShirt|Shorts)/.test(o.name))clothes.push({mesh:o,name:o.name});
+  if(/^Baby_(Diaper|Beanie)/.test(o.name)){o.material=o.material.clone();o.material.transparent=true;o.material.depthWrite=true;o.material.opacity=0;infantMeshes.push({mesh:o,name:o.name});}
+  if(/^EC_(SportsBra|Briefs)$/.test(o.name))o.visible=false;
+  if(/^EC_(TShirt|Shorts)$/.test(o.name))o.visible=true;
+  if(/^(Eyebrows|Lashes|Lash_Detail)/.test(o.name)){o.material=o.material.clone();o.material.transparent=true;o.material.depthWrite=false;}
+  o.frustumCulled=false;
+ });
+ if(found.length<10)throw Error(`Only ${found.length} Age_Newborn channels detected. Select the E1-A v016 model, not the older E-C model.`); const versionTag=gltf.parser?.json?.nodes?.find(n=>n.extras?.lanpasuE1A)?.extras?.lanpasuE1A?.version; if(versionTag!=='E.1-A v016')throw Error('This is '+(versionTag||'an unrecognized model')+'. Please select LANPASU_E1A_v016_High_Leg_Diaper_Beanie_Review.glb.');
+ if(infantMeshes.length<3)throw Error('Newborn diaper and beanie are missing. Select the new E1-A v016 GLB.');objects=found;window.__e1aClothes=clothes;babyWear=infantMeshes;scene.add(model);value=1;el('ageSlider').value='100';for(const id of allButtonIds)el(id).disabled=false;el('ageSlider').disabled=false;showOverlay(false);update();setStatus(`Loaded ${f.name} · ${objects.length} morph meshes + ${babyWear.length} newborn wear meshes · model stays on device.`)
+ }catch(err){showOverlay(true);el('loadingOverlay').textContent='Could not load this model';setStatus('Load error: '+err.message);}finally{URL.revokeObjectURL(url)}
+});
+el('ageSlider').oninput=e=>{value=Number(e.target.value)/100;update()};
+el('newborn').onclick=()=>{value=1;el('ageSlider').value='100';update()};el('adult').onclick=()=>{value=0;el('ageSlider').value='0';update()};el('half').onclick=()=>{value=.5;el('ageSlider').value='50';update()};
+for(const [id,name] of [['front','front'],['profile','profile'],['rear','rear'],['threequarter','threequarter']])el(id).onclick=()=>{angle=name;setView()};
+for(const [id,name] of [['full','full'],['head','head']])el(id).onclick=()=>{mode=name;setView()};
+el('zoomIn').onclick=()=>{camera.position.lerp(controls.target,.22);controls.update()};
+el('zoomOut').onclick=()=>{const d=camera.position.clone().sub(controls.target);camera.position.addScaledVector(d,.25);controls.update()};
+renderer.setAnimationLoop(()=>{controls.update();renderer.render(scene,camera)});
+window.lanpasuE1AQA=()=>({version:'E.1-A v016',loaded:!!model,morphMeshes:objects.length,babyWearMeshes:babyWear.length,ageMorphStrength:value,adultReferenceAtZero:true,heightMeters:getHeight(),actualGLBModelLoaded:!!model});
+</script></body></html>
