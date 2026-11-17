@@ -1,0 +1,383 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#182725"><title>LANPASU · E.1-A Age Development v023 (robust clothing loader, same v022 GLB)</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,sans-serif}*{box-sizing:border-box}body{margin:0;background:#12201e;color:#ebf3ed;font-size:14px}main{max-width:1050px;margin:auto;padding:10px 12px max(25px,env(safe-area-inset-bottom))}header{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:8px}h1{font-size:20px;line-height:1.1;margin:0}header p{font-size:11px;color:#a9c4b6;margin:5px 0 0}.pick,button{font:inherit;color:#eef4e9;background:#2a4640;border:1px solid #66897a;padding:9px 12px;border-radius:9px;cursor:pointer;min-height:42px;touch-action:manipulation}.pick{display:inline-flex;align-items:center;white-space:nowrap}input[type=file]{display:none}button.active{background:#547e67;border-color:#b9d8a3;color:white}button:disabled{opacity:.45;cursor:not-allowed}#view{height:clamp(380px,63dvh,750px);position:relative;background:linear-gradient(#dfe9de,#c2d4c8);border:1px solid #577c6b;border-radius:16px;overflow:hidden}canvas{width:100%;height:100%;display:block;touch-action:none}#hud{position:absolute;top:10px;left:10px;padding:10px 12px;border-radius:10px;background:#16312be5;color:#f4fbf3;max-width:70%;pointer-events:none}#hud strong{display:block;font-size:16px}#hud small{color:#c5e2ce;display:block;margin-top:3px}#status{position:absolute;bottom:8px;left:8px;right:8px;background:#152b26db;border-radius:8px;padding:7px;font-size:12px;line-height:1.4;pointer-events:none}section{background:#1b302a;border:1px solid #3c6354;border-radius:13px;padding:12px;margin-top:9px}h2{font-size:14px;margin:0 0 9px}.buttons{display:flex;gap:7px;flex-wrap:wrap}.buttons button{flex:1 1 95px;font-size:12px;min-height:38px}.line{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px}input[type=range]{width:100%;accent-color:#a4ca9d}#warning{font-size:12px;color:#bed8c5;line-height:1.5;margin:9px 0 0}.note{font-size:11px;color:#a1bdb0;line-height:1.45;margin:7px 0 0}.metric{font-size:15px;font-weight:700;color:#d9f4d3}footer{text-align:center;color:#98b1a4;font-size:11px;padding:10px}#loadingOverlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;background:#233e34c9;pointer-events:none;font-size:16px;font-weight:650;letter-spacing:.01em}#loadingOverlay.hidden{display:none}@media(min-width:800px){.panels{display:grid;grid-template-columns:1fr 1fr;gap:10px}#view{height:65vh}}
+
+/* v018 chronological age inspector, 18-Kimah anatomical baseline */
+.age-track{padding:12px 4px 4px;border:1px solid #426958;border-radius:12px;background:#17352d;margin-top:10px}
+.age-track input[type=range]{display:block;width:100%;margin:0;min-height:30px}
+.age-ticks{display:grid;grid-template-columns:repeat(19,minmax(0,1fr));margin:4px 0 0;gap:0}
+.age-ticks button{font-family:inherit;font-size:9px;min-height:27px;border:0;background:transparent;color:#b4cfbb;padding:1px 0;border-radius:4px;min-width:0;text-align:center}
+.age-ticks button.key-age{color:#d9f8cd;font-weight:800}
+.age-ticks button.selected{background:#6c9c80;color:#10251d;font-weight:850}
+.age-axis{display:flex;justify-content:space-between;color:#d4e9d4;font-size:11px;padding:3px 4px 4px}
+.age-stage{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.age-stage button{min-height:34px;font-size:11px;border-radius:9px;flex:1 1 96px;padding:5px 6px;background:#2a5343}
+.age-stage button.selected{background:#81ad87;color:#102219;border-color:#bde6ba}
+.age-meta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px;margin-top:8px}
+.age-meta strong{color:#ddf8da;font-size:15px}
+.age-meta small{color:#adccba}
+.review-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.8fr);gap:8px;margin-top:9px}
+.review-grid select,.review-grid textarea{width:100%;border-radius:9px;background:#142a25;color:#f1fff4;border:1px solid #648c75;padding:9px;font:inherit}
+.review-grid textarea{min-height:76px;resize:vertical}
+#issueList{margin:9px 0 4px;padding-left:20px;font-size:12px;color:#e3f3e8}
+#issueList li{margin-bottom:7px;line-height:1.4}
+#issueList .remove-note{font-size:10px;min-height:25px;padding:2px 7px;margin-left:5px}
+.under-development{padding:10px;background:#294037;border-left:3px solid #add1a7;border-radius:8px;font-size:12px;line-height:1.5;color:#e0efe0}
+@media(max-width:390px){.age-ticks button{font-size:8px}.review-grid{grid-template-columns:1fr}.age-stage button{flex-basis:85px}}
+
+/* v020 interface: locked-in-place preview, independently scrollable settings. */
+html,body{height:100%;width:100%;overflow:hidden;overscroll-behavior:none}
+body{position:fixed;inset:0;width:100%;-webkit-text-size-adjust:100%}
+main{
+  width:100%;max-width:1370px;height:100vh;height:100dvh;margin:0 auto;
+  display:flex;flex-direction:column;min-height:0;overflow:hidden;
+  padding:max(7px,env(safe-area-inset-top)) 10px max(7px,env(safe-area-inset-bottom));
+}
+header{flex:0 0 auto;min-height:0;margin:0 0 8px;gap:6px}
+header h1{font-size:clamp(16px,4.5vw,20px)}
+header p{font-size:11px;margin-top:3px}
+header .pick{min-height:37px;padding:8px 10px;font-size:12px}
+.workspace{
+  flex:1 1 auto;min-height:0;min-width:0;
+  display:grid;grid-template-columns:minmax(0,1fr);
+  grid-template-rows:minmax(195px,41%) minmax(0,1fr);
+  gap:7px;overflow:hidden;
+}
+.model-pane{position:relative;min-height:0;min-width:0;overflow:hidden}
+#view{height:100%!important;min-height:0;max-height:none!important;width:100%;border-radius:14px}
+#view canvas{touch-action:none}
+.preview-hint{
+  position:absolute;top:7px;right:8px;z-index:2;pointer-events:none;
+  display:flex;flex-direction:column;align-items:flex-end;gap:2px;
+  background:rgba(19,44,36,.88);padding:5px 8px;border-radius:8px;
+  color:#e1f3e0;font-size:10px;line-height:1.25;
+}
+.preview-hint span+span{opacity:.78;font-size:9px}
+/* Scroll only this panel, never the overall page or the WebGL canvas. */
+.controls-pane{
+  min-height:0;min-width:0;height:100%;overflow-x:hidden;overflow-y:auto;
+  overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;
+  touch-action:pan-y;scrollbar-gutter:stable;
+  padding:0 3px max(12px,env(safe-area-inset-bottom));
+}
+.scroll-prompt{
+  display:flex;justify-content:space-between;align-items:center;gap:9px;
+  background:#2c483c;border:1px solid #699476;border-radius:10px;
+  padding:8px 9px;margin:0 0 8px;font-size:11px;line-height:1.35;color:#c9e3cd;
+}
+.scroll-prompt strong{white-space:nowrap;color:#e7ffe2;font-size:12px}
+.scroll-prompt span{text-align:right}
+.controls-pane .panels{display:block!important}
+.controls-pane section{margin:0 0 9px}
+.controls-pane footer{padding:8px 8px 14px}
+.controls-pane :focus-visible{outline:2px solid #c9efa7;outline-offset:2px}
+@media(min-width:800px){
+  .workspace{grid-template-columns:minmax(0,1.08fr) minmax(365px,.92fr);grid-template-rows:minmax(0,1fr);gap:12px}
+  .preview-hint{top:9px;right:9px}
+}
+@media(max-width:799px) and (max-height:600px){
+  .workspace{grid-template-rows:minmax(130px,46%) minmax(0,1fr)}
+  header p{display:none}
+  .preview-hint span+span{display:none}
+}
+@media(max-width:390px){
+  .preview-hint{font-size:9px;max-width:45%}
+  .scroll-prompt{font-size:10px}
+}
+
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script></head>
+<body><main>
+<header><div><h1>LANPASU · E.1-A <span style="color:#b6d6aa">Age Tester v023 · Clothing Loader Fix</span></h1><p>Age 0–18 Kimah · age 18 default · preserved camera & gender heights</p></div><label class="pick" for="modelFile">📂 Select v022 GLB</label><input type="file" id="modelFile" accept=".glb,model/gltf-binary"></header>
+<div id="workspace" class="workspace">
+<div id="modelPane" class="model-pane" aria-label="Pinned 3D character preview">
+<div id="view"><div id="hud"><strong id="ageReadout">Young Adult · 18 Kimah</strong><small id="heightReadout">Age-18 default: 5'4" / 5'6" / 5'8" by gender</small></div><div id="loadingOverlay">🍼 Choose your v022 compact or full GLB · Birth ← 18 Kimah →</div><div id="status">Waiting for your v022 GLB. The 3D character appears after you select the model from Files. Unzip it first if necessary.</div></div>
+<div class="preview-hint"><span>📌 Model stays visible</span><span>Camera angle stays until you select a camera preset</span></div>
+</div>
+<div id="controlsPane" class="controls-pane" role="region" tabindex="0" aria-label="Scrollable character age and clothing settings">
+<div class="scroll-prompt"><strong>↕ Scroll settings</strong><span>Age and outfit changes never move your camera</span></div>
+<div class="panels"><section><h2>🍼 Age development · 0–18 Kimah</h2>
+<div class="age-meta"><strong id="stageReadout">Young Adult · 18 Kimah</strong><small id="blendReadout">18 Kimah · default anatomy</small></div>
+<div class="age-track">
+ <label for="ageSlider" style="font-size:12px;display:block;margin:0 6px 8px">Chronological age — younger on the LEFT, older on the RIGHT</label>
+ <input type="range" id="ageSlider" min="0" max="6480" step="1" value="6480" aria-label="Character age from 0 to 18 Kimah, measured in Alz">
+ <div class="age-ticks" id="ageTicks" aria-label="Tap an exact age from zero to eighteen"></div>
+ <div class="age-axis"><span>← Younger · Birth</span><span>18 Kimah · Default reference →</span></div>
+</div>
+<div class="buttons" style="margin-top:9px"><button id="newborn">0 · Newborn</button><button id="half">9 · Test</button><button id="adult">18 · Default</button></div>
+<div class="age-stage" id="stageAnchors">
+ <button data-age-alz="0">🍼 Birth</button>
+ <button data-age-alz="30">Baby · 30 Alz</button>
+ <button data-age-alz="360">Toddler · 1</button>
+ <button data-age-alz="1440">Child · 4</button>
+ <button data-age-alz="4320">Teen · 12</button>
+ <button data-age-alz="6480">Young adult · 18</button>
+</div>
+<div class="age-gender" style="margin-top:10px;border:1px solid #5b826d;border-radius:11px;padding:10px;background:#213c32">
+ <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:5px"><b>🧬 Gender foundation preview</b><small id="outfitReadout">At 18: Unisex · T-shirt + shorts</small></div>
+ <p class="note" id="garmentVisualCheck">Load the v022 GLB to see the actual outfit-piece status.</p><div class="buttons gender-buttons" style="margin-top:8px"><button id="genderFemale" type="button">Female</button><button id="genderIntersex" type="button" class="active">Intersex / Unisex</button><button id="genderMale" type="button">Male</button></div>
+ <p class="note" id="genderDevelopmentNote">Identical newborn appearance across all genders. Height and foundation differences emerge from 12–18. At age 18: Female 5′4″ · Intersex 5′6″ · Male 5′8″.</p>
+</div>
+<div class="buttons" style="margin-top:7px"><button id="backAge">−1 Kimah</button><button id="nextAge">+1 Kimah</button><button id="backAlz">−1 Alz</button><button id="nextAlz">+1 Alz</button></div>
+<p class="note"><b>Current 0–18 checkpoints:</b> Newborn Birth–29 Alz; Baby 30–359 Alz; Toddler 1–3 Kimah; Child 4–11; Teen 12–17; Young Adult begins at 18. This pass ends at 18; the next older-age pass will cover 18–100.</p>
+<p class="under-development"><b>Important:</b> Female outfit fix: sports bra and briefs now follow the actual Female body morph at age 18 instead of being hidden inside the torso and hips. The model retains the established newborn and age-18 anatomy endpoints. <b>The v022 gender-aware and stage-fitting clothing morphs</b> let you inspect the diaper and starter outfits at intermediate ages; the <b>BODY anatomy between the endpoints is still a temporary linear morph preview</b>. Age-specific physical growth still needs sculpting. After the 0–18 pass, we will develop 18–100.</p>
+</section>
+<section><h2>Inspect the actual geometry</h2><div class="buttons"><button id="front" disabled>Front</button><button id="profile" disabled>Profile</button><button id="rear" disabled>Rear</button><button id="threequarter" disabled>¾ view</button></div><div class="buttons" style="margin-top:6px"><button id="full" disabled>Full body</button><button id="head" disabled>Head close-up</button><button id="zoomIn" disabled>＋ Zoom</button><button id="zoomOut" disabled>－ Zoom</button></div><p class="note"><b>Camera memory:</b> Drag to orbit or pinch to zoom. Age, gender, clothing, and note controls will not change the camera pose. Front/Profile/Rear/¾ explicitly select a camera angle; Full Body and Head close-up reframe while keeping your current viewing direction. Select any marked Kimah age to review the current geometry. Body growth is provisional; the v022 model includes initial clothing-fit morphs, which still need collision checks in movement. Hair, proportions and animation remain in development. The complete v022 full master retains the original genetics, skeleton, rig and animations. Infant posture needs later rigging.</p></section></div>
+<section><h2>💗 Default reference · 18 Kimah</h2><p class="under-development"><b>18 Kimah is the NEW DEFAULT.</b> The original adult geometry and all original genetic slider values are preserved exactly at this age for the Unisex reference. At age 18 the existing Female/Male foundation morphs AND the GLB’s bone-based adult height offsets are restored: Female 5′4″, Intersex/Unisex 5′6″, Male 5′8″. Their height and foundation differences are eased in during the teen stage; newborn appearance is still shared. Birth (0 Kimah) is the opposite endpoint. Ages 1–17 are temporary shape previews until individually corrected. The older-life expansion will begin at the same age-18 reference and continue to 100 Kimah.</p></section>
+<section><h2>📝 Exact-age anatomy correction log</h2>
+<p class="note">Select an age (or a subyear Alz position), identify the body part, and record what needs fixing. Notes stay in this browser when storage is available; export JSON to bring them into a future chat or modeling pass.</p>
+<div class="review-grid">
+ <div><label for="partSelect">Body part / system</label>
+ <select id="partSelect"><option>Head & skull</option><option>Face & cheeks</option><option>Eyes & eyelids</option><option>Nose</option><option>Mouth & lips</option><option>Jaw & chin</option><option>Ears</option><option>Neck</option><option>Torso & ribcage</option><option>Shoulders & arms</option><option>Hands & fingers</option><option>Hips & pelvis</option><option>Buttocks</option><option>Legs & knees</option><option>Feet & toes</option><option>Height & overall proportions</option><option>Hair & scalp</option><option>Diaper / clothing</option><option>Rig & animation</option><option>Other</option></select></div>
+ <div><label for="issueInput">Correction needed at the selected age</label><textarea id="issueInput" placeholder="Example: at 4 Kimah, the head is too round; arms need more natural proportions..."></textarea></div>
+</div>
+<div class="buttons" style="margin-top:8px"><button id="saveIssue">＋ Add age-specific note</button><button id="exportIssues">↓ Export age notes JSON</button><button id="clearIssues">Clear notes</button></div>
+<ol id="issueList"><li style="color:#b6d3bf">No age corrections recorded yet.</li></ol>
+</section>
+<section><h2>🧵 v022 Clothing fitting scope</h2><p id="warning"><b>Actual v022 garment morphs:</b> baby diaper fit and age-fitting clearance morphs for toddler, child and teen starter garments. Newborn diaper and beanie mesh geometry are unchanged. Baby has diaper only; beanie is hidden starting at 30 Alz. Toddler/child of all genders wear the established Unisex T-shirt + shorts. Teen/age-18 garments use the <b>original EC gender default mapping</b>: Female = sports bra + briefs; Intersex/Unisex = T-shirt + shorts; Male = shorts. Foundation morphs and original gender-height differences are held at neutral until 12 Kimah and eased in through 18 as a provisional puberty preview. Female/Male outfit geometry follows the existing foundation morph with small clearance; only the 0/18 anatomy endpoints are established; intermediate body development and all garment fitting remain subject to playtest approval. Animation and Safari device rendering are not yet verified.</p></section>
+<footer>LANPASU · E.1-A v023 UI · v022 model · Default age 18 · 0–18 development pass · local file selection · Three.js requires internet</footer>
+</div>
+</div>
+</main>
+<script>
+window.__lanpasuViewerReady=false;
+window.addEventListener('error',function(e){let el=document.getElementById('status');if(el)el.textContent='Viewer error: '+(e.message||'A script or 3D library failed to load. Check your internet connection.');});
+window.addEventListener('unhandledrejection',function(e){let el=document.getElementById('status');if(el)el.textContent='Viewer error: '+(e.reason?.message||String(e.reason));});
+setTimeout(function(){if(!window.__lanpasuViewerReady){let el=document.getElementById('status');if(el)el.textContent='3D viewer did not start. Check that Safari can access the Three.js library online, then reload.';}},18000);
+</script>
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+const el=id=>document.getElementById(id),view=el('view');let model=null,objects=[],clothes=[],babyWear=[],urls=[],value=0,mode='full',angle='front',baseCameraDist=2,loadGeneration=0,genderChoice='Intersex';
+// 360 Alz = 1 Kimah. The slider is chronological, not newborn-morph-percent.
+const ALZ_PER_KIMAH=360,MAX_AGE_ALZ=18*ALZ_PER_KIMAH;
+let ageAlz=MAX_AGE_ALZ;
+const clampAge=n=>Math.max(0,Math.min(MAX_AGE_ALZ,Math.round(n)));
+function stageForAge(n){
+ if(n<30)return 'Newborn';
+ if(n<ALZ_PER_KIMAH)return 'Baby';
+ const k=Math.floor(n/ALZ_PER_KIMAH);
+ return k<4?'Toddler':k<12?'Child':k<18?'Teen':'Young Adult';
+}
+function ageText(n){
+ if(n===0)return 'Birth · 0 Kimah';
+ if(n<360)return n+' Alz · 0 Kimah';
+ const k=Math.floor(n/360),a=n%360;
+ return k+' Kimah'+(a?' + '+a+' Alz':'');
+}
+const clamp01=n=>Math.max(0,Math.min(1,n));
+const ease=t=>{t=clamp01(t);return t*t*(3-2*t)};
+const originalECOutfits={Female:['EC_SportsBra','EC_Briefs'],Intersex:['EC_TShirt','EC_Shorts'],Male:['EC_Shorts']};
+const garmentNames={EC_TShirt:'T-shirt',EC_Shorts:'shorts',EC_SportsBra:'sports bra',EC_Briefs:'briefs'};
+function setGender(g){if(!['Female','Intersex','Male'].includes(g))return;genderChoice=g;update();}
+function setAgeAlz(n){
+ ageAlz=clampAge(n);
+ value=1-ageAlz/MAX_AGE_ALZ;
+ el('ageSlider').value=String(ageAlz);
+ update();
+}
+
+const scene=new THREE.Scene();scene.background=new THREE.Color('#dce7dd');
+const camera=new THREE.PerspectiveCamera(34,1,.002,200);
+const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.25;view.insertBefore(renderer.domElement,view.firstChild);
+const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=false;controls.minDistance=.08;controls.maxDistance=15; // No residual drift after releasing orbit controls.
+scene.add(new THREE.HemisphereLight(0xf3fff8,0x9ead91,2.05));const key=new THREE.DirectionalLight(0xffffff,2.25);key.position.set(2.8,4.2,5);scene.add(key);const fill=new THREE.DirectionalLight(0xdfe7ff,.7);fill.position.set(-3,2,-3);scene.add(fill);
+const loader=new GLTFLoader();const setStatus=t=>el('status').textContent=t;
+const showOverlay=v=>el('loadingOverlay').classList.toggle('hidden',!v);
+function ftin(m){const inches=m/0.0254;let total=Math.round(inches);return `${Math.floor(total/12)}'${total%12}"`}
+// v023: Read the original height-runtime instructions directly from the loaded GLB.
+// The v023 meshes contain gender-shape morphs for the body AND fitted garments; previous builds applied foundation only to the body,
+// and v023 continues to preserve the 64/66/68-inch bone-based heights.
+let heightRuntime=null,heightBones=[];
+const GENDER_AVERAGES={Female:64,Intersex:66,Male:68};
+const genderProgress=()=>ageAlz<12*ALZ_PER_KIMAH?0:ease((ageAlz-12*ALZ_PER_KIMAH)/(6*ALZ_PER_KIMAH));
+const foundationHeightInches=()=>heightRuntime?.foundationAverageInches?.[genderChoice]??GENDER_AVERAGES[genderChoice];
+function getHeight(){
+ const baseline=(1.6764*(1-value)+.5034*value);
+ return baseline+(foundationHeightInches()-66)*.0254*genderProgress();
+}
+function updateHeightBones(){
+ if(!model||!heightRuntime)return;
+ const diffInches=foundationHeightInches()-heightRuntime.referenceInches;
+ const changeLocal=diffInches*.0254/heightRuntime.referenceLocalScale*genderProgress();
+ for(const b of heightBones)b.bone.position.y=b.originalY+changeLocal*b.localCoefficient;
+ model.updateMatrixWorld(true);
+}
+// Only called on initial model load or from explicit camera preset/reframe controls.
+// preserveDirection=true reframes to full/head without losing a manually chosen angle.
+function setView(preserveDirection=false){if(!model)return;
+ const adult=1-value,headCenterY=adult*1.47+value*.380+(getHeight()-(1.6764*(1-value)+.5034*value))*.9,bodyCenterY=getHeight()*.5;
+ const center=mode==='head'?new THREE.Vector3(0,headCenterY,0):new THREE.Vector3(0,bodyCenterY,0);
+ const extent=mode==='head'?(adult*.34+value*.145):getHeight();const dist=extent*(mode==='head'?3.2:2.15);
+ const sign=angle==='profile'?[1,0]:angle==='rear'?[0,-1]:angle==='threequarter'?[.72,.96]:[0,1];const norm=Math.hypot(...sign);
+ const direction=preserveDirection?camera.position.clone().sub(controls.target).normalize():new THREE.Vector3(sign[0]/norm,.04,sign[1]/norm);
+ const newPos=center.clone().addScaledVector(direction,dist);
+ controls.target.copy(center);camera.position.copy(newPos);camera.near=Math.max(.001,dist/800);camera.far=200;camera.updateProjectionMatrix();controls.minDistance=Math.max(.02,dist*.20);controls.maxDistance=Math.max(2,dist*8);controls.update();}
+function update(){
+ const stage=stageForAge(ageAlz),shown=ageText(ageAlz);
+ const genderFade=genderProgress();
+ const neutralClothes=['EC_TShirt','EC_Shorts'];
+ const garmentSet=ageAlz<4320?neutralClothes:originalECOutfits[genderChoice];
+ const wearing=ageAlz>=360?garmentSet:[];
+ const babyDiaperStrength=ageAlz<30?0:ease((ageAlz-29)/(359-29));
+ if(model){
+  for(const o of objects){
+   const a=o.mesh.morphTargetInfluences, d=o.mesh.morphTargetDictionary||{};
+   if(a){if(o.index>=0)a[o.index]=value;
+    if(d.Foundation_Female!==undefined)a[d.Foundation_Female]=genderChoice==='Female'?genderFade:0;
+    if(d.Foundation_Male!==undefined)a[d.Foundation_Male]=genderChoice==='Male'?genderFade:0;}
+   if(o.isBrow)o.mesh.material.opacity=1-.86*value;
+   if(o.isLash)o.mesh.material.opacity=1-.78*value;
+  }
+  for(const c of (window.__e1aClothes||[])){
+    c.mesh.visible=wearing.includes(c.name);
+    // The v023 GLB includes the body Female/Male morphs on these garment meshes.
+    // The prior 'objects' loop has already applied these same foundation values to the clothing.
+    const a=c.mesh.morphTargetInfluences,d=c.mesh.morphTargetDictionary||{};
+    if(a){if(d.Fit_Toddler!==undefined)a[d.Fit_Toddler]=stage==='Toddler'?1:0;
+     if(d.Fit_Child!==undefined)a[d.Fit_Child]=stage==='Child'?1:0;
+     if(d.Fit_Teen!==undefined)a[d.Fit_Teen]=stage==='Teen'?1:0;}
+  }
+  for(const b of babyWear){
+   const beanie=/Beanie/.test(b.name),vis=ageAlz<360&&(!beanie||ageAlz<30);
+   b.mesh.visible=vis;b.mesh.material.opacity=vis?1:0;
+   const a=b.mesh.morphTargetInfluences,d=b.mesh.morphTargetDictionary||{};
+   if(a&&d.Fit_Baby_Diaper!==undefined)a[d.Fit_Baby_Diaper]=babyDiaperStrength;
+  }
+ }
+ const outfitText=stage==='Newborn'?'Beanie + diaper':stage==='Baby'?'Fitted diaper · no beanie':
+  stage==='Toddler'||stage==='Child'?'Shared Unisex · T-shirt + shorts':
+  genderChoice+' · '+originalECOutfits[genderChoice].map(n=>garmentNames[n]).join(' + ');
+ el('outfitReadout').textContent=outfitText;
+ const loadedGarments=window.__e1aClothes||[]; const realVisible=loadedGarments.filter(c=>c.mesh.visible).map(c=>garmentNames[c.name]||c.name);
+ el('garmentVisualCheck').textContent=!model?'Load the v022 GLB to verify outfit meshes.': ageAlz<360?'Visible starter outfit: none · infant diaper/beanie used':`Visible model outfit pieces: ${realVisible.join(' + ')||'none'} · verified in loaded GLB`;
+ el('genderDevelopmentNote').textContent=ageAlz<4320?'All gender selections share the same neutral foundation until the teen stage (12 Kimah).':
+   'Female/Male shape + bone-height differences: '+Math.round(genderFade*100)+'% developed by this age. At 18: Female 5′4″ · Intersex 5′6″ · Male 5′8″. Intermediate anatomy still needs sculpting.';
+ for(const g of ['Female','Intersex','Male'])el('gender'+g).classList.toggle('active',genderChoice===g);
+ el('stageReadout').textContent=stage+' · '+shown;
+ el('blendReadout').textContent=ageAlz===0?'Birth · newborn endpoint':ageAlz===MAX_AGE_ALZ?'18 Kimah · default anatomy':'Age '+shown+' · shape pending';
+ el('ageReadout').textContent=stage+' · '+shown;
+ el('heightReadout').textContent=`${ftin(getHeight())} · ${Math.round(getHeight()*100)} cm (${ageAlz===MAX_AGE_ALZ?'established gender baseline':'provisional growth curve'})`; 
+ document.querySelectorAll('#ageTicks button').forEach(btn=>{
+  const isActive=Number(btn.dataset.age)===Math.floor(ageAlz/ALZ_PER_KIMAH);
+  btn.classList.toggle('selected',isActive);btn.setAttribute('aria-pressed',String(isActive));
+ });
+ document.querySelectorAll('#stageAnchors button').forEach(btn=>{
+  const isActive=Number(btn.dataset.ageAlz)===ageAlz;
+  btn.classList.toggle('selected',isActive);btn.setAttribute('aria-pressed',String(isActive));
+ });
+ for(const [id,target] of [['newborn',0],['adult',MAX_AGE_ALZ],['half',Math.round(MAX_AGE_ALZ/2)]])el(id).classList.toggle('active',ageAlz===target);
+ if(model)updateHeightBones(); // Crucial: age/gender/clothing adjustments never call setView().
+}
+
+for(let age=0;age<=18;age++){
+ const b=document.createElement('button');b.textContent=String(age);b.dataset.age=String(age);
+ b.type='button';b.className=[0,1,4,12,18].includes(age)?'key-age':'';
+ b.title='Select age '+age+' Kimah';b.setAttribute('aria-label','Age '+age+' Kimah');
+ b.addEventListener('click',()=>setAgeAlz(age*ALZ_PER_KIMAH));el('ageTicks').appendChild(b);
+}
+for(const b of document.querySelectorAll('#stageAnchors button'))b.addEventListener('click',()=>setAgeAlz(Number(b.dataset.ageAlz)));
+const allButtonIds=['newborn','adult','half','front','profile','rear','threequarter','full','head','zoomIn','zoomOut'];
+function resize(){const w=view.clientWidth,h=view.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/Math.max(h,1);camera.updateProjectionMatrix()};new ResizeObserver(resize).observe(view);resize();
+// v023: Three.js can suffix, sanitize, or nest GLTF mesh names. Resolve garments by
+// original glTF node or mesh association and by their ancestor names, not exact
+// SkinnedMesh.name string equality. Original EC source: EC_SportsBra, EC_Briefs,
+// EC_TShirt, EC_Shorts. Keep these four designations unchanged.
+const ecGarments=['EC_TShirt','EC_Shorts','EC_SportsBra','EC_Briefs'];
+function canonicalECName(raw){
+ const name=String(raw||'').replace(/[^a-zA-Z0-9]/g,'').toLowerCase();
+ return ecGarments.find(n=>{const key=n.replace(/[^a-zA-Z0-9]/g,'').toLowerCase();
+   return name===key||(name.startsWith(key)&&/^\d+$/.test(name.slice(key.length)));})||null;
+}
+function canonicalModelName(object,gltf){
+ for(let current=object;current;current=current.parent){
+  const named=canonicalECName(current.name);if(named)return named;
+  const assoc=gltf.parser?.associations?.get(current);
+  if(assoc?.type==='nodes'){
+   const name=gltf.parser.json.nodes?.[assoc.index]?.name;
+   const original=canonicalECName(name);if(original)return original;
+   const meshIndex=gltf.parser.json.nodes?.[assoc.index]?.mesh;
+   const meshName=gltf.parser.json.meshes?.[meshIndex]?.name;
+   const byMesh=canonicalECName(meshName);if(byMesh)return byMesh;
+  }
+  if(assoc?.type==='meshes'){
+   const meshName=gltf.parser.json.meshes?.[assoc.index]?.name;
+   const original=canonicalECName(meshName);if(original)return original;
+  }
+ }
+ return null;
+}
+el('modelFile').addEventListener('change',async e=>{const f=e.target.files?.[0];e.target.value='';if(!f)return;const token=++loadGeneration;const hadModel=!!model;showOverlay(true);setStatus(`Loading ${f.name} (${(f.size/1048576).toFixed(1)} MB)…`);if(model){scene.remove(model);model.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material){(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.dispose())}});model=null;objects=[];clothes=[];babyWear=[];heightBones=[];heightRuntime=null;}
+ try{if(!/\.glb$/i.test(f.name))throw Error('Choose the extracted .glb model, not a ZIP or HTML file.');
+ const arrayBuffer=await f.arrayBuffer();if(token!==loadGeneration)return;
+ const dataview=new DataView(arrayBuffer);if(dataview.byteLength<20||dataview.getUint32(0,true)!==0x46546c67)throw Error('This file is not a valid .glb model. Extract the ZIP first.');
+ const gltf=await loader.parseAsync(arrayBuffer,'');if(token!==loadGeneration)return;model=gltf.scene;const found=[];const clothes=[];const infantMeshes=[];
+ model.traverse(o=>{if(!o.isMesh)return;const index=o.morphTargetDictionary?.Age_Newborn;
+  if(index!==undefined)found.push({mesh:o,index,isBrow:/^Eyebrows/.test(o.name),isLash:/^(Lashes|Lash_Detail)/.test(o.name)});
+  const garment=canonicalModelName(o,gltf);if(garment)clothes.push({mesh:o,name:garment,actualThreeName:o.name});
+  if(/^Baby_(Diaper|Beanie)/.test(o.name)){o.material=o.material.clone();o.material.transparent=true;o.material.depthWrite=true;o.material.opacity=0;infantMeshes.push({mesh:o,name:o.name});}
+  if(garment==='EC_SportsBra'||garment==='EC_Briefs')o.visible=false;
+  if(garment==='EC_TShirt'||garment==='EC_Shorts')o.visible=true;
+  if(/^(Eyebrows|Lashes|Lash_Detail)/.test(o.name)){o.material=o.material.clone();o.material.transparent=true;o.material.depthWrite=false;}
+  o.frustumCulled=false;
+ });
+ if(found.length<8)throw Error(`Only ${found.length} Age_Newborn channels detected. Select the v022 compact or full newborn-to-18 model.`); const versionTag=gltf.parser?.json?.nodes?.find(n=>n.extras?.lanpasuE1A)?.extras?.lanpasuE1A?.version; if(versionTag!=='E.1-A v022')throw Error('This is '+(versionTag||'an unrecognized model')+'. Please select LANPASU_E1A_v022_GenderClothing_COMPACT.glb (recommended on iPhone) or LANPASU_E1A_v022_GenderClothing_FULL_MASTER.glb.');
+ const heightFromModel=gltf.parser?.json?.nodes?.find(n=>n.extras?.lanpasuCreator?.heightRuntime)?.extras?.lanpasuCreator?.heightRuntime;
+ if(!heightFromModel||heightFromModel.foundationAverageInches?.Female!==64||heightFromModel.foundationAverageInches?.Unisex!==66||heightFromModel.foundationAverageInches?.Male!==68||!Number.isFinite(heightFromModel.referenceLocalScale))throw Error('The model is missing its original gender height settings (5′4″ / 5′6″ / 5′8″). Select the original v022 compact or full GLB.');
+ const candidateHeightBones=[];model.traverse(o=>{if(!o.isBone)return;const b=heightFromModel.boneCoefficients?.[o.name];if(b&&Number.isFinite(b.local))candidateHeightBones.push({bone:o,originalY:o.position.y,localCoefficient:b.local});});
+ if(candidateHeightBones.length<100)throw Error(`Gender height settings cannot be applied: only ${candidateHeightBones.length} of 117 height-adjustable bones found.`);
+ heightRuntime=heightFromModel;heightBones=candidateHeightBones;
+ const expectedGarments=['EC_TShirt','EC_Shorts','EC_SportsBra','EC_Briefs'];
+ for(const name of expectedGarments){const parts=clothes.filter(c=>c.name===name);if(!parts.length){const names=[];model.traverse(o=>{if(o.isMesh)names.push(o.name)});throw Error('Could not identify outfit '+name+' in this loaded scene. Actual mesh names: '+names.join(', ').slice(0,380));}for(const piece of parts){const dict=piece.mesh.morphTargetDictionary||{};if(dict.Foundation_Female===undefined||dict.Foundation_Male===undefined)throw Error('Gender outfit-fitting shapes are missing from '+name+' (rendered as '+piece.actualThreeName+'). Choose the supplied v022 compact model.');}}
+ if(infantMeshes.length<3)throw Error('Newborn diaper and beanie are missing. Select the v022 0-to-18 GLB.');if(!clothes.find(x=>x.name==='EC_TShirt')?.mesh.morphTargetDictionary?.Fit_Toddler)throw Error('Age-stage outfit fitting is missing: choose the v022 GLB.');objects=found;window.__e1aClothes=clothes;babyWear=infantMeshes;scene.add(model);for(const id of allButtonIds)el(id).disabled=false;showOverlay(false);setAgeAlz(ageAlz);if(!hadModel)setView();setStatus(`Loaded ${f.name} · ${objects.length} morph meshes + ${babyWear.length} newborn wear meshes · model stays on device. The full v022 master retains all genetic morphs.`)
+ }catch(err){showOverlay(true);el('loadingOverlay').textContent='Could not load this model';setStatus('Load error: '+err.message);}
+});
+for(const g of ['Female','Intersex','Male'])el('gender'+g).onclick=()=>setGender(g);
+el('ageSlider').oninput=e=>setAgeAlz(Number(e.target.value));
+el('newborn').onclick=()=>setAgeAlz(0);
+el('adult').onclick=()=>setAgeAlz(MAX_AGE_ALZ);
+el('half').onclick=()=>setAgeAlz(MAX_AGE_ALZ/2);
+el('backAge').onclick=()=>setAgeAlz(ageAlz-360);
+el('nextAge').onclick=()=>setAgeAlz(ageAlz+360);
+el('backAlz').onclick=()=>setAgeAlz(ageAlz-1);
+el('nextAlz').onclick=()=>setAgeAlz(ageAlz+1);
+for(const [id,name] of [['front','front'],['profile','profile'],['rear','rear'],['threequarter','threequarter']])el(id).onclick=()=>{angle=name;setView()};
+for(const [id,name] of [['full','full'],['head','head']])el(id).onclick=()=>{mode=name;setView(true)}; // Reframe only, keep current orbit direction.
+el('zoomIn').onclick=()=>{camera.position.lerp(controls.target,.22);controls.update()};
+el('zoomOut').onclick=()=>{const d=camera.position.clone().sub(controls.target);camera.position.addScaledVector(d,.25);controls.update()};
+
+// Structured age+body-part issue log: saves only explicit user-entered notes.
+const ISSUE_KEY='LANPASU_E1A_age_review_v023';
+let issueNotes=[];
+try{const saved=JSON.parse(localStorage.getItem(ISSUE_KEY)||'[]');if(Array.isArray(saved))issueNotes=saved;}catch(e){}
+function persistIssues(){try{localStorage.setItem(ISSUE_KEY,JSON.stringify(issueNotes));}catch(e){setStatus('Review notes are in this session only; export them as JSON to keep them.');}}
+function renderIssues(){
+ const list=el('issueList');list.textContent='';
+ if(!issueNotes.length){const li=document.createElement('li');li.textContent='No age corrections recorded yet.';list.appendChild(li);return;}
+ for(const [i,note] of issueNotes.entries()){
+  const li=document.createElement('li');const label=document.createElement('strong');
+  label.textContent=note.stage+' · '+ageText(note.ageAlz)+' · '+note.part+': ';
+  li.appendChild(label);li.appendChild(document.createTextNode(note.text));
+  const del=document.createElement('button');del.type='button';del.textContent='Remove';del.className='remove-note';
+  del.addEventListener('click',()=>{issueNotes.splice(i,1);persistIssues();renderIssues();});
+  li.appendChild(del);list.appendChild(li);
+ }
+}
+el('saveIssue').onclick=()=>{
+ const text=el('issueInput').value.trim();
+ if(!text){setStatus('Type the body-part correction you want to record at this age.');return;}
+ issueNotes.push({ageAlz,ageKimah:ageAlz/360,stage:stageForAge(ageAlz),part:el('partSelect').value,text,recordedAt:new Date().toISOString()});
+ el('issueInput').value='';persistIssues();renderIssues();setStatus('Saved '+stageForAge(ageAlz)+' · '+ageText(ageAlz)+' correction note.');
+};
+el('clearIssues').onclick=()=>{if(issueNotes.length&&confirm('Delete all age correction notes saved in this browser?')){issueNotes=[];persistIssues();renderIssues();}};
+el('exportIssues').onclick=()=>{
+ const payload={project:'LANPASU',viewerVersion:'E1-A Age Development Viewer v023',modelVersion:'E.1-A v022',units:{AlzPerKimah:360},range:{startAlz:0,endAlz:6480},status:'Intermediate anatomy is not approved',notes:issueNotes};
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');a.href=url;a.download='LANPASU_E1A_v023_Age_0_to_18_Correction_Notes.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+renderIssues();update();
+
+renderer.setAnimationLoop(()=>{controls.update();renderer.render(scene,camera)});
+window.__lanpasuViewerReady=true;window.lanpasuE1AQA=()=>({viewerVersion:'E1-A age viewer v023 · resilient outfit lookup',genderChoice,clothingStages: true,modelVersion:'E.1-A v022',ageAlz,ageKimah:ageAlz/360,stage:stageForAge(ageAlz),middleAgesUnapproved:true,loggedIssues:issueNotes.length,loaded:!!model,visibleOutfitPieces:(window.__e1aClothes||[]).filter(c=>c.mesh.visible).map(c=>c.name),femaleOutfitReady:!!model&&['EC_SportsBra','EC_Briefs'].every(n=>(window.__e1aClothes||[]).some(c=>c.name===n&&c.mesh.morphTargetDictionary?.Foundation_Female!==undefined)),morphMeshes:objects.length,babyWearMeshes:babyWear.length,ageMorphStrength:value,defaultReferenceAtAge18:true,heightMeters:getHeight(),adultGenderReferenceInches:foundationHeightInches(),heightBoneCount:heightBones.length,heightAnimationEnabled:!!heightRuntime,manualCameraPose:{position:camera.position.toArray(),target:controls.target.toArray()},actualGLBModelLoaded:!!model});
+</script></body></html>
