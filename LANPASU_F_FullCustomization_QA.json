@@ -1,0 +1,597 @@
+{
+  "format": "lanpasu-f-assetpack-gzip-slices-v1",
+  "checkedParts": 37,
+  "checkedAssets": 39,
+  "assets": {
+    "model": {
+      "rawBytes": 161920632,
+      "partRange": [
+        1,
+        5
+      ]
+    },
+    "motions": {
+      "rawBytes": 23187424,
+      "partRange": [
+        5,
+        6
+      ]
+    },
+    "hair/Hair_001": {
+      "rawBytes": 1908584,
+      "partRange": [
+        6,
+        6
+      ]
+    },
+    "hair/Hair_002": {
+      "rawBytes": 2821736,
+      "partRange": [
+        6,
+        6
+      ]
+    },
+    "hair/Hair_003": {
+      "rawBytes": 9271152,
+      "partRange": [
+        6,
+        6
+      ]
+    },
+    "hair/Hair_004": {
+      "rawBytes": 3038808,
+      "partRange": [
+        6,
+        7
+      ]
+    },
+    "hair/Hair_005": {
+      "rawBytes": 5515484,
+      "partRange": [
+        7,
+        7
+      ]
+    },
+    "hair/Hair_006": {
+      "rawBytes": 7046228,
+      "partRange": [
+        7,
+        7
+      ]
+    },
+    "hair/Hair_007": {
+      "rawBytes": 5515444,
+      "partRange": [
+        7,
+        7
+      ]
+    },
+    "hair/Hair_008": {
+      "rawBytes": 14662236,
+      "partRange": [
+        7,
+        8
+      ]
+    },
+    "hair/Hair_009": {
+      "rawBytes": 5515552,
+      "partRange": [
+        8,
+        8
+      ]
+    },
+    "hair/Hair_010": {
+      "rawBytes": 22889140,
+      "partRange": [
+        8,
+        9
+      ]
+    },
+    "hair/Hair_011": {
+      "rawBytes": 5515740,
+      "partRange": [
+        9,
+        9
+      ]
+    },
+    "hair/Hair_012": {
+      "rawBytes": 11698608,
+      "partRange": [
+        9,
+        10
+      ]
+    },
+    "hair/Hair_013": {
+      "rawBytes": 18352976,
+      "partRange": [
+        10,
+        11
+      ]
+    },
+    "hair/Hair_014": {
+      "rawBytes": 22069236,
+      "partRange": [
+        11,
+        12
+      ]
+    },
+    "hair/Hair_015": {
+      "rawBytes": 30216664,
+      "partRange": [
+        12,
+        13
+      ]
+    },
+    "hair/Hair_016": {
+      "rawBytes": 19416384,
+      "partRange": [
+        13,
+        14
+      ]
+    },
+    "hair/Hair_017": {
+      "rawBytes": 37924576,
+      "partRange": [
+        14,
+        15
+      ]
+    },
+    "hair/Hair_018": {
+      "rawBytes": 15476152,
+      "partRange": [
+        15,
+        16
+      ]
+    },
+    "hair/Hair_019": {
+      "rawBytes": 54391820,
+      "partRange": [
+        16,
+        18
+      ]
+    },
+    "hair/Hair_020": {
+      "rawBytes": 27826796,
+      "partRange": [
+        18,
+        19
+      ]
+    },
+    "hair/Hair_021": {
+      "rawBytes": 72539656,
+      "partRange": [
+        19,
+        23
+      ]
+    },
+    "hair/Hair_022": {
+      "rawBytes": 38623296,
+      "partRange": [
+        23,
+        24
+      ]
+    },
+    "hair/Hair_023": {
+      "rawBytes": 75184288,
+      "partRange": [
+        24,
+        27
+      ]
+    },
+    "hair/Hair_024": {
+      "rawBytes": 41542860,
+      "partRange": [
+        27,
+        29
+      ]
+    },
+    "hair/Hair_025": {
+      "rawBytes": 1381252,
+      "partRange": [
+        29,
+        29
+      ]
+    },
+    "hair/Hair_026": {
+      "rawBytes": 2822100,
+      "partRange": [
+        29,
+        29
+      ]
+    },
+    "hair/Hair_027": {
+      "rawBytes": 2822120,
+      "partRange": [
+        29,
+        29
+      ]
+    },
+    "hair/Hair_028": {
+      "rawBytes": 7854020,
+      "partRange": [
+        29,
+        30
+      ]
+    },
+    "hair/Hair_029": {
+      "rawBytes": 16779076,
+      "partRange": [
+        30,
+        30
+      ]
+    },
+    "hair/Hair_030": {
+      "rawBytes": 1908968,
+      "partRange": [
+        30,
+        30
+      ]
+    },
+    "hair/Hair_031": {
+      "rawBytes": 3039068,
+      "partRange": [
+        30,
+        30
+      ]
+    },
+    "hair/Hair_032": {
+      "rawBytes": 5515840,
+      "partRange": [
+        30,
+        31
+      ]
+    },
+    "hair/Hair_033": {
+      "rawBytes": 22889404,
+      "partRange": [
+        31,
+        32
+      ]
+    },
+    "hair/Hair_034": {
+      "rawBytes": 18353240,
+      "partRange": [
+        32,
+        32
+      ]
+    },
+    "hair/Hair_035": {
+      "rawBytes": 19416880,
+      "partRange": [
+        32,
+        33
+      ]
+    },
+    "hair/Hair_036": {
+      "rawBytes": 72539676,
+      "partRange": [
+        33,
+        37
+      ]
+    },
+    "hair/Hair_037": {
+      "rawBytes": 16779144,
+      "partRange": [
+        37,
+        37
+      ]
+    }
+  },
+  "problems": [],
+  "model": {
+    "meshCount": 12,
+    "skins": 1,
+    "materialNames": [
+      "Skin_Warm_Golden_Brown",
+      "Blank_Eye_White",
+      "Eye_Iris_Warm_Brown",
+      "Eye_Pupil_Deep_Brown",
+      "Blank_Eye_Highlight",
+      "Lashes_Soft_Black",
+      "Eyebrow_Dark_Brown",
+      "Warm_Brown_Rose_Lip_Tint",
+      "EC_White_Starter_Fabric"
+    ],
+    "nodes": 138,
+    "morphPrimitiveCount": 8
+  },
+  "animations": {
+    "count": 32,
+    "names": [
+      "Casual_Idle",
+      "Casual_Walk",
+      "Casual_Run",
+      "Casual_Jump",
+      "Confident_Idle",
+      "Confident_Walk",
+      "Confident_Run",
+      "Confident_Jump",
+      "Reserved_Idle",
+      "Reserved_Walk",
+      "Reserved_Run",
+      "Reserved_Jump",
+      "Athletic_Idle",
+      "Athletic_Walk",
+      "Athletic_Run",
+      "Athletic_Jump",
+      "Elegant_Idle",
+      "Elegant_Walk",
+      "Elegant_Run",
+      "Elegant_Jump",
+      "Playful_Idle",
+      "Playful_Walk",
+      "Playful_Run",
+      "Playful_Jump",
+      "Grounded_Idle",
+      "Grounded_Walk",
+      "Grounded_Run",
+      "Grounded_Jump",
+      "Mysterious_Idle",
+      "Mysterious_Walk",
+      "Mysterious_Run",
+      "Mysterious_Jump"
+    ]
+  },
+  "hair": {
+    "hair/Hair_001": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 1908584
+    },
+    "hair/Hair_002": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 2821736
+    },
+    "hair/Hair_003": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 9271152
+    },
+    "hair/Hair_004": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 3038808
+    },
+    "hair/Hair_005": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 5515484
+    },
+    "hair/Hair_006": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 7046228
+    },
+    "hair/Hair_007": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 5515444
+    },
+    "hair/Hair_008": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 14662236
+    },
+    "hair/Hair_009": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 5515552
+    },
+    "hair/Hair_010": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 22889140
+    },
+    "hair/Hair_011": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 5515740
+    },
+    "hair/Hair_012": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 11698608
+    },
+    "hair/Hair_013": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 18352976
+    },
+    "hair/Hair_014": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 22069236
+    },
+    "hair/Hair_015": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 30216664
+    },
+    "hair/Hair_016": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 19416384
+    },
+    "hair/Hair_017": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 37924576
+    },
+    "hair/Hair_018": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 15476152
+    },
+    "hair/Hair_019": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 54391820
+    },
+    "hair/Hair_020": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 27826796
+    },
+    "hair/Hair_021": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 72539656
+    },
+    "hair/Hair_022": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 38623296
+    },
+    "hair/Hair_023": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 75184288
+    },
+    "hair/Hair_024": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 41542860
+    },
+    "hair/Hair_025": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 1381252
+    },
+    "hair/Hair_026": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 2822100
+    },
+    "hair/Hair_027": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 2822120
+    },
+    "hair/Hair_028": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 7854020
+    },
+    "hair/Hair_029": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 16779076
+    },
+    "hair/Hair_030": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 1908968
+    },
+    "hair/Hair_031": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 3039068
+    },
+    "hair/Hair_032": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 5515840
+    },
+    "hair/Hair_033": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 22889404
+    },
+    "hair/Hair_034": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 18353240
+    },
+    "hair/Hair_035": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 19416880
+    },
+    "hair/Hair_036": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 72539676
+    },
+    "hair/Hair_037": {
+      "materials": [
+        "Hair_Pigment_Adjustable"
+      ],
+      "meshes": 1,
+      "rawBytes": 16779144
+    }
+  },
+  "pass": true
+}

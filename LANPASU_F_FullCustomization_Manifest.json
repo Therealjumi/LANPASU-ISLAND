@@ -1,0 +1,556 @@
+{
+  "format": "lanpasu-f-assetpack-gzip-slices-v1",
+  "version": "Phase F all-asset pack v001 (2026-11-19)",
+  "partBytes": 12582912,
+  "partPrefix": "LANPASU_F_FullCustomization.part",
+  "runtimeSource": "LANPASU Chin v006 gender-foundation-localized continuous deformation",
+  "assetCount": 39,
+  "assets": {
+    "model": {
+      "kind": "glb",
+      "compressedOffset": 0,
+      "compressedBytes": 56597062,
+      "rawBytes": 161920632,
+      "rawSHA256": "7a5ab6792ca74aa27e7794b1e89aa99d6a1f204426702ca26dddfb919d01d1dc",
+      "sourceFile": "LANPASU_EC_Chin_Length_Shape_v001.glb"
+    },
+    "motions": {
+      "kind": "glb",
+      "compressedOffset": 56597062,
+      "compressedBytes": 11469552,
+      "rawBytes": 23187424,
+      "rawSHA256": "f7fb8c6392328bc5e599353f27d7f074f63c7da88e5349a505d78b7ad378446e",
+      "sourceFile": "LANPASU_F_Preview_All32.glb.gz"
+    },
+    "hair/Hair_001": {
+      "kind": "glb",
+      "compressedOffset": 68066614,
+      "compressedBytes": 1001975,
+      "rawBytes": 1908584,
+      "rawSHA256": "869ad49eb20b6d5692edb4cd251ef9c6a90466ba1844a5770a3d22b5815fca65",
+      "sourceFile": "LANPASU_Hair_1A_Long_Straight_v002.glb"
+    },
+    "hair/Hair_002": {
+      "kind": "glb",
+      "compressedOffset": 69068589,
+      "compressedBytes": 1385438,
+      "rawBytes": 2821736,
+      "rawSHA256": "0e047780225e75aee144eaceafa5e7e96036a47a8d1c43e247d8cec14537db22",
+      "sourceFile": "LANPASU_Hair_1A_Boy_Bowl_Cut_v001.glb"
+    },
+    "hair/Hair_003": {
+      "kind": "glb",
+      "compressedOffset": 70454027,
+      "compressedBytes": 4778158,
+      "rawBytes": 9271152,
+      "rawSHA256": "d60cff677b323fc9de427cfd473bd174d6b4caebc032ded3fd3bb92b839fcc69",
+      "sourceFile": "LANPASU_Hair_1B_Long_Straight_Layered_v002.glb"
+    },
+    "hair/Hair_004": {
+      "kind": "glb",
+      "compressedOffset": 75232185,
+      "compressedBytes": 1582664,
+      "rawBytes": 3038808,
+      "rawSHA256": "12ce1460fac89b36595e052a4e49c234b0746120eb9317a6685eebe416e532cb",
+      "sourceFile": "LANPASU_Hair_1B_Boy_Layered_v001.glb"
+    },
+    "hair/Hair_005": {
+      "kind": "glb",
+      "compressedOffset": 76814849,
+      "compressedBytes": 3286252,
+      "rawBytes": 5515484,
+      "rawSHA256": "1c2215e545ae548f5c63b9b994567c0809394accd77dec69c9c063bffe0c2e39",
+      "sourceFile": "LANPASU_Hair_1C_Long_Voluminous_Straight_v009.glb"
+    },
+    "hair/Hair_006": {
+      "kind": "glb",
+      "compressedOffset": 80101101,
+      "compressedBytes": 3281316,
+      "rawBytes": 7046228,
+      "rawSHA256": "da0269f4a2705d2e2cf36e52e05220e8e16f8aaee7b81adceae74315c033ce18",
+      "sourceFile": "LANPASU_Hair_1C_Boy_Textured_Fringe_v002.glb"
+    },
+    "hair/Hair_007": {
+      "kind": "glb",
+      "compressedOffset": 83382417,
+      "compressedBytes": 3297990,
+      "rawBytes": 5515444,
+      "rawSHA256": "8ff7f9020017c8ab5b09badb372f0e1098b10c9401c326ea4014f8ee7846a4e0",
+      "sourceFile": "LANPASU_Hair_2A_Long_Beach_Waves_v004.glb"
+    },
+    "hair/Hair_008": {
+      "kind": "glb",
+      "compressedOffset": 86680407,
+      "compressedBytes": 7272874,
+      "rawBytes": 14662236,
+      "rawSHA256": "11a104804fb4d135140be4eaf7164ce0850726cf171a907ddbc447e89e7eb1a6",
+      "sourceFile": "LANPASU_Hair_2A_Boy_Wavy_Surfer_v001.glb"
+    },
+    "hair/Hair_009": {
+      "kind": "glb",
+      "compressedOffset": 93953281,
+      "compressedBytes": 3305132,
+      "rawBytes": 5515552,
+      "rawSHA256": "b908ceb75a3c05e7b78bd848f815bc6407c51da06ac33c693a89ca01e1af88bc",
+      "sourceFile": "LANPASU_Hair_2B_Long_Defined_S_Waves_v002.glb"
+    },
+    "hair/Hair_010": {
+      "kind": "glb",
+      "compressedOffset": 97258413,
+      "compressedBytes": 12164710,
+      "rawBytes": 22889140,
+      "rawSHA256": "e9421363ceee9c67b7ca9b0f307fa1c379ae11c6874724430e81c5257af97cc9",
+      "sourceFile": "LANPASU_Hair_2B_Boy_Defined_Wavy_Fringe_v003.glb"
+    },
+    "hair/Hair_011": {
+      "kind": "glb",
+      "compressedOffset": 109423123,
+      "compressedBytes": 3305555,
+      "rawBytes": 5515740,
+      "rawSHA256": "13656c5ac2cb2d99d88f0c6c1279ac764acfbd41e00f77c30f45d157a920fca4",
+      "sourceFile": "LANPASU_Hair_2C_Long_Voluminous_Waves_v003.glb"
+    },
+    "hair/Hair_012": {
+      "kind": "glb",
+      "compressedOffset": 112728678,
+      "compressedBytes": 6017819,
+      "rawBytes": 11698608,
+      "rawSHA256": "65a3b881978f053b41b4eefe7d59a7058f65f0f375aa33430e8724b226888e12",
+      "sourceFile": "LANPASU_Hair_2C_Boy_Voluminous_Wavy_Shag_v002.glb"
+    },
+    "hair/Hair_013": {
+      "kind": "glb",
+      "compressedOffset": 118746497,
+      "compressedBytes": 9735749,
+      "rawBytes": 18352976,
+      "rawSHA256": "cf041e486b973d31a9ea67eadebdafa53da0ec0647927c67ecadb9ed4a10a358",
+      "sourceFile": "LANPASU_Hair_3A_Long_Bouncy_Ringlets_v001.glb"
+    },
+    "hair/Hair_014": {
+      "kind": "glb",
+      "compressedOffset": 128482246,
+      "compressedBytes": 10782139,
+      "rawBytes": 22069236,
+      "rawSHA256": "5b27eabaff2c3821b6442b2eeaa4f271cf9263f26b53a0f54392e687d00977a3",
+      "sourceFile": "LANPASU_Hair_3A_Boy_Loose_Curly_Mop_v001.glb"
+    },
+    "hair/Hair_015": {
+      "kind": "glb",
+      "compressedOffset": 139264385,
+      "compressedBytes": 15773162,
+      "rawBytes": 30216664,
+      "rawSHA256": "f9e93cc2cfca797391a3a069ad857e337dc3d01254d5533165acc1fe966e2259",
+      "sourceFile": "LANPASU_Hair_3B_Long_Defined_Ringlets_v001.glb"
+    },
+    "hair/Hair_016": {
+      "kind": "glb",
+      "compressedOffset": 155037547,
+      "compressedBytes": 9719460,
+      "rawBytes": 19416384,
+      "rawSHA256": "eea50abb64af59091bf28b508d39a359b23513847267b346b32ca2eafb1b1672",
+      "sourceFile": "LANPASU_Hair_3B_Boy_Short_Springy_Curls_v001.glb"
+    },
+    "hair/Hair_017": {
+      "kind": "glb",
+      "compressedOffset": 164757007,
+      "compressedBytes": 22408305,
+      "rawBytes": 37924576,
+      "rawSHA256": "b8a90f3577e8ab34b573671dc1e4aceddf54c45120774f06114b0d7b9a4da45e",
+      "sourceFile": "LANPASU_Hair_3C_Long_Dense_Corkscrew_Curls_v001.glb"
+    },
+    "hair/Hair_018": {
+      "kind": "glb",
+      "compressedOffset": 187165312,
+      "compressedBytes": 7767778,
+      "rawBytes": 15476152,
+      "rawSHA256": "7f0ab77fd74a1a25252721a17eb5c1abcdf926bcf986fb365ac6d75013546f89",
+      "sourceFile": "LANPASU_Hair_3C_Boy_Dense_Curly_Crop_v001.glb"
+    },
+    "hair/Hair_019": {
+      "kind": "glb",
+      "compressedOffset": 194933090,
+      "compressedBytes": 25062491,
+      "rawBytes": 54391820,
+      "rawSHA256": "7acbe73629c0e509c2cd6be084fcb00eb4d6aeb78039e5b149906bee237566f7",
+      "sourceFile": "LANPASU_Hair_4A_Long_Defined_Coils_v001.glb"
+    },
+    "hair/Hair_020": {
+      "kind": "glb",
+      "compressedOffset": 219995581,
+      "compressedBytes": 13805555,
+      "rawBytes": 27826796,
+      "rawSHA256": "31876f254a65ddeaa04657bba923b07f904e11aefe1239225ae70706f2e44a1c",
+      "sourceFile": "LANPASU_Hair_4A_Boy_Defined_Coil_Afro_v001.glb"
+    },
+    "hair/Hair_021": {
+      "kind": "glb",
+      "compressedOffset": 233801136,
+      "compressedBytes": 46118150,
+      "rawBytes": 72539656,
+      "rawSHA256": "400e0e12c79f34067606695754b673333f8e48e6f8c968b5f507caa61f0a6bdc",
+      "sourceFile": "LANPASU_Hair_4B_Girl_Voluminous_Twist_Out_v003.glb"
+    },
+    "hair/Hair_022": {
+      "kind": "glb",
+      "compressedOffset": 279919286,
+      "compressedBytes": 19219935,
+      "rawBytes": 38623296,
+      "rawSHA256": "9a44f756b79efaf87a69fe2a5b10c93179844398920ec5f1f9d41e0347953b88",
+      "sourceFile": "LANPASU_Hair_4B_Boy_Textured_Afro_v004.glb"
+    },
+    "hair/Hair_023": {
+      "kind": "glb",
+      "compressedOffset": 299139221,
+      "compressedBytes": 38215694,
+      "rawBytes": 75184288,
+      "rawSHA256": "1f9bf4891c6d272c7a749f901c8eabfe2a947987e98c069c692b557cf0eb83ab",
+      "sourceFile": "LANPASU_Hair_4C_Girl_Full_Natural_Afro_v001.glb"
+    },
+    "hair/Hair_024": {
+      "kind": "glb",
+      "compressedOffset": 337354915,
+      "compressedBytes": 20622232,
+      "rawBytes": 41542860,
+      "rawSHA256": "5a49a522de3e33a6291ea074ef24527b8f7f5b593eec214bf5a10456f112b148",
+      "sourceFile": "LANPASU_Hair_4C_Boy_Compact_Natural_Afro_v001.glb"
+    },
+    "hair/Hair_025": {
+      "kind": "glb",
+      "compressedOffset": 357977147,
+      "compressedBytes": 554384,
+      "rawBytes": 1381252,
+      "rawSHA256": "bcd21477987ae97da757bbbb575736d64cc9d945ec663034f0c236807dbc1918",
+      "sourceFile": "LANPASU_Hair_Baby_Soft_Scalp_v002.glb"
+    },
+    "hair/Hair_026": {
+      "kind": "glb",
+      "compressedOffset": 358531531,
+      "compressedBytes": 1388689,
+      "rawBytes": 2822100,
+      "rawSHA256": "8c1c85e0e40010918124e19b0759d94bc5a2e323e2832f5e2a7b615e0999d5d8",
+      "sourceFile": "LANPASU_Hair_Toddler_Straight_Soft_Crop_v001.glb"
+    },
+    "hair/Hair_027": {
+      "kind": "glb",
+      "compressedOffset": 359920220,
+      "compressedBytes": 1392169,
+      "rawBytes": 2822120,
+      "rawSHA256": "6ea2b120c9af3f7c94fc6d23ccc0e907383a9793d1d65a8889d327f39deb408b",
+      "sourceFile": "LANPASU_Hair_Toddler_Soft_Wavy_Crop_v001.glb"
+    },
+    "hair/Hair_028": {
+      "kind": "glb",
+      "compressedOffset": 361312389,
+      "compressedBytes": 3592386,
+      "rawBytes": 7854020,
+      "rawSHA256": "f2481f745d8bfc705bea67e0a8a42e6e991c469dbb543f1862a3c9f9387652f1",
+      "sourceFile": "LANPASU_Hair_Toddler_Soft_Bouncy_Curls_v001.glb"
+    },
+    "hair/Hair_029": {
+      "kind": "glb",
+      "compressedOffset": 364904775,
+      "compressedBytes": 7653536,
+      "rawBytes": 16779076,
+      "rawSHA256": "8abc1576060b1ec8414f06de1d8c434191f75630739532ffa01195d8f6d762e2",
+      "sourceFile": "LANPASU_Hair_Toddler_Soft_Coily_Afro_v001.glb"
+    },
+    "hair/Hair_030": {
+      "kind": "glb",
+      "compressedOffset": 372558311,
+      "compressedBytes": 1006871,
+      "rawBytes": 1908968,
+      "rawSHA256": "b246d26e250e8080d9c98c2c0623c9093b202a9663a035b89fce65ab5811da15",
+      "sourceFile": "LANPASU_Hair_Child_Girl_Soft_Straight_Locks_v001.glb"
+    },
+    "hair/Hair_031": {
+      "kind": "glb",
+      "compressedOffset": 373565182,
+      "compressedBytes": 1582599,
+      "rawBytes": 3039068,
+      "rawSHA256": "085a2229d2a9d3286c5e02cb1e58d5f1682544a4eba75442d3f755c4896fee42",
+      "sourceFile": "LANPASU_Hair_Child_Boy_Soft_Layered_Straight_v001.glb"
+    },
+    "hair/Hair_032": {
+      "kind": "glb",
+      "compressedOffset": 375147781,
+      "compressedBytes": 3300054,
+      "rawBytes": 5515840,
+      "rawSHA256": "977b41191b41b41b543ef37f4e17bf466ed9f4203c9789230eeff566e7fedca0",
+      "sourceFile": "LANPASU_Hair_Child_Girl_Soft_Wavy_Locks_v001.glb"
+    },
+    "hair/Hair_033": {
+      "kind": "glb",
+      "compressedOffset": 378447835,
+      "compressedBytes": 12158728,
+      "rawBytes": 22889404,
+      "rawSHA256": "7396d0490a9fd1de285044f480abcc06f2fbb7cbf4bbf1c367195c0930f8df60",
+      "sourceFile": "LANPASU_Hair_Child_Boy_Playful_Wavy_Fringe_v001.glb"
+    },
+    "hair/Hair_034": {
+      "kind": "glb",
+      "compressedOffset": 390606563,
+      "compressedBytes": 9730265,
+      "rawBytes": 18353240,
+      "rawSHA256": "68012948c7ce98997fe7c7c15abb770a55c2dfd5353366e1a49153236b7ef7ca",
+      "sourceFile": "LANPASU_Hair_Child_Girl_Soft_Curly_Ringlets_v001.glb"
+    },
+    "hair/Hair_035": {
+      "kind": "glb",
+      "compressedOffset": 400336828,
+      "compressedBytes": 9723249,
+      "rawBytes": 19416880,
+      "rawSHA256": "1d8ce5db7189ff8df3235a77136e39a67bb75b617c8b2d62661b5d5ab90b7a11",
+      "sourceFile": "LANPASU_Hair_Child_Boy_Soft_Springy_Curls_v001.glb"
+    },
+    "hair/Hair_036": {
+      "kind": "glb",
+      "compressedOffset": 410060077,
+      "compressedBytes": 46114535,
+      "rawBytes": 72539676,
+      "rawSHA256": "ebcc7ede3d56463a06c1412b125370ea0e2fadf38bda6b44e2666346fe2ebce6",
+      "sourceFile": "LANPASU_Hair_Child_Girl_Soft_Coily_Crown_v001.glb"
+    },
+    "hair/Hair_037": {
+      "kind": "glb",
+      "compressedOffset": 456174612,
+      "compressedBytes": 7652660,
+      "rawBytes": 16779144,
+      "rawSHA256": "2b2c35017425bc2484eff82f3eeef4e3b4362ee3ae4c70642722c11e0c302613",
+      "sourceFile": "LANPASU_Hair_Child_Boy_Soft_Coily_Crop_v001.glb"
+    }
+  },
+  "parts": [
+    {
+      "name": "LANPASU_F_FullCustomization.part001",
+      "bytes": 12582912,
+      "sha256": "0be07e4d4a7b4b558ea837d1c01409af85e8409a1ccc94f98def53c511079d8a"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part002",
+      "bytes": 12582912,
+      "sha256": "c0f650ba5cf4b22bdedf6e3acc81a5578145c54b741e51798fcac5b382596d2d"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part003",
+      "bytes": 12582912,
+      "sha256": "89f4386247deb43689cf7fc855919a82032b44f3dbaf7113e397dd1e01b4dbb1"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part004",
+      "bytes": 12582912,
+      "sha256": "3cf8a311486b48af658c1adcdc4ffcefde89c4716a9bf48eacf03d5be3275c89"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part005",
+      "bytes": 12582912,
+      "sha256": "ace54dcb4a05e285942d89dcb610d1c77ee6f45ba8845e01d206ee7ff27906ba"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part006",
+      "bytes": 12582912,
+      "sha256": "56aa594d4c7a48adc290c14041a1b5aa0af6436e6949e8fde19936c6627175aa"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part007",
+      "bytes": 12582912,
+      "sha256": "5317de9615d5f9498b845b8e36b4c9232b948829a571596d178ea26c40e059a0"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part008",
+      "bytes": 12582912,
+      "sha256": "534020abfb3cd2a89c774b324b524643fdca4fd11f2398b6ad4a23d9c9089d95"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part009",
+      "bytes": 12582912,
+      "sha256": "b305efc5bf224a0880cd55c3291871f382a5fafdb55d5fc95341cfa446e5ee49"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part010",
+      "bytes": 12582912,
+      "sha256": "ce3affed6f22a60ee8e9272ce22e7894d9761750c4f8ddd8fef370406fdc1eb5"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part011",
+      "bytes": 12582912,
+      "sha256": "55bba597d796bde291f9f7df8ce91e9a7a11efac50e02b98574978a28bde6993"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part012",
+      "bytes": 12582912,
+      "sha256": "bdedc7f357e960773264190b08fc35e4f3e0beab13c89fef3536098587ad58f0"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part013",
+      "bytes": 12582912,
+      "sha256": "8075e3b296f89e8cfb6c5af7de5bb8992e74585f81261cc301376f7be8f592a3"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part014",
+      "bytes": 12582912,
+      "sha256": "2ef9a32b1c990786a46aaa62aa8f63874eb3ad67a4b65acba1da44aa3951dcec"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part015",
+      "bytes": 12582912,
+      "sha256": "700a83bae66f3a71f306db099181c34d62fc16a87da62f28d3e439e82e1c46c1"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part016",
+      "bytes": 12582912,
+      "sha256": "e50445b6654af872eb06bebca46426f4252699a81bea1c105d7af83b898814bf"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part017",
+      "bytes": 12582912,
+      "sha256": "f95fe30e3575d6d8da0a1a8f93871ae07179349d36ca42493bb4792863d53419"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part018",
+      "bytes": 12582912,
+      "sha256": "75a08e79557fcf587d84350503bf9d92c44426f400f50223faf4861a49de73fb"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part019",
+      "bytes": 12582912,
+      "sha256": "7ab95794102de50d95c342d56ec8d5eb4a15184cd7f11da0704f45a409718801"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part020",
+      "bytes": 12582912,
+      "sha256": "cf71a92b3af8d10f3184d03263a0aa2f12946d0ceb3cf7ad4a6d0625777371ac"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part021",
+      "bytes": 12582912,
+      "sha256": "87accf39fef4d53dc40b9be1b9a9ffd74668b1101d72d5d0ae82483cbee2a439"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part022",
+      "bytes": 12582912,
+      "sha256": "da404ca913d559966375edc3fc21d738300ec045826af814d5b5f4d4cc985adb"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part023",
+      "bytes": 12582912,
+      "sha256": "932c0eadef1819bdcbb2c33f2d3001ea7d5d686deebaae08a5f85398941fd8c0"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part024",
+      "bytes": 12582912,
+      "sha256": "2d05615662c12bf54ff0501d656a8eb41d28cd4683ffb2c62fe0d28e1a791c79"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part025",
+      "bytes": 12582912,
+      "sha256": "f1ec01b1847309981afd50a320ad48c86b20716316532c115be0aebdcd73577d"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part026",
+      "bytes": 12582912,
+      "sha256": "00edaca4af68d189cb3e78d761000dde297005d7e0ab169f432bccf84089bac8"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part027",
+      "bytes": 12582912,
+      "sha256": "8a34a92ea02666050848c4c7c25f90713407da57154e521d6a5b0ff880d24006"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part028",
+      "bytes": 12582912,
+      "sha256": "9a24fe203ebce84532a7799a6ba002746ccb4482f3c299db50173844561ff3e9"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part029",
+      "bytes": 12582912,
+      "sha256": "c7588b737e592cbf3e08af8dcc76f96f653e472699d96c6862c043b1239d847c"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part030",
+      "bytes": 12582912,
+      "sha256": "372e9a728b9cdc6d6abae3aa14148b0de0817bec17873ace741c1073c68183ce"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part031",
+      "bytes": 12582912,
+      "sha256": "eba88b77656a4dc1e5b9bafdb3b54e0a14facfce55856136baaff91bc7e588c3"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part032",
+      "bytes": 12582912,
+      "sha256": "078c5b908ef92dbc5cc28d7cbc7a76b150fc3b2fc5d0ac13abc52c14e444ef21"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part033",
+      "bytes": 12582912,
+      "sha256": "fe9d0e79c7d313f77651e0e0014c19a577fa57ebd7dd9f51658ff5161e632408"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part034",
+      "bytes": 12582912,
+      "sha256": "1761705260583a4193f7470bb76be086922c4d2b4c46fbf116f37aff0f122136"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part035",
+      "bytes": 12582912,
+      "sha256": "a28b1beb193c574fb657426addc271ab4b95766dfc79fffc5cbd163eee808453"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part036",
+      "bytes": 12582912,
+      "sha256": "47a2fbe19bea395fe31532b7a3df52793041613a8c28b817fe4224ee66a1777c"
+    },
+    {
+      "name": "LANPASU_F_FullCustomization.part037",
+      "bytes": 10842440,
+      "sha256": "0615e6cc3a1f6059dc953e2161f0e9655a37c851368dbe47f7e72089316cdf84"
+    }
+  ],
+  "availableHairIDs": [
+    "Hair_001",
+    "Hair_002",
+    "Hair_003",
+    "Hair_004",
+    "Hair_005",
+    "Hair_006",
+    "Hair_007",
+    "Hair_008",
+    "Hair_009",
+    "Hair_010",
+    "Hair_011",
+    "Hair_012",
+    "Hair_013",
+    "Hair_014",
+    "Hair_015",
+    "Hair_016",
+    "Hair_017",
+    "Hair_018",
+    "Hair_019",
+    "Hair_020",
+    "Hair_021",
+    "Hair_022",
+    "Hair_023",
+    "Hair_024",
+    "Hair_025",
+    "Hair_026",
+    "Hair_027",
+    "Hair_028",
+    "Hair_029",
+    "Hair_030",
+    "Hair_031",
+    "Hair_032",
+    "Hair_033",
+    "Hair_034",
+    "Hair_035",
+    "Hair_036",
+    "Hair_037"
+  ],
+  "notes": [
+    "37 original hairstyle identities; Hair_005 uses newer v009 source in place of missing catalog v005",
+    "Only one selected hairstyle decoded on demand; child/toddler/baby body models remain future age integration",
+    "Original E-C starter clothing only; full wardrobe and age 0-100 body morph bridging not implemented",
+    "No change to main game index.html or approved Chin v006 tester"
+  ],
+  "compressedTotalBytes": 463827272,
+  "partCount": 37
+}
