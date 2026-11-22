@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#dbeadf">
+<title>LANPASU · G.2.0 Playable Test Town</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#dae9e0;color:#153e38;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:default}
+#game{position:fixed;inset:0;width:100%;height:100%;border:0;background:linear-gradient(160deg,#cce6de,#f2ecdb)}
+#splash{position:fixed;inset:0;z-index:30;background:linear-gradient(145deg,#b9dfda,#edf0de 60%,#e5cda9);display:grid;place-items:center;padding:16px;overflow:auto}
+.hero{max-width:535px;width:100%;background:#fbfbf2ed;padding:24px;border-radius:25px;box-shadow:0 24px 90px #264a3c2d;border:1px solid #ffffffb8}
+.hero .eyebrow{font-size:11px;letter-spacing:.17em;text-transform:uppercase;font-weight:850;color:#478174}.hero h1{font-family:ui-serif,Georgia,serif;font-size:36px;line-height:1.03;letter-spacing:-1.1px;margin:10px 0 12px}.hero p{font-size:14px;line-height:1.5;color:#48635b;margin:9px 0}
+.sun{font-size:39px;line-height:1}.pill{display:inline-block;background:#e3eee4;border:1px solid #bbd5c5;padding:5px 11px;border-radius:99px;font-size:11px;font-weight:850;color:#316353}
+.hero button.primary{display:block;width:100%;padding:14px 20px;color:#fffbed;background:#285d50;border:0;border-radius:13px;font-weight:800;margin-top:17px;min-height:50px}
+.hero button.primary:hover{background:#1b4b42}.hero small{font-size:11px;color:#63786e}
+.option{margin-top:13px;padding:13px 14px;background:#edf3e8;border:1px solid #d7e6d7;border-radius:13px}
+.option summary{font-weight:760;cursor:pointer;font-size:13px}.assets label{font-size:11px;font-weight:750;display:block;margin:8px 0 4px}.assets input{display:block;width:100%;font-size:11px;background:#fff;padding:6px;border-radius:8px}
+#loadStatus{min-height:17px;font-size:12px;font-weight:700;color:#426d60;margin-top:12px;white-space:pre-wrap;overflow-wrap:anywhere}
+#toolbar{display:none;position:fixed;top:max(9px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:10;align-items:center;gap:7px;background:#123d34e8;border:1px solid #e3f1c875;border-radius:17px;color:#fcf9e9;padding:6px;box-shadow:0 8px 30px #102c2a50;max-width:calc(100vw - 22px)}
+#toolbar .brand{font-weight:850;letter-spacing:.02em;font-size:11px;white-space:nowrap;padding-left:8px;line-height:1.4}
+#toolbar small{font-weight:500;opacity:.74;font-size:9px;display:block}
+#toolbar button{background:#ecf5e5;color:#245343;border:0;border-radius:11px;padding:9px 11px;white-space:nowrap;font-size:11px;font-weight:850;min-height:39px}
+#toolbar #addBtn{background:#bfe7d2}
+#shade{position:fixed;z-index:12;inset:0;background:#0d262855;display:none}
+#panel{position:fixed;z-index:13;right:0;top:0;bottom:0;max-width:390px;width:min(100vw,390px);background:#f6f8ed;box-shadow:-14px 0 60px #143e344a;transform:translateX(103%);transition:transform .26s ease;padding:18px 17px max(22px,env(safe-area-inset-bottom));overflow:auto}
+#panel.open{transform:translateX(0)}.panelhead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+#panel h2{font-family:Georgia,ui-serif,serif;font-size:26px;line-height:1.1;margin:3px 0 5px}
+#panel .lead{color:#64796d;font-size:12px;line-height:1.45}
+#panelClose{background:#e2eee4;border:0;border-radius:50%;width:37px;height:37px;font-size:18px;color:#2b5b4a}
+.segment{display:flex;padding:3px;gap:4px;border-radius:12px;background:#e8eee4;margin:18px 0}
+.segment button{flex:1;border:0;background:transparent;padding:10px 5px;border-radius:9px;font-size:12px;font-weight:760;color:#54685c}
+.segment button.active{background:#fffdfa;color:#1c5446;box-shadow:0 2px 7px #24402213}
+.entry{border:1px solid #d7e7d5;background:#fffefa;border-radius:14px;padding:12px;display:flex;align-items:center;gap:10px;margin:8px 0}
+.entry .avatar{width:43px;height:43px;border-radius:50%;flex:none;background:#dce7da;display:grid;place-items:center;font-size:22px}
+.entry .details{flex:1;min-width:0}.entry strong{display:block;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.entry small{font-size:11px;color:#698174;display:block;line-height:1.5}
+.entry button{flex:none;border:0;background:#2b6354;color:white;font-size:11px;font-weight:800;border-radius:9px;min-height:37px;padding:8px 11px}
+.entry button.remove{background:#f3e4dc;color:#8d4f3c}
+.note{font-size:11px;line-height:1.5;background:#eaf3e9;border:1px solid #dae8d9;color:#536e5b;padding:11px 12px;border-radius:13px;margin:12px 0}
+.none{padding:30px 12px;text-align:center;border:1px dashed #b6ccb6;border-radius:14px;font-size:13px;color:#61806f;margin-top:12px}
+#toast{position:fixed;z-index:25;bottom:max(145px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);max-width:min(94vw,400px);min-width:200px;display:none;text-align:center;background:#113f34ed;color:#fff8e9;border-radius:14px;padding:12px 16px;font-weight:750;font-size:12px;box-shadow:0 10px 25px #0f261a5b}
+.floating{position:fixed;left:50%;top:calc(max(9px,env(safe-area-inset-top)) + 75px);transform:translateX(-50%);z-index:5;color:#fcffea;background:#164337c9;border-radius:99px;padding:7px 11px;font-size:11px;text-align:center;pointer-events:none;white-space:nowrap;display:none}
+.ghost{border:1px solid #a4cdb6;color:#275e4b;background:transparent;padding:8px 11px;border-radius:10px;font-size:12px;font-weight:750}
+#fileImport{display:none}
+@media(max-width:430px){.hero{padding:20px}.hero h1{font-size:33px}#toolbar{gap:4px;border-radius:13px;padding:4px}#toolbar .brand{font-size:10px;padding-left:5px}#toolbar button{padding:7px 8px;font-size:10px;min-height:34px}#toolbar small{font-size:8px}.floating{top:calc(max(9px,env(safe-area-inset-top)) + 60px)}#toast{bottom:156px}}
+</style>
+</head>
+<body>
+<iframe id="game" title="LANPASU playable island test town" allow="fullscreen"></iframe>
+<div id="splash">
+ <div class="hero">
+  <div class="sun">🌴</div>
+  <div class="eyebrow">Lanpasu · Non-canon RPG · G.2.0</div>
+  <h1>A little town.<br>A lot of life.</h1>
+  <span class="pill">🧍 Neutral default player · 18 Kimah</span>
+  <p>Walk around our existing 3D Solavren game, then add your saved Young Adult characters as independently walking NPCs—right while you play.</p>
+  <p><strong id="savedCount">Checking your saved characters…</strong></p>
+  <details class="option"><summary>🏝️ Optional: choose exact official v014C2 world files</summary>
+   <p>Leave these blank for automatic GitHub E.3 island loading. If you have the original v014C2 town files on this device, choose the matched island and collision files together. They are never uploaded.</p>
+   <div class="assets"><label>Latest island · Lanpasu_Island_v014C2_RoutePolish.glb</label><input id="islandFile" type="file" accept=".glb" />
+   <label>Matching collision · Lanpasu_Collision_v010C2_RoutePolish.glb</label><input id="collisionFile" type="file" accept=".glb" />
+   <label>Matching routes · Lanpasu_Traversal_v010_routes.json</label><input id="routeFile" type="file" accept=".json" />
+   <label>Water · Lanpasu_Water_v006_StoneSprings.glb</label><input id="waterFile" type="file" accept=".glb" /></div>
+  </details>
+  <button class="primary" id="enter">🌺 Play the Test Town</button>
+  <div id="loadStatus">The existing E.3 game files stay unchanged.</div>
+  <small>This is a separate, test-only save. Your Character Library and original town game won't be overwritten.</small>
+ </div>
+</div>
+<div id="toolbar"><div class="brand">🌺 TEST TOWN <small>NEUTRAL · 18 Kimah</small></div><button id="addBtn">＋ Add NPC</button><button id="residentsBtn">Residents <span id="residentCount">0</span></button></div>
+<div class="floating" id="floating">NPCs stroll independently · Walk / Run / Jump to explore</div>
+<div id="shade"></div>
+<aside id="panel" aria-label="Add and manage NPC residents">
+ <div class="panelhead"><div><div class="eyebrow" style="font-size:10px;font-weight:900;letter-spacing:.13em;color:#6a9980">LANPASU · POPULATION</div><h2>Meet the residents 🌿</h2><div class="lead">Add characters you saved in Phase G while walking around the island.</div></div><button id="panelClose" aria-label="Close residents panel">×</button></div>
+ <div class="segment"><button id="tabSaved" class="active">Saved Young Adults</button><button id="tabActive">In Town (<span id="residentCountPanel">0</span>)</button></div>
+ <section id="savedList"></section><section id="activeList" hidden></section>
+ <div class="note">🧬 NPC identity, age, genes, hair selection and movement style are taken from your saved profiles. <strong>First-playtest visuals use recolored E.3 rig previews, not yet the exact Phase F facial and hairstyle meshes.</strong> Their 3D walking and nameplates are real.</div>
+ <button class="ghost" id="refresh">↻ Refresh Character Library</button> <button class="ghost" id="importBtn">Import library backup</button><input id="fileImport" type="file" accept="application/json,.json">
+</aside>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const LIB_KEY='LANPASU_G_CHARACTER_LIBRARY_V1';
+const TEST_KEY='LANPASU_G20_TEST_WORLD_V1';
+const MAX_NPC=8;
+const BASE_GAME='LANPASU_E3_Solavren_Game.html';
+let entries=[],inGame=[],ready=false,started=false,tab='saved',imported=[],urls=[],toastTimer=null;
+const demoProfiles=[
+ {id:'G20_demo_1',profile:{firstName:'Demo',lastName:'Marina',age:18,ageAlz:6480,foundation:'Female',hair:'Hair_016',movement:'Playful',genes:{height:43,skinDarkness:18,skinPigment:55,hairDarkness:15,hairRed:77}}},
+ {id:'G20_demo_2',profile:{firstName:'Demo',lastName:'Orin',age:18,ageAlz:6480,foundation:'Male',hair:'Hair_006',movement:'Grounded',genes:{height:68,skinDarkness:73,skinPigment:40,hairDarkness:88,hairRed:18}}}
+];
+const short=s=>String(s??'').slice(0,80);
+function names(entry){const p=entry.profile||entry;return ((p.firstName||'')+' '+(p.lastName||'')).trim()||'Unnamed resident';}
+function youngAdult(entry){const p=entry?.profile||entry;if(!p||typeof p!=='object'||!p.genes)return false;const age=Number.isFinite(Number(p.ageAlz))?Number(p.ageAlz):Number(p.age??18)*360;return age>=6480&&age<10800;}
+function notify(msg){$('toast').textContent=short(msg);$('toast').style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').style.display='none',3500)}
+function stored(){try{const j=JSON.parse(localStorage.getItem(LIB_KEY)||'{}');return Array.isArray(j.characters)?j.characters:[];}catch(e){return []}}
+function refreshLibrary(){
+ const all=[...stored(),...imported];entries=all.filter(youngAdult).map((x,i)=>({id:String(x.id||'imported-'+i),profile:x.profile||x}));
+ $('savedCount').textContent=entries.length?entries.length+' saved Young Adult'+(entries.length!==1?'s':'')+' ready to spawn.':'No saved Young Adults found in this browser yet; demo residents are available.';
+ render();return entries;
+}
+function activeAPI(){try{return $('game').contentWindow?.LANPASU_TOWN_API||null}catch(e){return null}}
+function getSavedTest(){try{const j=JSON.parse(localStorage.getItem(TEST_KEY)||'{}');return Array.isArray(j.npcs)?j.npcs:[]}catch(e){return []}}
+function persist(){try{localStorage.setItem(TEST_KEY,JSON.stringify({schema:'LANPASU_G20_001',updated:new Date().toISOString(),npcs:inGame.map(n=>({id:n.id,profile:n.profile,demo:!!n.demo}))}))}catch(e){console.warn('Cannot save G.2.0 temporary town:',e)}}
+function element(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e;}
+function makeEntry(entry,active){
+ const p=entry.profile||entry,div=element('div','entry');
+ const avatar=element('div','avatar',p.foundation==='Male'?'🧑':p.foundation==='Female'?'👩':'🧍');
+ const details=element('div','details'),title=element('strong','',names(entry));
+ const age=(Number(p.ageAlz??6480)/360).toFixed(0);
+ const desc=element('small','',((p.foundation||'Neutral')+' · '+age+' Kimah · '+(p.movement||p.movementStyle||'Casual')).slice(0,110));
+ details.append(title,desc);const btn=element('button',active?'remove':'add',active?'Remove':'＋ Add');
+ if(active)btn.addEventListener('click',()=>removeResident(entry.id));
+ else{const here=inGame.some(x=>x.id===entry.id);btn.disabled=here||!ready||inGame.length>=MAX_NPC;btn.textContent=here?'In town ✓':'＋ Add';btn.addEventListener('click',()=>spawn(entry,false));}
+ div.append(avatar,details,btn);return div;
+}
+function render(){
+ const saved=$('savedList'),active=$('activeList');saved.replaceChildren();active.replaceChildren();
+ for(const entry of entries)saved.append(makeEntry(entry,false));
+ if(!entries.length){saved.append(element('div','none','No saved Young Adults found. Your originals remain safe. You can test NPC walking with the demo villagers below.'));}
+ const demos=element('div','lead','TEST-ONLY VILLAGERS');demos.style.marginTop='20px';demos.style.fontWeight='800';saved.append(demos);
+ for(const d of demoProfiles)saved.append(makeEntry(d,false));
+ for(const n of inGame)active.append(makeEntry(n,true));
+ if(!inGame.length)active.append(element('div','none','The town is empty. Add your first resident!'));
+ $('residentCount').textContent=inGame.length;$('residentCountPanel').textContent=inGame.length;
+ $('tabSaved').classList.toggle('active',tab==='saved');$('tabActive').classList.toggle('active',tab==='active');
+ saved.hidden=tab!=='saved';active.hidden=tab!=='active';
+}
+function openPanel(nextTab='saved'){$('panel').classList.add('open');$('shade').style.display='block';tab=nextTab;refreshLibrary();}
+function closePanel(){$('panel').classList.remove('open');$('shade').style.display='none';}
+function spawn(entry,demo){
+ const api=activeAPI();if(!api){notify('The island is still loading.');return false}
+ if(inGame.some(x=>x.id===entry.id)){notify('That resident is already here.');return false}
+ try{api.add(entry,demo||String(entry.id).startsWith('G20_demo_'));
+  inGame.push({id:entry.id,profile:structuredClone(entry.profile),demo:demo||String(entry.id).startsWith('G20_demo_')});
+  persist();render();notify('🌺 '+names(entry)+' joined your town!');return true;
+ }catch(e){notify('Could not spawn: '+(e.message||e));console.error(e);return false}
+}
+function removeResident(id){const api=activeAPI();if(!api)return;
+ try{api.remove(id);inGame=inGame.filter(x=>x.id!==id);persist();render();notify('Resident removed from test town.');}catch(e){notify('Removal failed: '+e.message)}
+}
+function onTownReady(){if(ready)return;ready=true;started=true;
+ $('splash').style.display='none';$('toolbar').style.display='flex';$('floating').style.display='block';
+ const records=getSavedTest();for(const n of records){if(inGame.length>=MAX_NPC)break;spawn(n,n.demo)}
+ refreshLibrary();notify('🏝️ Welcome! Walk around, then tap ＋ Add NPC.');
+}
+window.addEventListener('message',event=>{if(event.origin!==location.origin||event.source!==$('game').contentWindow)return;const m=event.data;if(!m||m.source!=='LANPASU_G20')return;
+ if(m.kind==='ready')onTownReady();
+ if(m.kind==='pulse')$('residentCount').textContent=m.count;
+ if(m.kind==='residents'){$('residentCount').textContent=m.residents?.length??inGame.length;}
+});
+$('addBtn').onclick=()=>openPanel('saved');$('residentsBtn').onclick=()=>openPanel('active');$('shade').onclick=closePanel;$('panelClose').onclick=closePanel;
+$('tabSaved').onclick=()=>{tab='saved';render()};$('tabActive').onclick=()=>{tab='active';render()};$('refresh').onclick=()=>{refreshLibrary();notify('Character Library refreshed.');};
+$('importBtn').onclick=()=>$('fileImport').click();$('fileImport').onchange=async event=>{
+ const file=event.target.files?.[0];if(!file)return;try{const data=JSON.parse(await file.text());const records=Array.isArray(data)?data:Array.isArray(data.characters)?data.characters:Array.isArray(data.library?.characters)?data.library.characters:[];
+  imported=records.filter(youngAdult);refreshLibrary();notify('Imported '+imported.length+' Young Adults for this test. Originals unchanged.');
+ }catch(e){notify('Could not read library backup JSON.')} event.target.value='';};
+function addBase(html){const base=new URL('./',location.href).href.replaceAll('&','&amp;');return html.replace(/<head>/i,'<head><base href="'+base+'">')}
+function swapOnce(html,needle,replacement,name){if(!html.includes(needle))throw Error('The E.3 game structure has changed at '+name+'. Original game untouched.');return html.replace(needle,replacement);}
+function injection(){return $('townExtension').textContent;}
+async function launch(){
+ if(started)return;started=true;$('enter').disabled=true;$('loadStatus').textContent='Checking the original E.3 Solavren game…';
+ try{
+  const a=$('islandFile').files?.[0],b=$('collisionFile').files?.[0];
+  if(!!a!==!!b)throw Error('For exact v014C2 please choose BOTH matching island and collision files, or leave both blank.');
+  const response=await fetch('./'+BASE_GAME,{cache:'no-store'});if(!response.ok)throw Error('Original E.3 game is missing (HTTP '+response.status+').');
+  let source=await response.text();
+  if(!source.includes('LANPASU_E3_Island.glb.gz')||!source.includes('function frame(t)'))throw Error('Unexpected E.3 source version. No modifications were made.');
+  source=addBase(source);
+  // Optional, user-supplied official v014C2 world/physics. These GLBs are plain, not gzip.
+  for(const [field,asset,original] of [
+   ['islandFile','island',"'./LANPASU_E3_Island.glb.gz'"],
+   ['collisionFile','collision',"'./LANPASU_E3_Collision.glb.gz'"],
+   ['waterFile','water',"'./LANPASU_E3_Water.glb.gz'"]
+  ]){
+   const file=$(field).files?.[0];if(file){const u=URL.createObjectURL(file);urls.push(u);
+    source=swapOnce(source,asset+':'+original,asset+':'+JSON.stringify(u),'optional '+asset);}
+  }
+  const routes=$('routeFile').files?.[0];if(routes){const obj=JSON.parse(await routes.text());if(!Array.isArray(obj.spawn_xyz)&&!Array.isArray(obj.spawn))throw Error('Routes JSON lacks spawn coordinates.');
+   const routeUrl=URL.createObjectURL(routes);urls.push(routeUrl);
+   source=swapOnce(source,"fetch('./LANPASU_E3_Routes.json'","fetch("+JSON.stringify(routeUrl),'routes');
+  }
+  source=swapOnce(source,'active=true;attachCameraInput();','active=true;townReady();attachCameraInput();','ready hook');
+  source=swapOnce(source,'renderer.render(scene,camera);if(!lastHud','townUpdate(dt);renderer.render(scene,camera);if(!lastHud','frame hook');
+  const endTag='<'+'/script></body></html>';
+  source=swapOnce(source,endTag,'\n'+injection()+'\n'+endTag,'game extension');
+  $('loadStatus').textContent='🏝️ Building the town from your existing island and movement assets…';
+  $('game').srcdoc=source;
+  const safeTimeout=window.setTimeout(()=>{if(!ready){$('loadStatus').textContent='Still loading game assets. Check the island status inside the game or reload if it reports a missing file.';$('enter').disabled=false;$('enter').textContent='Try again';started=false;}},95000);
+  window.addEventListener('message',function handle(e){if(e.data?.source==='LANPASU_G20'&&e.data.kind==='ready'){clearTimeout(safeTimeout);window.removeEventListener('message',handle)} });
+ }catch(e){console.error(e);$('loadStatus').textContent='⚠ '+e.message;$('enter').disabled=false;$('enter').textContent='Try again';started=false;}
+}
+$('enter').onclick=launch;
+refreshLibrary();
+</script>
+<script type="text/plain" id="townExtension">// LANPASU G.2.0 — test-only resident extension injected into the ORIGINAL E.3 module.
+// Uses the existing scene, ground collision, rig and all 32 E.3 animations.
+import { clone as townSkeletonClone } from 'three/addons/utils/SkeletonUtils.js';
+const TOWN_API_VERSION='G.2.0-001';
+const townNPCs=new Map();
+let townLastSend=0;
+let townLastMove=0;
+const townClamped=(x,a,b)=>Math.max(a,Math.min(b,x));
+const townSafeString=(x,n=80)=>String(x==null?'':x).slice(0,n);
+const townGene=(g,key,def=50)=>townClamped(Number(g?.[key]??def)||0,0,100);
+const townHairShade=(g)=>{
+  const dark=townGene(g,'hairDarkness',75)/100,red=townGene(g,'hairRed',25)/100;
+  return new THREE.Color().setRGB(townClamped(.64-dark*.54+red*.14,.05,.78),townClamped(.42-dark*.33+red*.015,.035,.65),townClamped(.25-dark*.17-red*.075,.02,.55),THREE.SRGBColorSpace);
+};
+const townSkinShade=(g)=>{
+  const dark=townGene(g,'skinDarkness',50)/100;
+  const pigment=townGene(g,'skinPigment',50)/100;
+  const brown=townGene(g,'skinPigment',50)/100;
+  const shade=new THREE.Color().setRGB(townClamped(.93-dark*.57+(pigment-.5)*.08,.19,.98),townClamped(.75-dark*.48-(brown-.5)*.025,.13,.90),townClamped(.59-dark*.38-(pigment-.5)*.055,.08,.78),THREE.SRGBColorSpace);
+  return shade;
+};
+function townAppearance(rig,profile,isNeutral=false){
+  const genes=isNeutral?{}:(profile.genes||{});
+  const skin=townSkinShade(genes),hair=townHairShade(genes);
+  let palette=0;
+  rig.traverse(o=>{
+    if(!o.isMesh)return;
+    const meshName=(o.name||'').toLowerCase();
+    const materialArray=Array.isArray(o.material)?o.material:[o.material];
+    const mats=materialArray.map(mat=>{
+      if(!mat||!mat.isMaterial)return mat;
+      const n=(meshName+' '+(mat.name||'')).toLowerCase();
+      const material=mat.clone();
+      // Respect original rig materials and topology. These are test color variations;
+      // the Phase F full morphological avatar exporter will be integrated later.
+      const hairPart=/hair|curl|fringe|braid|afro|locs|ponytail|hairline/.test(n)&&!/eyebrow|lash|brow/.test(n);
+      const skinPart=/skin|body|face|head|neck|hand|arm|leg|foot|ear|nose|skin_base/.test(n)&&!/glove|shirt|short|scarf|cape|wrap|dress|pants|skirt/.test(n);
+      if(hairPart&&material.color)material.color.copy(hair);
+      if(skinPart&&material.color)material.color.copy(skin);
+      if(!isNeutral&&/shirt|shorts|trousers|dress|skirt|tunic|fabric|cloth/.test(n)&&material.color){
+        const hues=['#8ca8a1','#b7a5ad','#ae9c7b','#8397b7','#b5a891','#86aba1','#ac957d','#9e96b5'];
+        const c=new THREE.Color(hues[(Math.abs(Math.floor(townGene(genes,'hairDarkness',60)/14))+palette++)%hues.length]);
+        material.color.copy(c);
+      }
+      return material;
+    });
+    o.material=Array.isArray(o.material)?mats:mats[0];
+    o.frustumCulled=false;
+  });
+  const foundation=townSafeString(profile.foundation);
+  // Subtle test-only silhouette differentiation without modifying DNA.
+  const size=isNeutral?1:townClamped(.94+(townGene(genes,'height',50)-50)/320,.81,1.13);
+  const sexScale=foundation==='Male'?1.02:foundation==='Female'?.99:1;
+  rig.scale.multiplyScalar(size*sexScale);
+  rig.userData.townModelIsPreview=true;
+}
+function townNameplate(name){
+  const c=document.createElement('canvas');c.width=512;c.height=90;const context=c.getContext('2d');
+  context.fillStyle='rgba(14,55,47,.88)';context.beginPath();context.roundRect(16,6,480,72,24);context.fill();
+  context.lineWidth=3;context.strokeStyle='rgba(216,235,205,.7)';context.stroke();
+  context.fillStyle='#fff8df';context.font='600 35px system-ui,sans-serif';context.textAlign='center';
+  const short=String(name).slice(0,25);context.fillText(short,256,56,460);
+  const tx=new THREE.CanvasTexture(c);tx.colorSpace=THREE.SRGBColorSpace;
+  const s=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false,depthWrite:false}));
+  s.name='TownNPCName';s.position.set(0,2.12,0);s.scale.set(1.55,.29,1);s.renderOrder=950;
+  return s;
+}
+function townProfilesafe(x){
+  if(!x||typeof x!=='object')throw Error('Saved character profile is missing');
+  const p=x.profile&&x.profile.genes?x.profile:x;
+  if(!p.genes||typeof p.genes!=='object')throw Error('This character has no saved genes');
+  const ageAlz=Number.isFinite(Number(p.ageAlz))?Number(p.ageAlz):Number(p.age??18)*360;
+  if(ageAlz<18*360||ageAlz>=30*360)throw Error('Choose a saved Young Adult (18–29 Kimah)');
+  return {id:townSafeString(x.id||p.testNpcId||p.firstName+'-'+p.lastName,100),
+   firstName:townSafeString(p.firstName,60),lastName:townSafeString(p.lastName,60),
+   foundation:townSafeString(p.foundation,50),movementStyle:styles.includes(p.movement)?p.movement:styles.includes(p.movementStyle)?p.movementStyle:'Casual',
+   ageAlz,genes:p.genes,hair:townSafeString(p.hair,30)};
+}
+function townShowNPCs(){
+  return [...townNPCs.values()].map(n=>({id:n.data.id,name:n.name,style:n.data.movementStyle, foundation:n.data.foundation, demo:!!n.demo}));
+}
+function townEmit(kind,payload={}){try{window.parent.postMessage({source:'LANPASU_G20',kind,...payload},window.parent.location.origin)}catch(e){console.warn('town message',e)}}
+function townFindGround(seedR=2.8,angle=0){
+  if(!active||!collider)return null;
+  for(let pass=0;pass<24;pass++){
+    const a=angle+pass*2.399963,dist=seedR+Math.floor(pass/8)*1.25;
+    const x=foot.x+Math.cos(a)*dist,z=foot.z+Math.sin(a)*dist;
+    const p=new V(x,foot.y,z);let f=floorProbe(p,2.0,7.0);
+    if(f&&Math.abs(f.y-foot.y)<2.5&&townNPCs.size<20){
+      let clear=true;
+      for(const n of townNPCs.values())if(n.root.position.distanceToSquared(new V(x,f.y,z))<1.6){clear=false;break}
+      if(clear)return new V(x,f.y,z);
+    }
+  }
+  return null;
+}
+function townSwitchClip(n,kind){
+  if(n.clip===kind)return;
+  const key=n.data.movementStyle+'_'+kind;
+  let clip=clipMap[key]||clipMap['Casual_'+kind];if(!clip)return;
+  const action=n.mixer.clipAction(clip,n.rig);
+  action.reset().setLoop(THREE.LoopRepeat).setEffectiveWeight(1).play();
+  if(n.action&&n.action!==action)n.action.fadeOut(.22);
+  action.fadeIn(.22);n.action=action;n.clip=kind;
+}
+function townSpawn(input,demo=false){
+  if(!active||!animRoot||!scene)throw Error('Finish loading the island first');
+  const data=townProfilesafe(input);
+  if(townNPCs.has(data.id))throw Error('This character is already in town');
+  if(townNPCs.size>=8)throw Error('Test Town limit: eight NPCs at once (iPhone-friendly)');
+  const spot=townFindGround(2.8,Math.random()*Math.PI*2);
+  if(!spot)throw Error('Could not find safe walkable ground nearby');
+  const root=new THREE.Group();root.name='G20_NPC_'+data.id;
+  const rig=townSkeletonClone(animRoot);
+  townAppearance(rig,data,false);root.add(rig);
+  const fullName=(data.firstName+' '+data.lastName).trim()||'Unnamed Resident';
+  root.add(townNameplate(fullName));root.position.copy(spot);scene.add(root);
+  const resident={data,demo,name:fullName,root,rig,mixer:new THREE.AnimationMixer(rig),clip:'',action:null,
+   mood:'idle',target:null,think:1+Math.random()*3,speed:.55+Math.random()*.45,angle:Math.random()*6.28};
+  townNPCs.set(data.id,resident);
+  townSwitchClip(resident,'Idle');
+  townEmit('residents',{residents:townShowNPCs()});
+  return townShowNPCs();
+}
+function townRemove(id){
+  const n=townNPCs.get(String(id));if(!n)return false;
+  n.mixer.stopAllAction();scene.remove(n.root);
+  n.rig.traverse(o=>{if(!o.isMesh)return;for(const m of (Array.isArray(o.material)?o.material:[o.material]))if(m&&m.dispose)m.dispose()});
+  const plate=n.root.children.find(o=>o.name==='TownNPCName');if(plate){plate.material.map?.dispose();plate.material.dispose();}
+  townNPCs.delete(n.data.id);townEmit('residents',{residents:townShowNPCs()});return true;
+}
+function townWalk(dt,n){
+  n.think-=dt;
+  if(n.think<=0){
+    const canWalk=Math.random()>.28;
+    n.mood=canWalk?'walk':'idle';n.think=(canWalk?3.5:1.8)+Math.random()*3.6;
+    n.angle=Math.random()*Math.PI*2;
+  }
+  let walking=n.mood==='walk';
+  if(walking){
+    const heading=new V(Math.cos(n.angle),0,Math.sin(n.angle));
+    const curr=n.root.position;
+    const next=curr.clone().addScaledVector(heading,n.speed*dt);
+    const floor=floorProbe(new V(next.x,curr.y,next.z),.45,1.05);
+    const wall=cast(curr.clone().add(new V(0,.60,0)),heading,.43);
+    let blocked=!floor||Math.abs((floor?.y??curr.y)-curr.y)>.25||!!wall;
+    if(curr.distanceToSquared(foot)>2600)blocked=true;
+    if(!blocked){for(const x of townNPCs.values())if(x!==n&&next.distanceToSquared(x.root.position)<.53* .53){blocked=true;break;}}
+    if(next.distanceToSquared(foot)<.8*.8)blocked=true;
+    if(blocked){n.mood='idle';n.think=.3+Math.random()*1.5;walking=false;}
+    else{
+      curr.x=next.x;curr.z=next.z;curr.y+=(floor.y-curr.y)*Math.min(1,dt*10);
+      const facing=Math.atan2(heading.x,heading.z);
+      let d=angleDelta(facing,n.root.rotation.y);
+      n.root.rotation.y+=d*(1-Math.exp(-dt*6));
+    }
+  }
+  townSwitchClip(n,walking?'Walk':'Idle');n.mixer.update(dt);
+}
+function townUpdate(dt){
+  if(!active)return;
+  const elapsed=Math.min(.08,Math.max(0,dt||0));
+  for(const n of townNPCs.values())townWalk(elapsed,n);
+  townLastSend+=elapsed;
+  if(townLastSend>6){townLastSend=0;townEmit('pulse',{count:townNPCs.size})}
+}
+function townReady(){
+  // The E.3 main rig remains the original skinned model so its collisions,
+  // full 32 movement clips, and bespoke stair IK remain byte-for-byte preserved.
+  // Neutral visual colors only; the exact Phase F neutral mesh bridge is a future item.
+  townAppearance(animRoot,{foundation:'Neutral (Intersex)',genes:{}},true);
+  window.LANPASU_TOWN_API={
+    version:TOWN_API_VERSION,
+    add:(profile,demo=false)=>townSpawn(profile,!!demo),
+    remove:townRemove, list:townShowNPCs,
+    status:()=>({ready:active,count:townNPCs.size,player:'Neutral (Intersex) · 18 Kimah',
+      engine:'Original E.3 skinned rig + 32 movement clips',exactCreatorGeometry:false}),
+    resetResidents:()=>{for(const id of [...townNPCs.keys()])townRemove(id);return true;}
+  };
+  townEmit('ready',{version:TOWN_API_VERSION,engine:'E.3',player:'Neutral (Intersex) · 18 Kimah'});
+}
+</script>
+</body>
+</html>
