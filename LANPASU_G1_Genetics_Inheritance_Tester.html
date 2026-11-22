@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#eaf4ed">
+<title>LANPASU · Phase G.1 Genetics & Inheritance Test</title>
+<style>
+:root{color-scheme:light;--cream:#fcfaf3;--white:#fffefa;--sea:#207b69;--dark:#1c4239;--ink:#2a5146;--muted:#69877b;--line:#d9e8dd;--sky:#dceee7;--gold:#eccc93;--rose:#f4e4e3;--shadow:0 14px 46px rgba(33,79,63,.09)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%}body{background:radial-gradient(ellipse at 85% 0%,#d8ebe1 0%,transparent 45%),linear-gradient(160deg,#f7f7ec 5%,#e9f5ee 60%,#fbf5ec 100%);font-family:ui-rounded,"Avenir Next",system-ui,-apple-system,sans-serif;color:var(--ink);line-height:1.48}button,select,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.46;cursor:not-allowed}button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #31a591;outline-offset:3px}a{color:#207b69;text-decoration:none;font-weight:750}.hidden{display:none!important}strong{color:var(--dark)}
+.top{background:rgba(255,254,247,.92);border-bottom:1px solid var(--line);padding:12px max(16px,calc((100% - 1140px)/2));display:flex;align-items:center;justify-content:space-between;gap:12px}.mark{font:bold 24px Georgia,serif;letter-spacing:.09em;color:var(--dark);line-height:1}.mark small{display:block;font:800 10px system-ui,sans-serif;letter-spacing:.23em;color:#62a38a;margin-top:5px}.toplinks{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.toplinks a{font-size:12px}.tag{border:1px solid #c8e2d2;padding:6px 10px;background:#ecf7ed;border-radius:99px;font-size:11px;font-weight:800;color:#397865}.wrap{max-width:1120px;margin:0 auto;padding:25px 18px 64px}.hero{background:linear-gradient(115deg,#fffcf4,#e4f4e9);border:1px solid #d1e7d8;border-radius:26px;box-shadow:var(--shadow);padding:27px 29px;position:relative;overflow:hidden}.hero::after{content:'';position:absolute;right:-75px;top:-140px;width:310px;height:310px;border:35px solid #cfe8d7;border-radius:50%;opacity:.68;pointer-events:none}.eyebrow{font-size:11px;font-weight:850;color:#4e9780;letter-spacing:.19em;text-transform:uppercase}.hero h1{font:600 clamp(31px,4.9vw,53px) Georgia,serif;letter-spacing:-.045em;line-height:1.06;color:var(--dark);margin:10px 0 10px;position:relative;z-index:1}.hero p{max-width:660px;margin:0;color:#5e8073;font-size:14px;line-height:1.7;position:relative;z-index:1}.hero-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:17px}.status{background:#ebf7ec;border:1px solid #d0e4d3;padding:10px 13px;border-radius:13px;font-size:12px;color:#567d6e}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:15px}.card{background:var(--white);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 8px 25px rgba(45,82,61,.045)}.stack{display:grid;gap:16px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:26px 2px 12px}.section-head h2{font:600 26px Georgia,serif;margin:0;color:var(--dark)}.section-head small{font-size:12px;color:var(--muted)}.card h3{font:600 21px Georgia,serif;color:var(--dark);margin:0 0 7px}.card p{margin:0 0 14px;font-size:12px;color:var(--muted);line-height:1.6}.bar-title{font-size:12px;color:#548474;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.between{justify-content:space-between}.btn{border:1px solid #bed7c8;background:#fffefa;color:#276858;border-radius:13px;padding:10px 15px;min-height:42px;font-size:13px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:background .15s,transform .15s}.btn:hover{background:#eef8ef}.btn:active{transform:scale(.99)}.btn.primary{background:#257d69;color:white;border-color:#257d69}.btn.primary:hover{background:#226a59}.btn.secondary{background:#e4f1e6}.btn.small{padding:8px 11px;min-height:35px;font-size:11px}.btn.rose{background:#fff5f2;border-color:#e9cdc5;color:#92584d}.btn.block{width:100%}label.field{display:block;font-size:12px;color:#486f61;font-weight:750}label.field select,label.field input{display:block;margin-top:7px;width:100%;min-height:45px;border:1px solid #c9ddce;border-radius:12px;background:#fbfdf8;padding:10px 12px;color:#264d42;font-size:14px}label.field select:disabled{background:#f0f4f0;color:#9daaa3}.muted{color:var(--muted)!important}.tiny{font-size:11px;color:#789084}.notice{font-size:12px;border-radius:12px;padding:12px 13px;background:#f0f6ed;border:1px solid #dbe8d9;color:#507264;line-height:1.6}.warning{background:#fff3e8;border-color:#edd6be;color:#8a6d4c}.error{background:#fff0eb;border-color:#eac6bd;color:#99554a}.parent-head{display:flex;gap:11px;align-items:center;margin-bottom:13px}.avatar{width:50px;height:54px;display:grid;place-items:center;background:#e6efe6;border-radius:15px;font-size:28px}.parent-name{font-size:14px;font-weight:800;color:var(--dark)}.parent-notes{font-size:12px;color:var(--muted)}.chips{display:flex;flex-wrap:wrap;gap:6px}.chip{border-radius:99px;background:#edf5ed;padding:6px 9px;font-size:11px;color:#557d6f;font-weight:750}.chip.pink{background:#f8ebee;color:#956978}.chip.gold{background:#f5eddd;color:#936e3a}.divider{height:1px;background:#e0e9dd;margin:15px 0}.generated{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:13px;margin-top:15px}.baby-card{border:1px solid #d9e6d9;background:#fffefa;border-radius:18px;overflow:hidden}.baby-top{padding:15px;background:linear-gradient(112deg,#f7f4ec,#eaf5ec);display:flex;gap:12px;align-items:center}.baby-portrait{width:65px;height:72px;flex:0 0 65px;border-radius:15px;background:linear-gradient(#d8ece2,#eef3e9);position:relative;overflow:hidden}.baby-portrait::before{content:'';position:absolute;top:12px;left:17px;width:33px;height:38px;border-radius:44% 44% 47% 47%;background:var(--skin,#bb8c71);box-shadow:0 -9px 0 -3px var(--hair,#4e2a25)}.baby-portrait::after{content:'';position:absolute;bottom:-13px;left:1px;width:65px;height:37px;background:#f4f3ea;border-radius:50%}.baby-top h3{font:600 20px Georgia,serif;margin:0 0 4px;color:var(--dark)}.baby-info{font-size:12px;color:#668373}.baby-body{padding:13px}.baby-body .chips{margin-bottom:12px}.baby-actions{display:flex;gap:6px;flex-wrap:wrap}.baby-actions .btn{flex:1}.largebtn{font-size:14px;min-height:46px}.result-header{background:#ebf7ec;border:1px solid #cfe2d4;padding:12px 16px;border-radius:15px}.result-header strong{display:block;font-size:15px}.result-header small{font-size:11px;color:#618677}.compare{width:100%;border-collapse:collapse;margin-top:7px;font-size:12px}.compare th{color:#587d6e;background:#edf5ee;text-align:left;padding:9px}.compare td{padding:8px 9px;border-bottom:1px solid #edf1ea}.compare td.num{text-align:center;font-variant-numeric:tabular-nums}.compare tr:last-child td{border:0}.compare tr:hover td{background:#f7faf5}.comparison-box{overflow:auto;max-height:550px;border:1px solid #e0e9dd;border-radius:13px}.compare-col{color:#267c69;font-weight:800}.comp-tabs{display:flex;flex-wrap:wrap;gap:6px}.comp-tabs button.selected{background:#297a68;color:white}.statline{display:grid;grid-template-columns:175px 1fr 65px;align-items:center;gap:10px;font-size:12px;margin:9px 0}.statTrack{height:12px;background:#e5efe8;border-radius:99px;overflow:hidden}.statFill{height:100%;background:#66aa99;border-radius:99px;min-width:1px}.statnum{text-align:right;font-variant-numeric:tabular-nums}.footnote{margin-top:20px;text-align:center;font-size:11px;color:#759083;line-height:1.7}.file-hidden{display:none}.preview-overlay{position:fixed;inset:0;z-index:60;background:#e6f0e9;display:flex;flex-direction:column}.preview-top{background:#fcfcf6;padding:8px 12px;display:flex;gap:8px;align-items:center;justify-content:space-between;border-bottom:1px solid #cde0d2;min-height:58px}.preview-top strong{font-size:12px;display:block}.preview-top small{font-size:10px;color:#678276}.preview-frame{width:100%;flex:1;min-height:0;border:0;background:#ebf2e8}.toast{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom));left:50%;transform:translate(-50%,150px);background:#255649;color:white;padding:13px 17px;font-size:12px;border-radius:13px;box-shadow:var(--shadow);max-width:calc(100vw - 32px);text-align:center;z-index:100;transition:transform .2s,opacity .2s;opacity:0;pointer-events:none}.toast.show{transform:translate(-50%,0);opacity:1}.kicker{color:#43947f;font-size:11px;font-weight:850;text-transform:uppercase;letter-spacing:.18em}.helper{font-size:12px;color:#628173;line-height:1.65}details{border:1px solid #d8e5d9;background:#fbfdf8;border-radius:13px;padding:12px 14px}summary{cursor:pointer;font-size:13px;color:#2c6b5b;font-weight:800}.rules li{margin:6px 0;font-size:12px;color:#57796c}.spin{font-variant-numeric:tabular-nums;font-size:14px;font-weight:800;color:#287d69}
+@media(max-width:740px){.top{padding:11px 13px}.toplinks .tag{display:none}.mark{font-size:19px}.wrap{padding:15px 12px 47px}.hero{padding:22px 19px;border-radius:21px}.hero h1{font-size:38px}.grid2{grid-template-columns:1fr;gap:12px}.card{padding:17px;border-radius:19px}.section-head{margin-top:23px}.section-head h2{font-size:24px}.statline{grid-template-columns:116px 1fr 60px;gap:7px;font-size:10px}.preview-top{padding:7px 8px}.toplinks a{font-size:11px}.hero p{font-size:13px}.compare th,.compare td{padding:7px 5px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="mark">LANPASU<small>GENETICS LAB · PHASE G.1</small></div><nav class="toplinks"><span class="tag">✧ Test mode only</span><a href="./LANPASU_G_Character_Library.html">♡ Character Library</a></nav></header>
+<div class="wrap">
+<section class="hero"><span class="eyebrow">🌴 Your people. Their future.</span><h1>A little family of their own.</h1><p>Choose two saved parents and discover how their children inherit their faces, colors, hair textures, personality and movement. Their tapped hairstyles already contain the natural texture—no extra texture selection needed.</p><div class="hero-row"><span class="chip">🧬 63 inherited genes</span><span class="chip">🍼 Singles, twins & triplets</span><span class="chip">🤍 18 Kimah genetic reference</span></div></section>
+
+<div class="section-head"><div><h2>Meet the parents</h2><small>Reads characters from your existing Phase G library.</small></div><div class="row"><button class="btn small" type="button" id="refresh">↻ Refresh library</button><button class="btn small" type="button" id="sample">✧ Try sample parents</button><button class="btn small" type="button" id="import">↑ Import backup</button><input class="file-hidden" type="file" id="importFile" accept=".json,application/json"></div></div>
+<div id="libraryStatus" class="notice">Looking for your saved characters…</div>
+<div class="grid2" style="margin-top:12px">
+ <section class="card"><div class="parent-head"><div class="avatar">🌸</div><div><div class="parent-name">Mother</div><div class="parent-notes">Female foundation · saved profile</div></div></div><label class="field">Choose mother<select id="mother"></select></label><div class="divider"></div><div id="motherInfo" class="helper" style="margin-top:11px"></div></section>
+ <section class="card"><div class="parent-head"><div class="avatar">🌿</div><div><div class="parent-name">Father</div><div class="parent-notes">Male foundation · child's surname</div></div></div><label class="field">Choose father<select id="father"></select></label><div class="divider"></div><div id="fatherInfo" class="helper" style="margin-top:11px"></div></section>
+</div>
+<div class="notice" style="margin-top:12px">💍 <strong>Marriage rule:</strong> in the future game, only married Female–Male couples can conceive. Here, marriage is assumed for <strong>simulation only</strong>; no marriage or pregnancy is added to your actual game.</div>
+
+<div class="section-head"><div><h2>Generate a family</h2><small>True odds or a chosen test outcome.</small></div></div>
+<section class="card"><div class="grid2"><label class="field">Pregnancy test mode<select id="outcome"><option value="natural">🎲 Real probabilities — most likely one baby</option><option value="single">One baby (forced test)</option><option value="identical-twins">Identical twins (forced test)</option><option value="fraternal-twins">Fraternal twins (forced test)</option><option value="identical-triplets">Three identical triplets (forced test)</option><option value="paired-triplets">Two identical + one fraternal (forced test)</option><option value="fraternal-triplets">Three fraternal triplets (forced test)</option></select></label><div><div class="bar-title">Inherited from the saved profiles</div><p style="margin:7px 0 0">Every numeric gene stays between both parents. The midpoint is most likely; each trait is independently inherited. No mutations.</p></div></div><div class="divider"></div><div class="row between"><span class="helper" id="canGenerate">Choose two saved parents; hair texture is read from their selected hairstyles.</span><button class="btn primary largebtn" type="button" id="generate">🍼 Generate children</button></div></section>
+
+<section id="results" class="hidden"><div class="section-head"><div><h2>Meet their little ones 🥹</h2><small>Each child is a test profile, not an in-game birth.</small></div><button class="btn small" type="button" id="exportFamily">↓ Export test results</button></div><div id="resultHeader" class="result-header"></div><div id="children" class="generated"></div>
+ <section class="card" style="margin-top:16px"><div class="row between"><div><h3>See their inherited genes</h3><p>Compare mother → child → father, gene by gene.</p></div><div class="chips"><span class="chip">Exactly 63 genetic sliders</span><span class="chip">No mutations</span></div></div><div id="childTabs" class="comp-tabs" style="margin-bottom:10px"></div><div id="compare" class="comparison-box"></div></section>
+</section>
+
+<div class="section-head"><div><h2>Test the probabilities</h2><small>Thousands of simulated pregnancies without saving any babies.</small></div></div>
+<section class="card"><div class="row between"><p style="max-width:580px;margin:0">Your natural odds are <strong>98.761% single</strong>, <strong>0.4% identical twins</strong>, <strong>0.8% fraternal twins</strong>, <strong>0.004% identical triplets</strong> and <strong>0.035% mixed/fraternal triplets</strong>.</p><button class="btn secondary" id="runStats" type="button">✦ Simulate 100,000 pregnancies</button></div><div id="statistics" style="margin-top:12px" class="hidden"></div><div class="notice" style="margin-top:14px">💡 The <strong>forced tests</strong> above let you see rare twins and triplets immediately. They don't change the real pregnancy odds.</div></section>
+
+<div class="section-head"><h2>The rules we're protecting</h2></div>
+<details><summary>♡ Review the genetics and life-stage rules</summary><ul class="rules"><li><strong>63 genes:</strong> each numeric child value is between the two parent values, with a triangular midpoint-favored distribution and no mutations.</li><li><strong>Hair:</strong> parents’ tapped Teen+ hair styles (Hair_001–024) already specify their natural 1a–4c textures, no second selection; natural texture inherits between 1a and 4c; newborn face appears first, baby reveals hair color, toddler reveals broad texture (1–4) and starts weight development, child hair presentation and strength develop, teen reveals specific 1a–4c and body type; 18 Kimah is the adult genetics reference.</li><li><strong>Foundation:</strong> 49% Female, 49% Male, 2% Neutral (Intersex) per independent baby.</li><li><strong>Alignment:</strong> one ordered LG → NG → CG → LN → TN → CN → LE → NE → CE scale, midpoint most likely.</li><li><strong>MBTI:</strong> each letter inherits from one parent with 50/50 when letters differ. Movement style inherits 50/50 as one complete style.</li><li><strong>Siblings:</strong> identical children share the same inherited genes and foundation; fraternal children are independent. Mixed triplets are ⅓ paired identical + 1 fraternal and ⅔ all fraternal.</li><li><strong>Family:</strong> in real gameplay, parents must be married; children take their father's surname; pregnancy lasts 280 Alz.</li><li><strong>Safety:</strong> the finished v036 Creator and original Phase G Library are read-only unless you explicitly save a generated child.</li></ul></details>
+<div class="footnote">LANPASU · Phase G.1 · Prototype for future in-game inheritance<br>Library saves stay local to your device. Export backups regularly. The test does not create real NPCs, marriages, or pregnancies.</div>
+</div>
+
+<div class="preview-overlay hidden" id="preview" role="dialog" aria-modal="true" aria-label="3D character preview"><div class="preview-top"><div><strong id="previewName">Previewing child</strong><small>Temporary look in your original Phase F creator · original draft restored on closing</small></div><div class="row"><label class="field" style="font-size:10px">Age preview<select id="previewAge" style="margin:0;min-height:34px;padding:3px 6px;border-radius:9px;background:#fffdf7"><option value="0">Newborn · 0 Alz</option><option value="180">Baby · 180 Alz</option><option value="360">Toddler · 1 Kimah</option><option value="1440">Child · 4 Kimah</option><option value="4320">Teen · 12 Kimah</option><option value="6480">Young Adult · 18 Kimah</option></select></label><button class="btn primary small" id="closePreview" type="button">✕ Back</button></div></div><iframe id="previewFrame" class="preview-frame" title="LANPASU original Character Creator preview" loading="lazy"></iframe></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+/* BEGIN REUSABLE GENETICS ENGINE */
+/* LANPASU Phase G.1 v002 — selected-hairstyle texture inheritance.
+   A future game can reuse these functions without changing the creator.
+   Never mutates any parent profile or library object. */
+const LANPASU_G1_ENGINE=(()=>{
+'use strict';
+const ALIGNMENTS=['Lawful Good','Neutral Good','Chaotic Good','Lawful Neutral','True Neutral','Chaotic Neutral','Lawful Evil','Neutral Evil','Chaotic Evil'];
+const TEXTURES=['1a','1b','1c','2a','2b','2c','3a','3b','3c','4a','4b','4c'];
+const STYLES=['Casual','Confident','Reserved','Athletic','Elegant','Playful','Grounded','Mysterious'];
+const FOUNDATION=['Female','Male','Neutral (Intersex)'];
+const GENDER_ODDS=[.49,.49,.02];
+const PREGNANCY=[
+ {id:'single',label:'One baby',weight:98.761},
+ {id:'identical-twins',label:'Identical twins',weight:.4},
+ {id:'fraternal-twins',label:'Fraternal twins',weight:.8},
+ {id:'identical-triplets',label:'Three identical triplets',weight:.004},
+ {id:'mixed-triplets',label:'Mixed / fraternal triplets',weight:.035}
+];
+const clone=o=>JSON.parse(JSON.stringify(o));
+const round=v=>Math.round(Number(v));
+const allowed=(a,v)=>a.includes(v);
+const TEXTURE_HAIR_IDS=Object.fromEntries(TEXTURES.map((t,i)=>[t,['Hair_'+String(i*2+1).padStart(3,'0'),'Hair_'+String(i*2+2).padStart(3,'0')]]));
+// Read the same selected Teen+ hairstyle stored by the finished Phase F creator.
+// The real 37-style catalog maps Hair_001/002→1a through Hair_023/024→4c.
+// The parent's latest tapped hairstyle takes priority over old derived metadata.
+function textureFromProfile(p){
+ const id=/^Hair_(\d{3})$/.exec(String(p?.hair||''));
+ if(id){const n=Number(id[1]);if(n>=1&&n<=24)return TEXTURES[Math.floor((n-1)/2)];}
+ // Compatibility for generated child profiles with age-only hair models.
+ const saved=String(p?.naturalHairTexture||p?.inheritance?.naturalHairTexture||'').toLowerCase();
+ return TEXTURES.includes(saved)?saved:null;
+}
+
+function midpointInt(a,b,rng=Math.random){
+  if(!Number.isFinite(Number(a))||!Number.isFinite(Number(b)))throw Error('Invalid inherited gene input');
+  const lo=round(Math.min(Number(a),Number(b))),hi=round(Math.max(Number(a),Number(b)));
+  if(lo===hi)return lo;
+  return Math.min(hi,Math.max(lo,round(lo+((rng()+rng())/2)*(hi-lo))));
+}
+function rollGender(rng=Math.random){const x=rng();return x<.49?'Female':x<.98?'Male':'Neutral (Intersex)';}
+function rollPregnancy(rng=Math.random){let x=rng()*100;for(const row of PREGNANCY){x-=row.weight;if(x<0)return row.id;}return PREGNANCY.at(-1).id;}
+function rollTripletSubtype(rng=Math.random){return rng()<1/3?'paired-triplets':'fraternal-triplets';}
+function rollMBTI(a,b,rng=Math.random){
+ const letters=x=>Array.isArray(x)?x:String(x||'').split('');
+ const p=letters(a),q=letters(b),sets=[['E','I'],['S','N'],['T','F'],['J','P']];
+ if(p.length!==4||q.length!==4||sets.some((s,i)=>!s.includes(p[i])||!s.includes(q[i])))throw Error('Both parents need valid MBTI');
+ return p.map((v,i)=>v===q[i]?v:(rng()<.5?v:q[i]));
+}
+function rollAlignment(a,b,rng=Math.random){const i=ALIGNMENTS.indexOf(a),j=ALIGNMENTS.indexOf(b);if(i<0||j<0)throw Error('Both parents need a chosen alignment');return ALIGNMENTS[midpointInt(i,j,rng)];}
+function rollTexture(a,b,rng=Math.random){const i=TEXTURES.indexOf(String(a).toLowerCase()),j=TEXTURES.indexOf(String(b).toLowerCase());if(i<0||j<0)throw Error('Confirm both parents’ natural hair texture (1a–4c)');return TEXTURES[midpointInt(i,j,rng)];}
+function isProfile(p){return p&&typeof p==='object'&&p.genes&&typeof p.genes==='object'&&!Array.isArray(p.genes)&&typeof p.foundation==='string';}
+function validateParents(m,f,keys){
+ if(!isProfile(m)||!isProfile(f))throw Error('Select two valid saved parent profiles');
+ if(m.foundation!=='Female'||f.foundation!=='Male')throw Error('The test needs a Female mother and Male father');
+ if(!String(f.lastName||'').trim())throw Error('Give the father a surname in the creator first');
+ for(const key of keys){const x=m.genes[key],y=f.genes[key];if(!Number.isFinite(Number(x))||!Number.isFinite(Number(y))||x===null||y===null)throw Error('Parent is missing gene '+key);}
+ if(!allowed(ALIGNMENTS,m.alignment)||!allowed(ALIGNMENTS,f.alignment))throw Error('Both parents must have an alignment selected');
+ if(!allowed(STYLES,m.movement)||!allowed(STYLES,f.movement))throw Error('Both parents must have a movement style');
+ rollMBTI(m.mbti,f.mbti,()=>.49);
+ if(!textureFromProfile(m))throw Error('Mother needs a selected Teen+ hairstyle saved in Phase F (1a–4c).');
+ if(!textureFromProfile(f))throw Error('Father needs a selected Teen+ hairstyle saved in Phase F (1a–4c).');
+ return true;
+}
+function childGenotype(m,f,keys,mTexture,fTexture,rng=Math.random){
+ const genes={};for(const k of keys)genes[k]=midpointInt(m.genes[k],f.genes[k],rng);
+ return {genes,foundation:rollGender(rng),mbti:rollMBTI(m.mbti,f.mbti,rng),alignment:rollAlignment(m.alignment,f.alignment,rng),movement:rng()<.5?m.movement:f.movement,naturalHairTexture:rollTexture(mTexture,fTexture,rng)};
+}
+function genotypeToProfile(g, surname,index, styleRng=Math.random){
+ const styleRoute=g.foundation==='Female'?0:g.foundation==='Male'?1:(styleRng()<.5?0:1);
+ const profile={
+  schema:'LANPASU_Phase_F_v001', firstName:'Baby '+index, lastName:String(surname).trim().slice(0,60),
+  age:0, ageAlz:0, foundation:g.foundation, mbti:[...g.mbti], alignment:g.alignment,
+  genes:{...g.genes},hair:TEXTURE_HAIR_IDS[g.naturalHairTexture][styleRoute],
+  hairFit:{scale:100,y:0,z:0},outfit:'E-C starter set',movement:g.movement,action:'Idle',
+  naturalHairTexture:g.naturalHairTexture,
+  inheritance:{schema:'LANPASU_G1_CHILD_GENOTYPE_V1',naturalHairTexture:g.naturalHairTexture, hairPresentation:styleRoute?'Male':'Female'}
+ };
+ return profile;
+}
+function family(m,f,keys,forced='natural',rng=Math.random){
+ validateParents(m,f,keys);
+ const mTexture=textureFromProfile(m),fTexture=textureFromProfile(f);
+ let kind=forced==='natural'?rollPregnancy(rng):forced;
+ if(kind==='mixed-triplets')kind=rollTripletSubtype(rng);
+ let groups;
+ switch(kind){
+ case 'single':groups=[0];break;
+ case 'identical-twins':groups=[0,0];break;
+ case 'fraternal-twins':groups=[0,1];break;
+ case 'identical-triplets':groups=[0,0,0];break;
+ case 'paired-triplets':groups=[0,0,1];break;
+ case 'fraternal-triplets':groups=[0,1,2];break;
+ default:throw Error('Unsupported pregnancy outcome');
+ }
+ const types=new Map();const children=groups.map((group,i)=>{
+  if(!types.has(group)){
+   const genotype=childGenotype(m,f,keys,mTexture,fTexture,rng);
+   const hairPresentation=genotype.foundation==='Female'?0:genotype.foundation==='Male'?1:(rng()<.5?0:1);
+   types.set(group,{genotype,hairPresentation});
+  }
+  const stored=types.get(group),inherited=clone(stored.genotype);
+  const profile=genotypeToProfile(inherited,f.lastName,i+1,()=>stored.hairPresentation?.1:.1);
+  return {childIndex:i+1,identicalGroup:group,genotype:inherited,profile};
+ });
+ return {schema:'LANPASU_G1_TEST_V1',kind,n:children.length,children,parents:[{firstName:m.firstName,lastName:m.lastName,foundation:m.foundation,texture:mTexture},{firstName:f.firstName,lastName:f.lastName,foundation:f.foundation,texture:fTexture}],generatedAt:new Date().toISOString(),testOnly:true};
+}
+function verifyFamily(family,m,f,keys){
+ const errors=[];const groupProfiles=new Map();
+ for(const child of family.children){
+  const p=child.profile;
+  for(const key of keys){const lo=Math.min(m.genes[key],f.genes[key]),hi=Math.max(m.genes[key],f.genes[key]);if(p.genes[key]<lo||p.genes[key]>hi)errors.push('Gene out of parent range: '+key);}
+  if(p.lastName!==f.lastName)errors.push('Wrong surname');
+  if(!FOUNDATION.includes(p.foundation))errors.push('Invalid foundation');
+  const alignIndex=ALIGNMENTS.indexOf(p.alignment),aIndex=ALIGNMENTS.indexOf(m.alignment),bIndex=ALIGNMENTS.indexOf(f.alignment);
+  if(alignIndex<Math.min(aIndex,bIndex)||alignIndex>Math.max(aIndex,bIndex))errors.push('Alignment out of parental range');
+  if(![m.movement,f.movement].includes(p.movement))errors.push('Movement style not inherited from a parent');
+  const getLetters=x=>Array.isArray(x)?x:String(x||'').split('');
+  const letters=getLetters(p.mbti),left=getLetters(m.mbti),right=getLetters(f.mbti);
+  if(letters.length!==4||letters.some((v,i)=>v!==left[i]&&v!==right[i]))errors.push('MBTI not inherited from parental letters');
+  const tx=TEXTURES.indexOf(p.naturalHairTexture),lo=Math.min(TEXTURES.indexOf(family.parents[0].texture),TEXTURES.indexOf(family.parents[1].texture)),hi=Math.max(TEXTURES.indexOf(family.parents[0].texture),TEXTURES.indexOf(family.parents[1].texture));
+  if(tx<lo||tx>hi)errors.push('Texture out of parental range');
+  const group=child.identicalGroup;
+  const inheritance={genes:p.genes,foundation:p.foundation,mbti:p.mbti,alignment:p.alignment,movement:p.movement,naturalHairTexture:p.naturalHairTexture};
+  if(groupProfiles.has(group)&&JSON.stringify(groupProfiles.get(group))!==JSON.stringify(inheritance))errors.push('Identical sibling mismatch');
+  groupProfiles.set(group,inheritance);
+ }
+ return {passed:errors.length===0,errors};
+}
+return Object.freeze({ALIGNMENTS,TEXTURES,STYLES,FOUNDATION,GENDER_ODDS,PREGNANCY,TEXTURE_HAIR_IDS,textureFromProfile,midpointInt,rollGender,rollPregnancy,rollTripletSubtype,rollMBTI,rollAlignment,rollTexture,validateParents,childGenotype,genotypeToProfile,family,verifyFamily});
+})();
+
+/* END REUSABLE GENETICS ENGINE */
+</script>
+<script>
+const GENE_GROUPS={"body":{"Build & height":[["fullness","Body fullness"],["muscle","Muscularity"],["height","Height"]],"Neck & shoulders":[["neck","Neck circumference"],["shoulder","Shoulder width"]],"Chest, waist & torso":[["chestSize","Chest size"],["chestDepth","Chest depth"],["waist","Waist width"],["stomach","Stomach shape"],["torsoLength","Torso length"]],"Hips & buttocks":[["hipWidth","Hip width"],["hipShape","Hip shape"],["gluteSize","Buttock size"],["gluteShape","Buttock shape"]],"Arms, legs, hands & feet":[["upperArm","Upper arm thickness"],["forearm","Forearm thickness"],["thigh","Thigh thickness"],["calf","Calf thickness"],["handSize","Hand size"],["footSize","Foot size"]]},"face":{"Face shape & forehead":[["headWidth","Head width"],["cranialDepth","Cranial depth"],["foreheadHeight","Forehead height"],["templeWidth","Temple width"]],"Eyes":[["eyeSize","Eye size"],["eyeWidth","Eye width"],["eyeHeight","Eye height"],["eyeSpacing","Eye spacing"],["eyeTilt","Eye tilt"],["eyeDepth","Eye depth"]],"Eyebrows":[["browThickness","Eyebrow thickness"],["browHeight","Eyebrow height"],["browArch","Eyebrow arch"]],"Nose":[["noseSize","Nose size"],["noseLength","Nose length"],["noseWidth","Nose width"],["bridgeHeight","Bridge height"],["bridgeShape","Bridge shape"],["tipProjection","Tip projection"],["tipShape","Tip shape"],["nostrilWidth","Nostril width"]],"Mouth & lips":[["mouthSize","Mouth size"],["mouthWidth","Mouth width"],["upperLipFullness","Upper lip fullness"],["lowerLipFullness","Lower lip fullness"],["lipProjection","Lip projection"],["mouthCornerTilt","Mouth corner tilt"]],"Cheeks & ears":[["cheekFullness","Cheek fullness"],["cheekboneProminence","Cheekbone prominence"],["cheekboneHeight","Cheekbone height"],["earSize","Ear size"],["earProjection","Ear projection"],["earLength","Ear length"]],"Jaw & chin":[["jawWidth","Jaw width"],["jawAngle","Jaw angle"],["chinProjection","Chin projection"],["chinLength","Chin length"],["chinShape","Chin shape"]]},"color":{"Skin":[["skinPigment","Skin pigment"],["skinDarkness","Skin darkness"]],"Eyes":[["eyeColor","Eye color"]]},"hair":{"Hair pigment":[["hairRed","Red / orange pigment"],["hairDarkness","Dark pigment"]]}};
+(()=>{
+'use strict';
+const ENGINE=LANPASU_G1_ENGINE;
+window.LANPASU_G1_ENGINE=ENGINE;
+const LIBKEY='LANPASU_G_CHARACTER_LIBRARY_V1';
+const DRAFT='LANPASU_F_ALLPARTS_PROFILE';
+const GUARD='LANPASU_G1_TEMP_PREVIEW_DRAFT_BACKUP_V1';
+const $=id=>document.getElementById(id);
+const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const deep=x=>JSON.parse(JSON.stringify(x));
+const labels={};
+for(const cat of Object.values(GENE_GROUPS))for(const group of Object.values(cat))for(const [k,label] of group)labels[k]=label;
+const geneKeys=Object.keys(labels);
+if(geneKeys.length!==63)throw Error('Expected the 63 unchanged Phase F genes');
+const state={entries:[],mode:'saved',source:'none',generated:null,viewChild:0,previewIndex:null,previewOpen:false,previousMother:'',previousFather:''};
+let timer;
+function toast(message){const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>el.classList.remove('show'),3900);}
+function valid(p){return p&&typeof p==='object'&&p.genes&&geneKeys.every(k=>Number.isFinite(Number(p.genes[k]))&&p.genes[k]!==null)&&p.foundation&&p.hair;}
+function name(p){return [p?.firstName,p?.lastName].filter(x=>typeof x==='string'&&x.trim()).join(' ').trim()||'Unnamed character';}
+function uid(){return typeof crypto!=='undefined'&&crypto.randomUUID?crypto.randomUUID():'g1-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
+function readSaved(){try{const raw=localStorage.getItem(LIBKEY);if(!raw)return [];const lib=JSON.parse(raw);if(!Array.isArray(lib.characters))throw Error('Library record damaged');return lib.characters.filter(x=>x&&valid(x.profile)).map(x=>({id:x.id,profile:deep(x.profile)}));}catch(e){toast('Cannot read the local Character Library. You can import a JSON backup instead.');return [];}}
+function sampleEntries(){
+ const base=Object.fromEntries(geneKeys.map(k=>[k,50]));
+ const mom={schema:'LANPASU_Phase_F_v001',firstName:'Mira',lastName:'Vale',foundation:'Female',genes:{...base},hair:'Hair_001',mbti:['E','N','F','P'],alignment:'Lawful Good',movement:'Elegant',age:24,ageAlz:8640};
+ const dad={schema:'LANPASU_Phase_F_v001',firstName:'Kael',lastName:'Shore',foundation:'Male',genes:{...base},hair:'Hair_024',mbti:['I','S','T','J'],alignment:'Chaotic Evil',movement:'Athletic',age:27,ageAlz:9720};
+ for(const [i,k] of geneKeys.entries()){mom.genes[k]=Math.min(100,Math.max(0,Math.round(25+(i*17)%46)));dad.genes[k]=Math.min(100,Math.max(0,Math.round(48+(i*23)%45)));}
+ mom.genes.skinDarkness=23;dad.genes.skinDarkness=82;
+ return [{id:'demo-mother',profile:mom},{id:'demo-father',profile:dad}];
+}
+function sourceEntries(entries,mode){state.entries=entries;state.mode=mode;state.generated=null;state.viewChild=0;$('results').classList.add('hidden');
+ const female=entries.filter(x=>x.profile.foundation==='Female');const male=entries.filter(x=>x.profile.foundation==='Male');
+ const setSelect=(id,arr,previous)=>{const el=$(id);el.replaceChildren(new Option(arr.length?'Choose a parent…':'No matching parents found',''));for(const c of arr)el.add(new Option(name(c.profile),c.id));el.value=arr.some(x=>x.id===previous)?previous:(arr[0]?.id||'');};
+ setSelect('mother',female,state.previousMother);setSelect('father',male,state.previousFather);
+ if(mode==='sample'){$('libraryStatus').className='notice warning';$('libraryStatus').innerHTML='✧ <strong>Sample mode.</strong> These two people are imaginary test parents; they have NOT been added to your Character Library.';}
+ else if(mode==='import'){$('libraryStatus').className='notice';$('libraryStatus').innerHTML=`✦ Imported ${entries.length} profile${entries.length!==1?'s':''} for this test only. Your saved library is unchanged.`;}
+ else if(!entries.length){$('libraryStatus').className='notice warning';$('libraryStatus').innerHTML='No saved parents found on this device. Create a Female and Male character in your <a href="./LANPASU_G_Character_Library.html">Character Library</a>, or use sample parents to try the genetics test.';}
+ else{$('libraryStatus').className='notice';$('libraryStatus').innerHTML=`✦ Found <strong>${entries.length} saved character${entries.length!==1?'s':''}</strong> from your existing Phase G library. This page only reads them.`;}
+ // Parents’ natural texture is inferred solely from their saved hairstyle IDs.
+ syncParentControls();}
+function current(id){return state.entries.find(x=>x.id===$(id).value)?.profile||null;}
+function infoFor(id){
+ const p=current(id),field=id==='mother'?'motherInfo':'fatherInfo';
+ if(!p){$(field).textContent='Select a saved parent profile.';return;}
+ const texture=ENGINE.textureFromProfile(p);
+ $(field).innerHTML=`<div class="chips"><span class="chip">${esc(p.mbti?.join('')||p.mbti||'—')}</span><span class="chip">${esc(p.alignment||'Alignment missing')}</span><span class="chip">${esc(p.movement||'Movement missing')}</span><span class="chip gold">${geneKeys.filter(k=>p.genes?.[k]!==undefined).length}/63 genes</span></div><div class="notice ${texture?'':'warning'}" style="margin-top:12px">${texture?`✦ <strong>Hair texture: ${esc(texture.toUpperCase())}</strong> · Automatically from your chosen <strong>${esc(p.hair)}</strong> hairstyle. No extra selection.`:`Choose an original Teen+ hairstyle in the Character Creator and save the parent again. The saved hairstyle (${esc(p.hair||'none')}) does not contain a complete 1a–4c texture.`}</div>`;
+}
+function syncParentControls(){infoFor('mother');infoFor('father');checkReady();}
+function checkReady(){const m=current('mother'),f=current('father');let err='';
+ try{ENGINE.validateParents(m,f,geneKeys);}catch(e){err=e.message;}
+ $('generate').disabled=!!err;$('canGenerate').textContent=err||'Ready! Both parent textures were read automatically from their saved hairstyles.';
+ return !err;}
+function outcomeName(kind){return ({single:'One baby','identical-twins':'Identical twins','fraternal-twins':'Fraternal twins','identical-triplets':'Three identical triplets','paired-triplets':'Two identical + one fraternal triplet','fraternal-triplets':'Three fraternal triplets'})[kind]||kind;}
+function portraitStyle(p){const s=p.genes?.skinDarkness??50,h=p.genes?.hairDarkness??50,r=p.genes?.hairRed??25;
+ // Presentation-only icons, NOT a substitute for the creator's true skin palette.
+ const skin=`hsl(${22+s*.05},${28+s*.01}%,${81-s*.56}%)`,hair=`hsl(${30-r*.13},${20+r*.12}%,${73-h*.62}%)`;
+ return `--skin:${skin};--hair:${hair}`;}
+function generate(){if(!checkReady())return;try{const m=current('mother'),f=current('father');const result=ENGINE.family(m,f,geneKeys,$('outcome').value);const qa=ENGINE.verifyFamily(result,m,f,geneKeys);if(!qa.passed)throw Error('Genetic check failed: '+qa.errors[0]);result.qa=qa;state.generated=result;state.viewChild=0;renderFamily();toast('Generated '+result.n+' child'+(result.n!==1?'ren':'')+' with all 63 inherited genes! ♡');}catch(e){toast(e.message);}}
+function renderFamily(){const g=state.generated;if(!g)return;const m=current('mother'),f=current('father');$('results').classList.remove('hidden');
+ $('resultHeader').innerHTML=`<strong>🍼 ${esc(outcomeName(g.kind))} — ${g.n} child${g.n!==1?'ren':''}</strong><small>Mother: ${esc(name(m))} · Father: ${esc(name(f))} · Surname: ${esc(f.lastName)} · 63/63 genetic range checks passed</small>`;
+ $('children').innerHTML=g.children.map((c,i)=>{const p=c.profile;const group=c.identicalGroup;const twins=g.children.filter(x=>x.identicalGroup===group).length>1;return `<article class="baby-card"><div class="baby-top"><div class="baby-portrait" aria-hidden="true" style="${esc(portraitStyle(p))}"></div><div><h3>${esc(name(p))}</h3><div class="baby-info">${esc(p.foundation)} · 0 Alz / Newborn</div></div></div><div class="baby-body"><div class="chips"><span class="chip pink">${twins?'Identical sibling group '+(group+1):'Independent inheritance'}</span><span class="chip">${esc(p.naturalHairTexture)} texture</span><span class="chip">${esc(p.mbti.join(''))}</span><span class="chip">${esc(p.alignment)}</span><span class="chip gold">${esc(p.movement)}</span></div><div class="baby-actions"><button type="button" class="btn small primary" data-c-action="preview" data-index="${i}">✧ 3D preview</button><button type="button" class="btn small" data-c-action="compare" data-index="${i}">🧬 Compare genes</button><button type="button" class="btn small" data-c-action="save" data-index="${i}">♡ Save to library</button><button type="button" class="btn small" data-c-action="export" data-index="${i}">↓ JSON</button></div></div></article>`;}).join('');
+ $('childTabs').innerHTML=g.children.map((c,i)=>`<button type="button" class="btn small ${i===state.viewChild?'selected':''}" data-c-action="compare" data-index="${i}">Baby ${i+1}</button>`).join('');renderCompare();$('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function renderCompare(){const g=state.generated;if(!g)return;const m=current('mother'),f=current('father'),c=g.children[state.viewChild].profile;
+ $('childTabs').querySelectorAll('button').forEach((b,i)=>b.classList.toggle('selected',i===state.viewChild));
+ let rows='';for(const [category,groups] of Object.entries(GENE_GROUPS)){
+ rows+=`<tr><th colspan="4" style="background:#e4eee4;font-size:12px">${esc(category.toUpperCase())}</th></tr>`;
+ for(const pairs of Object.values(groups))for(const [k,label] of pairs){const a=m.genes[k],v=c.genes[k],b=f.genes[k];rows+=`<tr data-gene="${esc(k)}"><td>${esc(label)}</td><td class="num">${a}</td><td class="num compare-col">${v}</td><td class="num">${b}</td></tr>`;}
+ }
+ $('compare').innerHTML=`<table class="compare"><thead><tr><th>Inherited trait</th><th>Mother</th><th>Child</th><th>Father</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+function download(obj,filename){const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);}
+function exportChild(i){const c=state.generated?.children[i];if(c){download(c.profile,`LANPASU_G1_Baby_${i+1}_${String(c.profile.lastName).replace(/[^\w-]+/g,'_')}.json`);toast('Child profile exported; no library changes.');}}
+function saveChild(i){const c=state.generated?.children[i];if(!c)return;const p=c.profile;
+ if(!confirm(`Save ${name(p)} as a NEW character in your existing Phase G Library? This test profile is not an in-game birth.`))return;
+ try{const raw=localStorage.getItem(LIBKEY);if(!raw)throw Error('Your Phase G Library is empty or unavailable. Export JSON and import it from the Library instead.');
+  const lib=JSON.parse(raw);if(!Array.isArray(lib.characters))throw Error('Library format is incompatible. No changes made.');
+  if(lib.characters.length>=120)throw Error('Library has 120 characters; export a backup before adding more.');
+  const saved=deep(lib),time=new Date().toISOString();saved.characters.push({id:uid(),profile:deep(p),createdAt:time,updatedAt:time});
+  localStorage.setItem(LIBKEY,JSON.stringify(saved));toast(name(p)+' saved as a new library slot! ♡');
+ }catch(e){toast('Save was not completed: '+e.message);}}
+function importBackup(obj){let items=[];if(Array.isArray(obj?.characters))items=obj.characters.map(x=>({id:uid(),profile:x?.profile||x}));else if(valid(obj?.profile))items=[{id:uid(),profile:obj.profile}];else if(valid(obj))items=[{id:uid(),profile:obj}];items=items.filter(x=>valid(x.profile));if(!items.length)throw Error('No valid LANPASU parent profiles in JSON');return items;}
+async function importFile(file){if(!file)return;if(file.size>4_000_000){toast('JSON backup is larger than 4 MB');return;}try{const entries=importBackup(JSON.parse(await file.text()));state.previousMother='';state.previousFather='';sourceEntries(entries,'import');toast(entries.length+' parent profiles loaded for testing only.');}catch(e){toast('Import failed: '+e.message);}}
+function restoreDraft(){try{const raw=localStorage.getItem(GUARD);if(!raw)return;const b=JSON.parse(raw);if(b.had)localStorage.setItem(DRAFT,b.raw);else localStorage.removeItem(DRAFT);localStorage.removeItem(GUARD);}catch(e){console.warn('Could not restore Phase F draft:',e);}}
+function closePreview(){if(!state.previewOpen)return;state.previewOpen=false;$('previewFrame').src='about:blank';$('preview').classList.add('hidden');restoreDraft();state.previewIndex=null;}
+function previewChild(i){if(!state.generated?.children[i])return;const p=state.generated.children[i].profile;try{if(!state.previewOpen){const original=localStorage.getItem(DRAFT);if(localStorage.getItem(GUARD))restoreDraft();localStorage.setItem(GUARD,JSON.stringify({had:original!==null,raw:original}));}
+ state.previewOpen=true;state.previewIndex=i;$('previewAge').value='0';$('preview').classList.remove('hidden');$('previewName').textContent=name(p)+' · 3D genetics preview';updatePreviewAge();
+ }catch(e){toast('Cannot open 3D preview: Safari storage is unavailable.');closePreview();}}
+function updatePreviewAge(){if(!state.previewOpen||state.previewIndex===null)return;const p=deep(state.generated.children[state.previewIndex].profile);const age=Number($('previewAge').value);p.ageAlz=age;p.age=age/360;
+ try{localStorage.setItem(DRAFT,JSON.stringify(p));$('previewFrame').src='./LANPASU_F_FullCustomization_Viewer.html?v=g1-test-'+age+'-'+Date.now();}catch(e){toast('Cannot write temporary character preview.');closePreview();}}
+function stats(){const N=100000;const counts=Object.fromEntries(ENGINE.PREGNANCY.map(x=>[x.id,0]));for(let i=0;i<N;i++)counts[ENGINE.rollPregnancy()]++;
+ const data=ENGINE.PREGNANCY.map(x=>({label:x.label,want:x.weight,observed:counts[x.id]/N*100,count:counts[x.id]}));
+ $('statistics').classList.remove('hidden');$('statistics').innerHTML='<div class="divider"></div><div class="bar-title">Observed vs expected · 100,000 trials</div>'+data.map(x=>`<div class="statline"><span>${esc(x.label)}</span><div class="statTrack"><div class="statFill" style="width:${Math.max(.5,x.observed)}%"></div></div><span class="statnum">${x.observed.toFixed(3)}%</span></div>`).join('')+'<p class="tiny" style="margin-top:10px">Actual counts: '+data.map(x=>`${esc(x.label)} ${x.count.toLocaleString()}`).join(' · ')+'</p><p class="tiny">The rarest outcomes fluctuate. Run the simulation again to see natural variation.</p>';
+ toast('100,000 pregnancy outcomes simulated!');}
+
+$('refresh').addEventListener('click',()=>{state.previousMother=$('mother').value;state.previousFather=$('father').value;sourceEntries(readSaved(),'saved');toast('Character Library refreshed.');});
+$('sample').addEventListener('click',()=>{state.previousMother='';state.previousFather='';sourceEntries(sampleEntries(),'sample');checkReady();toast('Example mother and father loaded. No real characters changed.');});
+$('import').addEventListener('click',()=>$('importFile').click());$('importFile').addEventListener('change',async e=>{await importFile(e.target.files?.[0]);e.target.value='';});
+function clearResult(){state.generated=null;state.viewChild=0;$('results').classList.add('hidden');}
+$('mother').addEventListener('change',()=>{infoFor('mother');checkReady();clearResult();});
+$('father').addEventListener('change',()=>{infoFor('father');checkReady();clearResult();});
+
+$('generate').addEventListener('click',generate);$('runStats').addEventListener('click',stats);
+$('children').addEventListener('click',e=>{const b=e.target.closest('button[data-c-action]');if(!b)return;const i=Number(b.dataset.index);switch(b.dataset.cAction){case 'compare':state.viewChild=i;renderCompare();$('compare').scrollIntoView({behavior:'smooth',block:'nearest'});break;case 'preview':previewChild(i);break;case 'save':saveChild(i);break;case 'export':exportChild(i);break;}});
+$('childTabs').addEventListener('click',e=>{const b=e.target.closest('button[data-c-action="compare"]');if(!b)return;state.viewChild=Number(b.dataset.index);renderCompare();});
+$('exportFamily').addEventListener('click',()=>{if(state.generated){download(state.generated,'LANPASU_G1_Family_Genetics_Test.json');toast('Complete test family exported!');}});
+$('closePreview').addEventListener('click',closePreview);$('previewAge').addEventListener('change',updatePreviewAge);
+window.addEventListener('pagehide',()=>{if(state.previewOpen)restoreDraft();});
+window.addEventListener('storage',e=>{if(e.key===LIBKEY&&state.mode==='saved')$('libraryStatus').textContent='Your saved Character Library changed. Tap “Refresh library” to update the parents.';});
+restoreDraft();sourceEntries(readSaved(),'saved');
+})();
+
+</script>
+</body>
+</html>
