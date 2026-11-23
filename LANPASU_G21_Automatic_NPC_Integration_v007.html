@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#dbeadf">
+<title>LANPASU · G.2.1 Automatic NPC Integration · v007</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#dae9e0;color:#153e38;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:default}
+#game{position:fixed;inset:0;width:100%;height:100%;border:0;background:linear-gradient(160deg,#cce6de,#f2ecdb)}
+#splash{position:fixed;inset:0;z-index:30;background:linear-gradient(145deg,#b9dfda,#edf0de 60%,#e5cda9);display:grid;place-items:center;padding:16px;overflow:auto}
+.hero{max-width:535px;width:100%;background:#fbfbf2ed;padding:24px;border-radius:25px;box-shadow:0 24px 90px #264a3c2d;border:1px solid #ffffffb8}
+.hero .eyebrow{font-size:11px;letter-spacing:.17em;text-transform:uppercase;font-weight:850;color:#478174}.hero h1{font-family:ui-serif,Georgia,serif;font-size:36px;line-height:1.03;letter-spacing:-1.1px;margin:10px 0 12px}.hero p{font-size:14px;line-height:1.5;color:#48635b;margin:9px 0}
+.sun{font-size:39px;line-height:1}.pill{display:inline-block;background:#e3eee4;border:1px solid #bbd5c5;padding:5px 11px;border-radius:99px;font-size:11px;font-weight:850;color:#316353}
+.hero button.primary{display:block;width:100%;padding:14px 20px;color:#fffbed;background:#285d50;border:0;border-radius:13px;font-weight:800;margin-top:17px;min-height:50px}
+.hero button.primary:hover{background:#1b4b42}.hero small{font-size:11px;color:#63786e}
+.option{margin-top:13px;padding:13px 14px;background:#edf3e8;border:1px solid #d7e6d7;border-radius:13px}
+.option summary{font-weight:760;cursor:pointer;font-size:13px}.assets label{font-size:11px;font-weight:750;display:block;margin:8px 0 4px}.assets input{display:block;width:100%;font-size:11px;background:#fff;padding:6px;border-radius:8px}
+#loadStatus{min-height:17px;font-size:12px;font-weight:700;color:#426d60;margin-top:12px;white-space:pre-wrap;overflow-wrap:anywhere}
+#toolbar{display:none;position:fixed;top:max(9px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:10;align-items:center;gap:7px;background:#123d34e8;border:1px solid #e3f1c875;border-radius:17px;color:#fcf9e9;padding:6px;box-shadow:0 8px 30px #102c2a50;max-width:calc(100vw - 22px)}
+#toolbar .brand{font-weight:850;letter-spacing:.02em;font-size:11px;white-space:nowrap;padding-left:8px;line-height:1.4}
+#toolbar small{font-weight:500;opacity:.74;font-size:9px;display:block}
+#toolbar button{background:#ecf5e5;color:#245343;border:0;border-radius:11px;padding:9px 11px;white-space:nowrap;font-size:11px;font-weight:850;min-height:39px}
+#toolbar #addBtn{background:#bfe7d2}
+#shade{position:fixed;z-index:12;inset:0;background:#0d262855;display:none}
+#panel{position:fixed;z-index:13;right:0;top:0;bottom:0;max-width:390px;width:min(100vw,390px);background:#f6f8ed;box-shadow:-14px 0 60px #143e344a;transform:translateX(103%);transition:transform .26s ease;padding:18px 17px max(22px,env(safe-area-inset-bottom));overflow:auto}
+#panel.open{transform:translateX(0)}.panelhead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+#panel h2{font-family:Georgia,ui-serif,serif;font-size:26px;line-height:1.1;margin:3px 0 5px}
+#panel .lead{color:#64796d;font-size:12px;line-height:1.45}
+#panelClose{background:#e2eee4;border:0;border-radius:50%;width:37px;height:37px;font-size:18px;color:#2b5b4a}
+.segment{display:flex;padding:3px;gap:4px;border-radius:12px;background:#e8eee4;margin:18px 0}
+.segment button{flex:1;border:0;background:transparent;padding:10px 5px;border-radius:9px;font-size:12px;font-weight:760;color:#54685c}
+.segment button.active{background:#fffdfa;color:#1c5446;box-shadow:0 2px 7px #24402213}
+.entry{border:1px solid #d7e7d5;background:#fffefa;border-radius:14px;padding:12px;display:flex;align-items:center;gap:10px;margin:8px 0}
+.entry .avatar{width:43px;height:43px;border-radius:50%;flex:none;background:#dce7da;display:grid;place-items:center;font-size:22px}
+.entry .details{flex:1;min-width:0}.entry strong{display:block;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.entry small{font-size:11px;color:#698174;display:block;line-height:1.5}
+.entry button{flex:none;border:0;background:#2b6354;color:white;font-size:11px;font-weight:800;border-radius:9px;min-height:37px;padding:8px 11px}
+.entry button.remove{background:#f3e4dc;color:#8d4f3c}
+.note{font-size:11px;line-height:1.5;background:#eaf3e9;border:1px solid #dae8d9;color:#536e5b;padding:11px 12px;border-radius:13px;margin:12px 0}
+.none{padding:30px 12px;text-align:center;border:1px dashed #b6ccb6;border-radius:14px;font-size:13px;color:#61806f;margin-top:12px}
+#toast{pointer-events:none;position:fixed;z-index:25;bottom:max(145px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);max-width:min(94vw,400px);min-width:200px;display:none;text-align:center;background:#113f34ed;color:#fff8e9;border-radius:14px;padding:12px 16px;font-weight:750;font-size:12px;box-shadow:0 10px 25px #0f261a5b}
+#avatarLivePill{position:fixed;z-index:15;top:calc(max(9px,env(safe-area-inset-top)) + 115px);left:50%;transform:translateX(-50%);max-width:min(95vw,470px);display:none;padding:9px 14px;border-radius:99px;background:#164337e8;border:1px solid #e2f4df8c;color:#faffee;font-size:11px;font-weight:780;text-align:center;pointer-events:none;box-shadow:0 6px 18px #133a3040}
+.floating{position:fixed;left:50%;top:calc(max(9px,env(safe-area-inset-top)) + 75px);transform:translateX(-50%);z-index:5;color:#fcffea;background:#164337c9;border-radius:99px;padding:7px 11px;font-size:11px;text-align:center;pointer-events:none;white-space:nowrap;display:none}
+.ghost{border:1px solid #a4cdb6;color:#275e4b;background:transparent;padding:8px 11px;border-radius:10px;font-size:12px;font-weight:750}
+#fileImport{display:none}
+@media(max-width:430px){.hero{padding:20px}.hero h1{font-size:33px}#toolbar{gap:4px;border-radius:13px;padding:4px}#toolbar .brand{font-size:10px;padding-left:5px}#toolbar button{padding:7px 8px;font-size:10px;min-height:34px}#toolbar small{font-size:8px}.floating{top:calc(max(9px,env(safe-area-inset-top)) + 60px)}#toast{bottom:156px}}
+</style>
+</head>
+<body>
+<iframe id="game" title="LANPASU playable island test town" allow="fullscreen"></iframe>
+<div id="splash">
+ <div class="hero">
+  <div class="sun">🌴</div>
+  <div class="eyebrow">Lanpasu · Non-canon RPG · G.2.1 v007 · Automatic Citizens</div>
+  <h1>Your citizens, already here.<br>Let them move naturally.</h1>
+  <span class="pill">🧍 Neutral player · 18 Kimah</span> <span class="pill">🌺 Up to 2 saved citizens at once</span>
+  <p>Play as the original neutral Young Adult while your saved Young Adult citizens appear automatically, wearing their own hairstyles and clothes. Their exact Phase F faces and bodies now use the repaired v006 mesh buffers plus the original E.3 Idle/Walk animations. Citizens wander independently; no manual reveal or animation buttons.</p>
+  <p><strong id="savedCount">Checking your saved characters…</strong></p>
+  <details class="option"><summary>🏝️ Optional: choose exact official v014C2 world files</summary>
+   <p>Leave these blank for automatic GitHub E.3 island loading. If you have the original v014C2 town files on this device, choose the matched island and collision files together. They are never uploaded.</p>
+   <div class="assets"><label>Latest island · Lanpasu_Island_v014C2_RoutePolish.glb</label><input id="islandFile" type="file" accept=".glb" />
+   <label>Matching collision · Lanpasu_Collision_v010C2_RoutePolish.glb</label><input id="collisionFile" type="file" accept=".glb" />
+   <label>Matching routes · Lanpasu_Traversal_v010_routes.json</label><input id="routeFile" type="file" accept=".json" />
+   <label>Water · Lanpasu_Water_v006_StoneSprings.glb</label><input id="waterFile" type="file" accept=".glb" /></div>
+  </details>
+  <button class="primary" id="enter">🏝️ Enter Living Test Town</button>
+  <div id="loadStatus">This separate v007 test integration uses your existing E.3 game and Phase F creator without editing either. Full iPhone gameplay verification still matters.</div>
+  <small>Your saved Young Adult characters join automatically after the island opens. Only two exact, detailed NPCs load at once for an initial iPhone-safe test. Other saved citizens remain in your library; you can swap residents from the panel. No character data is edited.</small>
+ </div>
+</div>
+<div id="toolbar"><div class="brand">🌺 TEST TOWN <small>NEUTRAL · 18 Kimah</small></div><button id="addBtn">＋ Citizens</button><button id="residentsBtn">Residents <span id="residentCount">0</span></button></div>
+<div class="floating" id="floating">Real saved citizens stroll independently · Walk / Run / Jump to explore</div>
+<div id="shade"></div>
+<aside id="panel" aria-label="Add and manage NPC residents">
+ <div class="panelhead"><div><div class="eyebrow" style="font-size:10px;font-weight:900;letter-spacing:.13em;color:#6a9980">LANPASU · POPULATION</div><h2>Meet the residents 🌿</h2><div class="lead">Your saved Young Adults enter automatically, then walk around while you explore as the neutral default. Swap or remove them here.</div></div><button id="panelClose" aria-label="Close residents panel">×</button></div>
+ <div class="segment"><button id="tabSaved" class="active">Saved Young Adults</button><button id="tabActive">In Town (<span id="residentCountPanel">0</span>)</button></div>
+ <div class="note" style="background:#fff9de;border-color:#e4d6a6"><strong>🌿 Automatic citizen loading</strong>
+  <div style="margin-top:5px">Up to two saved Young Adults automatically join after the island loads, one at a time. Their actual 63-gene appearance, hair, outfit, and skeletal walking animations are preserved. The original neutral player stays unchanged. For a third citizen, remove one of the current two first.</div>
+ </div>
+  <section id="savedList"></section><section id="activeList" hidden></section>
+ <div id="avatarStatus" role="status" aria-live="polite" class="note" style="display:none"></div>
+ <div class="note">🧬 Exact appearance: Phase F v036 creates each saved citizen’s actual body, face, hairstyle and clothes; E.3 provides the Idle/Walk motions. No generic replacement meshes. The very first hairstyle load can briefly slow Safari.</div>
+ <button class="ghost" id="refresh">↻ Refresh Character Library</button> <button class="ghost" id="importBtn">Import library backup</button><input id="fileImport" type="file" accept="application/json,.json">
+</aside>
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="avatarLivePill" role="status" aria-live="polite">🧬 Preparing exact character…</div>
+
+<button id="diagOpen" type="button" style="display:none;position:fixed;right:10px;top:calc(max(9px,env(safe-area-inset-top)) + 70px);z-index:24;background:#315b4b;color:white;border:1px solid #d0e8c6;border-radius:11px;padding:10px;font-size:12px;font-weight:850">🛠️ Logs</button>
+<section id="diagBox" style="display:none;position:fixed;right:8px;top:calc(max(9px,env(safe-area-inset-top)) + 116px);z-index:24;width:min(95vw,430px);max-height:60vh;overflow:auto;background:#fffef4;color:#204437;border-radius:14px;border:1px solid #a9bfaf;padding:12px;box-shadow:0 12px 48px #142b2577;font-size:12px">
+ <div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><strong>🛠️ G.2.1 v007 · Citizen Status</strong><button id="diagClose" type="button" style="border:0;background:#e4ece0;padding:7px;border-radius:8px">×</button></div>
+ <div id="diagLast" style="padding:8px 0;font-weight:750;overflow-wrap:anywhere">No test recorded yet</div>
+ <div style="font-size:11px;line-height:1.45;color:#5c776d;margin:7px 0">Animations and exact meshes turn on automatically. Use this only if you need to share an error report.</div>
+ <div style="display:flex;gap:6px;flex-wrap:wrap;margin:10px 0">
+  <button id="diagCopy" type="button" class="ghost" style="font-size:11px">Copy report</button>
+  <button id="diagClear" type="button" class="ghost" style="font-size:11px">Clear log</button>
+ </div>
+ <pre id="diagLog" style="font:10px/1.5 ui-monospace,SFMono-Regular,monospace;white-space:pre-wrap;overflow-wrap:anywhere;background:#e5eee6;border-radius:9px;padding:9px;max-height:26vh;overflow:auto"></pre>
+</section>
+<iframe id="avatarCore" title="Phase F v036 exact mesh source" aria-hidden="true" tabindex="-1" style="position:fixed;left:-500px;top:-500px;width:4px;height:4px;opacity:0;pointer-events:none;border:0"></iframe>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const LIB_KEY='LANPASU_G_CHARACTER_LIBRARY_V1';
+const TEST_KEY='LANPASU_G21_V007_AUTO_NPCS_TEST_ONLY'; // own test slot: never modify v001-v006 tests
+const MAX_NPC=2; // Staged maximum for early iPhone Safari testing; later phases may scale further.
+const pendingNPCs=new Set();
+const PHASE_F_CORE='LANPASU_F_FullCustomization_Core.html';
+let meshLoadPromise=null, meshQueue=Promise.resolve();
+const failedNPCs=new Set(); // reject a resident if the first GPU draw fails after exact capture
+const BASE_GAME='LANPASU_E3_Solavren_Game.html';
+let entries=[],inGame=[],ready=false,started=false,tab='saved',imported=[],urls=[],toastTimer=null;
+const TRACE_KEY='LANPASU_G21_V007_TRACE_V1';
+let trace=[];try{const old=JSON.parse(localStorage.getItem(TRACE_KEY)||'[]');if(Array.isArray(old))trace=old.slice(-80)}catch(e){}
+const PREVIOUS_RUN_LAST=trace.length?trace[trace.length-1]:null;
+let traceLast='No test recorded';
+function TRACE(stage,detail=''){
+ const message=String(stage).slice(0,110), extra=String(detail==null?'':typeof detail==='object'?JSON.stringify(detail):detail).slice(0,210);
+ const event={at:new Date().toISOString(),stage:message,detail:extra};trace.push(event);trace=trace.slice(-80);traceLast=message;
+ try{localStorage.setItem(TRACE_KEY,JSON.stringify(trace))}catch(e){}
+ updateTraceUI();
+}
+window.LANPASU_G21_DIAG=TRACE;
+function updateTraceUI(){
+ const last=trace[trace.length-1];const node=$('diagLast'),area=$('diagLog');if(!node||!area)return;
+ node.textContent=(PREVIOUS_RUN_LAST?'Previous session ended: '+PREVIOUS_RUN_LAST.stage+(PREVIOUS_RUN_LAST.detail?' · '+PREVIOUS_RUN_LAST.detail:'')+' | ':'')+(last?'Current: '+last.stage+(last.detail?' · '+last.detail:''):'No test recorded yet');
+ area.textContent=trace.slice(-32).map((e,i)=>e.at.slice(11,19)+'  '+e.stage+(e.detail?' · '+e.detail:'')).join('\n')||'No events yet';
+}
+window.addEventListener('error',e=>TRACE('PARENT SCRIPT ERROR',e.message||e.error?.message||'unknown'));
+window.addEventListener('unhandledrejection',e=>TRACE('PARENT PROMISE REJECTION',e.reason?.message||String(e.reason)));
+
+const G21_DEFAULT_GENES={"fullness":50,"muscle":50,"height":50,"neck":50,"shoulder":50,"chestSize":50,"chestDepth":50,"waist":50,"stomach":50,"torsoLength":50,"hipWidth":50,"hipShape":50,"gluteSize":50,"gluteShape":50,"upperArm":50,"forearm":50,"thigh":50,"calf":50,"handSize":50,"footSize":50,"headWidth":50,"cranialDepth":50,"foreheadHeight":50,"templeWidth":50,"eyeSize":50,"eyeWidth":50,"eyeHeight":50,"eyeSpacing":50,"eyeTilt":50,"eyeDepth":50,"browThickness":50,"browHeight":50,"browArch":50,"noseSize":50,"noseLength":50,"noseWidth":50,"bridgeHeight":50,"bridgeShape":50,"tipProjection":50,"tipShape":50,"nostrilWidth":50,"mouthSize":50,"mouthWidth":50,"upperLipFullness":50,"lowerLipFullness":50,"lipProjection":50,"mouthCornerTilt":50,"cheekFullness":50,"cheekboneProminence":50,"cheekboneHeight":50,"earSize":50,"earProjection":50,"earLength":50,"jawWidth":50,"jawAngle":50,"chinProjection":50,"chinLength":50,"chinShape":50,"skinPigment":50,"skinDarkness":50,"eyeColor":75,"hairRed":25,"hairDarkness":75};
+const demoProfiles=[
+ {id:'G20_demo_1',profile:{firstName:'Demo',lastName:'Marina',age:18,ageAlz:6480,foundation:'Female',hair:'Hair_015',movement:'Playful',hairFit:{scale:100,y:0,z:0},genes:{...G21_DEFAULT_GENES,height:43,skinDarkness:18,skinPigment:55,hairDarkness:15,hairRed:77}}},
+ {id:'G20_demo_2',profile:{firstName:'Demo',lastName:'Orin',age:18,ageAlz:6480,foundation:'Male',hair:'Hair_016',movement:'Grounded',hairFit:{scale:100,y:0,z:0},genes:{...G21_DEFAULT_GENES,height:68,skinDarkness:73,skinPigment:40,hairDarkness:88,hairRed:18}}}
+];
+const short=s=>String(s??'').slice(0,80);
+function names(entry){const p=entry.profile||entry;return ((p.firstName||'')+' '+(p.lastName||'')).trim()||'Unnamed resident';}
+function youngAdult(entry){const p=entry?.profile||entry;if(!p||typeof p!=='object'||!p.genes)return false;const age=Number.isFinite(Number(p.ageAlz))?Number(p.ageAlz):Number(p.age??18)*360;return age>=6480&&age<10800;}
+function notify(msg){$('toast').textContent=short(msg);$('toast').style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').style.display='none',3500)}
+function showMeshProgress(msg){const p=$('avatarLivePill');p.textContent=msg;p.style.display='block';}
+function hideMeshProgress(){const p=$('avatarLivePill');p.style.display='none';}
+function restoreTownInput(){try{$('game').contentWindow?.focus();}catch(e){/* Safari may not shift keyboard focus; touch controls remain available. */}}
+function stored(){try{const j=JSON.parse(localStorage.getItem(LIB_KEY)||'{}');return Array.isArray(j.characters)?j.characters:[];}catch(e){return []}}
+function refreshLibrary(){
+ const all=[...stored(),...imported];const seen=new Set();
+ entries=all.filter(youngAdult).map((x,i)=>({id:String(x.id||'imported-'+i),profile:x.profile||x})).filter(x=>{if(seen.has(x.id))return false;seen.add(x.id);return true;});
+ $('savedCount').textContent=entries.length?entries.length+' saved Young Adult'+(entries.length!==1?'s':'')+' available for automatic town loading.':'No saved Young Adults in this browser yet; you can add demo residents manually.';
+ render();return entries;
+}
+function activeAPI(){try{return $('game').contentWindow?.LANPASU_TOWN_API||null}catch(e){return null}}
+function getSavedTest(){try{const j=JSON.parse(localStorage.getItem(TEST_KEY)||'{}');return Array.isArray(j.npcs)?j.npcs:[]}catch(e){return []}}
+function persist(){try{localStorage.setItem(TEST_KEY,JSON.stringify({schema:'LANPASU_G20_001',updated:new Date().toISOString(),npcs:inGame.map(n=>({id:n.id,profile:n.profile,demo:!!n.demo}))}))}catch(e){console.warn('Cannot save G.2.0 temporary town:',e)}}
+function element(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e;}
+function makeEntry(entry,active){
+ const p=entry.profile||entry,div=element('div','entry');
+ const avatar=element('div','avatar',p.foundation==='Male'?'🧑':p.foundation==='Female'?'👩':'🧍');
+ const details=element('div','details'),title=element('strong','',names(entry));
+ const age=(Number(p.ageAlz??(Number(p.age??18)*360))/360).toFixed(0);
+ const desc=element('small','',((p.foundation||'Neutral')+' · '+age+' Kimah · '+(p.movement||p.movementStyle||'Casual')).slice(0,110));
+ details.append(title,desc);const btn=element('button',active?'remove':'add',active?'Remove':'＋ Add');
+ if(active)btn.addEventListener('click',()=>removeResident(entry.id));
+ else{const here=inGame.some(x=>x.id===entry.id),waiting=pendingNPCs.has(entry.id);btn.disabled=here||waiting||!ready||(inGame.length+pendingNPCs.size)>=MAX_NPC;btn.textContent=here?'In town ✓':waiting?'Loading…':'＋ Add';btn.addEventListener('click',async()=>{btn.disabled=true;
+ // The old panel shade intercepted EVERY joystick/camera gesture after adding a resident.
+ // Uncover the playable island first, then build the Phase F avatar.
+ closePanel();restoreTownInput();
+ TRACE('PARENT: manual add clicked',names(entry));
+ await new Promise(r=>requestAnimationFrame(()=>setTimeout(r,0)));
+ await spawn(entry,false);render();});}
+ div.append(avatar,details,btn);return div;
+}
+function render(){
+ const saved=$('savedList'),active=$('activeList');saved.replaceChildren();active.replaceChildren();
+ for(const entry of entries)saved.append(makeEntry(entry,false));
+ if(!entries.length){saved.append(element('div','none','No saved Young Adults here yet. Save a character in the LANPASU Character Library or try the test villagers below.'));}
+ const demos=element('div','lead','TEST-ONLY VILLAGERS');demos.style.marginTop='20px';demos.style.fontWeight='800';saved.append(demos);
+ for(const d of demoProfiles)saved.append(makeEntry(d,false));
+ for(const n of inGame)active.append(makeEntry(n,true));
+ if(!inGame.length)active.append(element('div','none','No residents in town yet. Saved citizens join automatically when available.'));
+ $('residentCount').textContent=inGame.length;$('residentCountPanel').textContent=inGame.length;
+ $('tabSaved').classList.toggle('active',tab==='saved');$('tabActive').classList.toggle('active',tab==='active');
+ saved.hidden=tab!=='saved';active.hidden=tab!=='active';
+}
+function openPanel(nextTab='saved'){$('panel').classList.add('open');$('shade').style.display='block';tab=nextTab;refreshLibrary();}
+function closePanel(){$('panel').classList.remove('open');$('shade').style.display='none';}
+async function spawn(entry,demo){
+ const api=activeAPI();if(!api){notify('The island is still loading.');return false}
+ if(inGame.some(x=>x.id===entry.id)||pendingNPCs.has(entry.id)){notify('That resident is already here or loading.');return false}
+ if(inGame.length+pendingNPCs.size>=MAX_NPC){notify('Two residents maximum for this iPhone-safe test. Remove one to swap.');return false}
+ pendingNPCs.add(entry.id);
+ TRACE('PARENT: starting add',names(entry));
+ try{
+  const name=names(entry);
+  const message='🧬 Loading '+name+'’s exact avatar… Safari may slow briefly on first import.';
+  $('avatarStatus').style.display='block';$('avatarStatus').textContent=message;
+  showMeshProgress(message);render();
+  // Permit a game frame before starting the large creator asset load.
+  await new Promise(r=>setTimeout(r,20));
+  await api.add(entry,demo||String(entry.id).startsWith('G20_demo_'),'automatic');
+  if(failedNPCs.has(String(entry.id)))throw Error('Rendering this exact NPC failed; the game remains playable.');
+  TRACE('PARENT: add returned successfully',name);
+  inGame.push({id:entry.id,profile:structuredClone(entry.profile),demo:demo||String(entry.id).startsWith('G20_demo_')});
+  persist();render();notify('🌺 '+name+' joined and is walking!');return true;
+ }catch(e){TRACE('PARENT: add failed',e.message||e);notify('Exact avatar failed: '+(e.message||e));console.error('G.2.1 exact avatar load:',e);return false}
+ finally{pendingNPCs.delete(entry.id);$('avatarStatus').style.display='none';hideMeshProgress();render();restoreTownInput();}
+}
+function removeResident(id){const api=activeAPI();if(!api)return;
+ try{api.remove(id);inGame=inGame.filter(x=>x.id!==id);persist();render();notify('Resident removed from test town.');}catch(e){notify('Removal failed: '+e.message)}
+}
+function onTownReady(){if(ready)return;ready=true;started=true;
+ $('splash').style.display='none';$('toolbar').style.display='flex';$('floating').style.display='block';$('diagOpen').style.display='block';TRACE('GAME: town ready');
+ // v007: automatically hydrate the town with exact saved citizens in a serial, resource-limited queue.
+ refreshLibrary();notify('🏝️ Welcome! Your saved Young Adults will join automatically.');
+ // Delay startup just enough to let the player's first island frame and controls render.
+ setTimeout(()=>autoPopulate(),350);
+}
+let autoPopulateRunning=false;
+async function autoPopulate(){
+ if(autoPopulateRunning||!ready)return;
+ autoPopulateRunning=true;
+ try{
+  refreshLibrary();
+  if(!entries.length){TRACE('AUTO: no saved Young Adults');notify('No saved citizens yet. Use ＋ Citizens for demos or save a Young Adult in the Character Library.');return;}
+  const recent=getSavedTest().map(x=>String(x.id));
+  const ordered=[...entries].sort((a,b)=>{
+    const ia=recent.indexOf(a.id),ib=recent.indexOf(b.id);
+    return (ia<0?999:ia)-(ib<0?999:ib);
+  });
+  TRACE('AUTO: saved citizens discovered',entries.length+' eligible; max '+MAX_NPC);
+  let loaded=0;
+  for(const resident of ordered){
+    if(!ready||inGame.length>=MAX_NPC)break;
+    if(inGame.some(x=>x.id===resident.id)||pendingNPCs.has(resident.id))continue;
+    // One exact CPU mesh and hairstyle per turn prevents stacked GPU and memory spikes.
+    TRACE('AUTO: loading',names(resident));
+    const ok=await spawn(resident,false);
+    if(ok)loaded++;
+    await new Promise(r=>setTimeout(r,220));
+  }
+  TRACE('AUTO: completed',loaded+' loaded; '+inGame.length+' in town');
+  if(loaded)notify('🌺 '+inGame.length+' real citizen'+(inGame.length===1?'':'s')+' now in town, walking independently!');
+  else if(!inGame.length)notify('Could not load the saved citizens. Open 🛠️ Logs to see why; player game is still available.');
+ }catch(e){TRACE('AUTO: error',e.message||e);notify('Citizen loading stopped; original game is still playable.');}
+ finally{autoPopulateRunning=false;render();restoreTownInput();}
+}
+window.addEventListener('message',event=>{if(event.origin!==location.origin||event.source!==$('game').contentWindow)return;const m=event.data;if(!m||m.source!=='LANPASU_G20')return;
+ if(m.kind==='ready')onTownReady();
+ if(m.kind==='pulse')$('residentCount').textContent=m.count;
+ if(m.kind==='residents'){$('residentCount').textContent=m.residents?.length??inGame.length;}
+ if(m.kind==='npcError'){
+  failedNPCs.add(String(m.id));
+  inGame=inGame.filter(n=>String(n.id)!==String(m.id));persist();render();
+  TRACE('PARENT: NPC rejected after render',m.id+' | '+m.message);
+  notify('A citizen could not render safely. Other town controls still work.');
+ }
+});
+$('addBtn').onclick=()=>openPanel('saved');$('residentsBtn').onclick=()=>openPanel('active');$('shade').onclick=closePanel;$('panelClose').onclick=closePanel;
+$('tabSaved').onclick=()=>{tab='saved';render()};$('tabActive').onclick=()=>{tab='active';render()};$('refresh').onclick=()=>{refreshLibrary();notify('Character Library refreshed.');};
+$('importBtn').onclick=()=>$('fileImport').click();$('fileImport').onchange=async event=>{
+ const file=event.target.files?.[0];if(!file)return;try{const data=JSON.parse(await file.text());const records=Array.isArray(data)?data:Array.isArray(data.characters)?data.characters:Array.isArray(data.library?.characters)?data.library.characters:[];
+  imported=records.filter(youngAdult);refreshLibrary();notify('Imported '+imported.length+' Young Adults for this test. Originals unchanged.');if(ready)autoPopulate();
+ }catch(e){notify('Could not read library backup JSON.')} event.target.value='';};
+function addBase(html){const base=new URL('./',location.href).href.replaceAll('&','&amp;');return html.replace(/<head>/i,'<head><base href="'+base+'">')}
+function swapOnce(html,needle,replacement,name){if(!html.includes(needle))throw Error('The E.3 game structure has changed at '+name+'. Original game untouched.');return html.replace(needle,replacement);}
+const G21_CORE_EXTENSION="// G.2.1 mesh snapshot is a READ-ONLY view of this existing v036 creator, never an edit to its GitHub source.\n// The actual 3D meshes, morphs, bone poses, skin/eye/hair materials and fitted outfits come from Phase F.\nconst G21_DIAG=(s,d)=>{try{window.parent.LANPASU_G21_DIAG(s,d)}catch(e){}};\nconst G21_YIELD=()=>new Promise(resolve=>setTimeout(resolve,0));\n// CPU-only hidden source: avoid two active WebGL canvases competing for Safari GPU memory.\ntry{renderer.setAnimationLoop(null);renderer.forceContextLoss();renderer.dispose();}catch(err){console.warn('Hidden Phase F renderer release',err);}\nasync function LANPASU_G21_CAPTURE(p){\n if(!F3.loaded||!model||!ecState)throw Error('Phase F model has not loaded');\n // Wait until the approved v037 orbital/age bridge is applied to the source.\n if(!lanpasuAgeReady){G21_DIAG('F: loading age shapes');await lanpasuAgeLoad();G21_DIAG('F: age shapes ready');}\n if(!p||!p.genes)throw Error('Saved profile has no genetic appearance data');\n const snapshot={...p,age:18,ageAlz:6480,action:'Idle',movement:'Casual'};\n G21_DIAG('F: applying saved genetic profile');\n coreSync(snapshot);G21_DIAG('F: coreSync completed');\n const fit=snapshot.hairFit||{scale:100,y:0,z:0};\n hairFitScale=THREE.MathUtils.clamp((Number(fit.scale)||100)/100,.85,1.15);\n hairFitY=THREE.MathUtils.clamp((Number(fit.y)||0)/1000,-.030,.030);\n hairFitZ=THREE.MathUtils.clamp((Number(fit.z)||0)/1000,-.030,.030);\n hairSignature='';hairPaintKey='';\n G21_DIAG('F: waiting for selected hairstyle');\n const requested=hairRouteResolve(snapshot.hair||'Hair_001',18);\n if(requested){\n   let waited=0;\n   while(hairEntry?.id!==requested&&waited<600){\n      if(!hairPending&&waited>12)break;\n      await new Promise(r=>setTimeout(r,150));waited++;\n   }\n   if(hairEntry?.id!==requested)throw Error('Exact hair '+requested+' did not load; check Phase F asset parts and saved hairstyle');\n }\n G21_DIAG('F: hairstyle loaded',hairEntry?.id||'none');\n await G21_YIELD();\n G21_DIAG('F: final face and clothing morphs');\n updateMobileMorphs();ecSync(true);lanpasuInfantWearSync();hairAdapt();hairColorApply();\n G21_DIAG('F: final morphs complete');\n await G21_YIELD();\n // The animation drive here is only for the editor; the new town supplies its own 32 movement clips.\n mixer?.stopAllAction();resetPose();model.updateMatrixWorld(true);\n const {clone}=await import('three/addons/utils/SkeletonUtils.js');\n G21_DIAG('F: cloning complete 117-bone rig');\n const rig=clone(model);G21_DIAG('F: skeleton clone complete');\n // Phase F CPU facial morphs modify geometry. Deep-clone every geometry and\n // material so later NPCs cannot overwrite any earlier NPC's personal face.\n let meshes=0,vertices=0,skinned=0,hairMeshes=0;\n // Drop all currently invisible, age-only alternative garments from this adult snapshot.\n // Bones and currently displayed face/hair/clothes are preserved exactly.\n const invisible=[];rig.traverse(o=>{if(o.isMesh&&!o.visible)invisible.push(o)});\n for(const o of invisible)o.removeFromParent();\n const meshList=[];rig.traverse(o=>{if(o.isMesh)meshList.push(o)});\n for(const o of meshList){\n   // Clone only final CPU-baked render geometry; not every unused morph target.\n   const sourceGeo=o.geometry,geom=new THREE.BufferGeometry();\n   for(const [name,attr] of Object.entries(sourceGeo.attributes))geom.setAttribute(name,attr.clone());\n   if(sourceGeo.index)geom.setIndex(sourceGeo.index.clone());\n   for(const g of sourceGeo.groups)geom.addGroup(g.start,g.count,g.materialIndex);\n   geom.setDrawRange(sourceGeo.drawRange.start,sourceGeo.drawRange.count);\n   o.geometry=geom;\n   if(Array.isArray(o.material))o.material=o.material.map(m=>m?.clone?.()||m);\n   else if(o.material)o.material=o.material.clone();\n   o.frustumCulled=false;meshes++;vertices+=o.geometry.attributes?.position?.count||0;\n   if(o.isSkinnedMesh)skinned++;\n   if(o.name.startsWith('EB_Hair_')||o.parent?.name?.startsWith('EB_Hair_'))hairMeshes++;\n   // Clone a few meshes, then let the game render before continuing.\n   if(meshes%3===0){G21_DIAG('F: deep-copying geometry',meshes+' meshes / '+vertices+' vertices');await G21_YIELD();}\n }\n G21_DIAG('F: deep-copy complete',meshes+' meshes / '+vertices+' vertices');\n rig.userData.lanpasuExactPhaseF=true;\n rig.userData.lanpasuSource='Phase F v036 117-joint 63-gene source + real hair and fitted clothes';\n rig.userData.lanpasuCapture={meshes,vertices,skinned,hairMeshes,hair:hairEntry?.id||'',foundation:currentFoundation};\n return rig;\n}\nwindow.LANPASU_CORE.captureG21=LANPASU_G21_CAPTURE;\nwindow.LANPASU_CORE.pauseRenderG21=()=>{\n try{if(typeof renderer!=='undefined'&&renderer?.setAnimationLoop){renderer.setAnimationLoop(null);return true;}}catch(e){}\n return false;\n};\n";
+function g21Base(html){const base=new URL('./',location.href).href.replaceAll('&','&amp;');return html.replace(/<head>/i,'<head><base href="'+base+'">');}
+async function ensurePhaseF(){
+ if(meshLoadPromise)return meshLoadPromise;
+ meshLoadPromise=(async()=>{
+   TRACE('PHASE F: fetching 11 MB editor HTML');
+   const resp=await fetch('./'+PHASE_F_CORE,{cache:'no-store'});
+   if(!resp.ok)throw Error('Exact Phase F Core missing (HTTP '+resp.status+'). Keep the original v036 Core on GitHub.');
+   let core=await resp.text();TRACE('PHASE F: editor HTML downloaded',(core.length/1048576).toFixed(1)+' MiB');
+   const anchor="report('bridgeReady','LANPASU E-C core initialized');";
+   if(!core.includes(anchor)||!core.includes('window.LANPASU_CORE={'))throw Error('Unexpected Phase F Core; the v036 mesh bridge could not attach.');
+   core=g21Base(core).replace(anchor, G21_CORE_EXTENSION+'\n'+anchor);
+   core=core.replace('  await coreLoadMotions();', '  /* G.2.1: E.3 already owns the 32 motion clips; no duplicate download needed. */');
+   // Young Adults use only fitted adult outfits; skip the infant-only garment GLB.
+   const infantStartup="  lanpasuInfantWearLoad().catch(e=>console.error('LANPASU infant outfit',e));";
+   if(!core.includes(infantStartup))throw Error('Phase F infant-only import hook moved');
+   core=core.replace(infantStartup,'  /* G.2.1 v003: skip infant-only outfit import. */');
+   const infantSyncStart='function lanpasuInfantWearSync(){\n if(!model)return;';
+   if(!core.includes(infantSyncStart))throw Error('Phase F infant-only sync hook moved');
+   core=core.replace(infantSyncStart,'function lanpasuInfantWearSync(){\n if(lanpasuAgeYears>=12)return;\n if(!model)return;');
+   TRACE('PHASE F: starting hidden editor');
+   const frame=$('avatarCore');frame.srcdoc=core;
+   let frames=0;
+   while(frames<360){
+      const api=frame.contentWindow?.LANPASU_CORE;
+      if(api){const result=api.qa?.();if(result?.loaded&&typeof api.captureG21==='function'){api.pauseRenderG21?.();TRACE('PHASE F: editor model loaded');return api;}}
+      await new Promise(r=>setTimeout(r,300));frames++;
+   }
+   throw Error('Phase F real mesh is not ready; check asset parts and Safari memory. No substitute NPC was spawned.');
+ })().catch(e=>{meshLoadPromise=null;throw e});
+ return meshLoadPromise;
+}
+window.LANPASU_G21_CAPTURE=profile=>{
+ const operation=meshQueue.catch(()=>{}).then(async()=>{
+   TRACE('PHASE F: queued exact model request');
+   const api=await ensurePhaseF();
+   TRACE('PHASE F: capture started');
+   const rig=await api.captureG21(profile);
+   TRACE('PHASE F: capture returned',rig?.userData?.lanpasuCapture||'no stats');
+   return rig;
+ });
+ meshQueue=operation.catch(()=>{});
+ return operation;
+};
+
+function injection(){return $('townExtension').textContent;}
+async function launch(){
+ if(started)return;started=true;$('enter').disabled=true;$('loadStatus').textContent='Checking the original E.3 Solavren game…';
+ try{
+  const a=$('islandFile').files?.[0],b=$('collisionFile').files?.[0];
+  if(!!a!==!!b)throw Error('For exact v014C2 please choose BOTH matching island and collision files, or leave both blank.');
+  const response=await fetch('./'+BASE_GAME,{cache:'no-store'});if(!response.ok)throw Error('Original E.3 game is missing (HTTP '+response.status+').');
+  let source=await response.text();
+  if(!source.includes('LANPASU_E3_Island.glb.gz')||!source.includes('function frame(t)'))throw Error('Unexpected E.3 source version. No modifications were made.');
+  source=addBase(source);
+  // Optional, user-supplied official v014C2 world/physics. These GLBs are plain, not gzip.
+  for(const [field,asset,original] of [
+   ['islandFile','island',"'./LANPASU_E3_Island.glb.gz'"],
+   ['collisionFile','collision',"'./LANPASU_E3_Collision.glb.gz'"],
+   ['waterFile','water',"'./LANPASU_E3_Water.glb.gz'"]
+  ]){
+   const file=$(field).files?.[0];if(file){const u=URL.createObjectURL(file);urls.push(u);
+    source=swapOnce(source,asset+':'+original,asset+':'+JSON.stringify(u),'optional '+asset);}
+  }
+  const routes=$('routeFile').files?.[0];if(routes){const obj=JSON.parse(await routes.text());if(!Array.isArray(obj.spawn_xyz)&&!Array.isArray(obj.spawn))throw Error('Routes JSON lacks spawn coordinates.');
+   const routeUrl=URL.createObjectURL(routes);urls.push(routeUrl);
+   source=swapOnce(source,"fetch('./LANPASU_E3_Routes.json'","fetch("+JSON.stringify(routeUrl),'routes');
+  }
+  source=swapOnce(source,'active=true;attachCameraInput();','active=true;townReady();attachCameraInput();','ready hook');
+  source=swapOnce(source,'renderer.render(scene,camera);if(!lastHud',
+  'townUpdate(dt);townTraceFrameBefore();try{renderer.render(scene,camera);}catch(townRenderError){townRecoverFromRenderError(townRenderError);}townTraceFrameAfter();if(!lastHud','frame hook');
+  const endTag='<'+'/script></body></html>';
+  source=swapOnce(source,endTag,'\n'+injection()+'\n'+endTag,'game extension');
+  $('loadStatus').textContent='🏝️ Building the town from your existing island and movement assets…';
+  $('game').srcdoc=source;
+  const safeTimeout=window.setTimeout(()=>{if(!ready){$('loadStatus').textContent='Still loading game assets. Check the island status inside the game or reload if it reports a missing file.';$('enter').disabled=false;$('enter').textContent='Try again';started=false;}},95000);
+  window.addEventListener('message',function handle(e){if(e.data?.source==='LANPASU_G20'&&e.data.kind==='ready'){clearTimeout(safeTimeout);window.removeEventListener('message',handle)} });
+ }catch(e){console.error(e);$('loadStatus').textContent='⚠ '+e.message;$('enter').disabled=false;$('enter').textContent='Try again';started=false;}
+}
+$('enter').onclick=launch;
+$('diagOpen').onclick=()=>{$('diagBox').style.display=$('diagBox').style.display==='block'?'none':'block';updateTraceUI()};
+$('diagClose').onclick=()=>{$('diagBox').style.display='none'};
+$('diagCopy').onclick=async()=>{
+ const report='LANPASU G.2.1 v007 AUTOMATIC NPC INTEGRATION REPORT\n'+trace.map(e=>e.at+' '+e.stage+(e.detail?' | '+e.detail:'')).join('\n')+'\n\nFull render exception (if caught):\n'+JSON.stringify(window.LANPASU_G21_RENDER_ERROR||null,null,2);
+ try{await navigator.clipboard.writeText(report);notify('Diagnostic report copied. Paste it into ChatGPT.')}catch(e){prompt('Copy the report below and paste it into ChatGPT',report)}
+};
+$('diagClear').onclick=()=>{trace=[];try{localStorage.removeItem(TRACE_KEY)}catch(e){}updateTraceUI();notify('Diagnostic events cleared; saved characters unchanged.')};
+TRACE('PAGE: v007 automatic NPC integration loaded');
+refreshLibrary();
+</script>
+<script type="text/plain" id="townExtension">// LANPASU G.2.1 v007 — automatic resident extension injected into the ORIGINAL E.3 module.
+// Uses the existing scene, ground collision and all 32 E.3 animations, plus Phase F exact NPC meshes.
+import { clone as townSkeletonClone } from 'three/addons/utils/SkeletonUtils.js';
+const TOWN_API_VERSION='G.2.1-v007-automatic-npc-integration';
+const townNPCs=new Map();
+let townLastSend=0;
+let townLastMove=0;let townRenderTrace=0;let townPulse=0;let townFrameCount=0;
+function townDiag(stage,detail=''){try{window.parent.LANPASU_G21_DIAG(stage,detail)}catch(e){}}
+window.addEventListener('error',e=>townDiag('GAME SCRIPT ERROR',(e.message||'unknown')+' @ '+String(e.filename||'').slice(-90)+':'+(e.lineno||0)+' | '+String(e.error?.stack||'').slice(0,220)));
+window.addEventListener('unhandledrejection',e=>townDiag('GAME PROMISE REJECTION',(e.reason?.message||String(e.reason))+' | '+String(e.reason?.stack||'').slice(0,160)));
+document.addEventListener('webglcontextlost',e=>townDiag('GAME WEBGL CONTEXT LOST'),true);
+function townTraceFrameBefore(){if(townRenderTrace>0)townDiag('GAME: before renderer.render',townRenderTrace)}
+function townTraceFrameAfter(){if(townRenderTrace>0){townDiag('GAME: after renderer.render',townRenderTrace);townRenderTrace--;}}
+const townClamped=(x,a,b)=>Math.max(a,Math.min(b,x));
+const townSafeString=(x,n=80)=>String(x==null?'':x).slice(0,n);
+const townGene=(g,key,def=50)=>townClamped(Number(g?.[key]??def)||0,0,100);
+const townHairShade=(g)=>{
+  const dark=townGene(g,'hairDarkness',75)/100,red=townGene(g,'hairRed',25)/100;
+  return new THREE.Color().setRGB(townClamped(.64-dark*.54+red*.14,.05,.78),townClamped(.42-dark*.33+red*.015,.035,.65),townClamped(.25-dark*.17-red*.075,.02,.55),THREE.SRGBColorSpace);
+};
+const townSkinShade=(g)=>{
+  const dark=townGene(g,'skinDarkness',50)/100;
+  const pigment=townGene(g,'skinPigment',50)/100;
+  const brown=townGene(g,'skinPigment',50)/100;
+  const shade=new THREE.Color().setRGB(townClamped(.93-dark*.57+(pigment-.5)*.08,.19,.98),townClamped(.75-dark*.48-(brown-.5)*.025,.13,.90),townClamped(.59-dark*.38-(pigment-.5)*.055,.08,.78),THREE.SRGBColorSpace);
+  return shade;
+};
+// The neutral player remains our existing E.3 test rig; saved NPCs use captured Phase F geometry.
+function townNameplate(name){
+  const c=document.createElement('canvas');c.width=512;c.height=90;const context=c.getContext('2d');
+  context.fillStyle='rgba(14,55,47,.88)';context.beginPath();context.roundRect(16,6,480,72,24);context.fill();
+  context.lineWidth=3;context.strokeStyle='rgba(216,235,205,.7)';context.stroke();
+  context.fillStyle='#fff8df';context.font='600 35px system-ui,sans-serif';context.textAlign='center';
+  const short=String(name).slice(0,25);context.fillText(short,256,56,460);
+  const tx=new THREE.CanvasTexture(c);tx.colorSpace=THREE.SRGBColorSpace;
+  const s=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false,depthWrite:false}));
+  s.name='TownNPCName';s.position.set(0,2.12,0);s.scale.set(1.55,.29,1);s.renderOrder=950;
+  return s;
+}
+function townProfilesafe(x){
+  if(!x||typeof x!=='object')throw Error('Saved character profile is missing');
+  const p=x.profile&&x.profile.genes?x.profile:x;
+  if(!p.genes||typeof p.genes!=='object')throw Error('This character has no saved genes');
+  const ageAlz=Number.isFinite(Number(p.ageAlz))?Number(p.ageAlz):Number(p.age??18)*360;
+  if(ageAlz<18*360||ageAlz>=30*360)throw Error('Choose a saved Young Adult (18–29 Kimah)');
+  return {id:townSafeString(x.id||p.testNpcId||p.firstName+'-'+p.lastName,100),
+   firstName:townSafeString(p.firstName,60),lastName:townSafeString(p.lastName,60),
+   foundation:townSafeString(p.foundation,50),movementStyle:styles.includes(p.movement)?p.movement:styles.includes(p.movementStyle)?p.movementStyle:'Casual',
+   ageAlz,genes:p.genes,hair:townSafeString(p.hair,30)};
+}
+function townShowNPCs(){
+  return [...townNPCs.values()].map(n=>({id:n.data.id,name:n.name,style:n.data.movementStyle, foundation:n.data.foundation, demo:!!n.demo,animated:!!n.animOn,walkState:n.mood}));
+}
+function townEmit(kind,payload={}){try{window.parent.postMessage({source:'LANPASU_G20',kind,...payload},window.parent.location.origin)}catch(e){console.warn('town message',e)}}
+function townFindGround(seedR=2.8,angle=0){
+  if(!active||!collider)return null;
+  for(let pass=0;pass<24;pass++){
+    const a=angle+pass*2.399963,dist=seedR+Math.floor(pass/8)*1.25;
+    const x=foot.x+Math.cos(a)*dist,z=foot.z+Math.sin(a)*dist;
+    const p=new V(x,foot.y,z);let f=floorProbe(p,2.0,7.0);
+    if(f&&Math.abs(f.y-foot.y)<2.5&&townNPCs.size<20){
+      let clear=true;
+      for(const n of townNPCs.values())if(n.root.position.distanceToSquared(new V(x,f.y,z))<1.6){clear=false;break}
+      if(clear)return new V(x,f.y,z);
+    }
+  }
+  return null;
+}
+function townAuditClipTargets(n){
+  // GLB animations must actually bind to the captured 117-bone NPC skeleton.
+  // Logging this guards against apparent "walking" that is just root-object gliding.
+  const sample=clipMap[n.data.movementStyle+'_Walk']||clipMap['Casual_Walk'];
+  if(!sample?.tracks?.length)throw Error('The original E.3 Walk animations are not loaded');
+  const targets=[...new Set(sample.tracks.map(t=>String(t.name).split('.')[0]).filter(Boolean))];
+  const found=targets.filter(name=>!!n.rig.getObjectByName(name));
+  const missing=targets.filter(name=>!n.rig.getObjectByName(name));
+  townDiag('GAME: real skeleton clip binding',found.length+'/'+targets.length+' targets; '+(missing.slice(0,4).join(', ')||'none')+' missing');
+  if(targets.length&&found.length<Math.ceil(targets.length*.65))throw Error('The selected E.3 walking clip does not match the exact NPC skeleton. Refusing a gliding NPC.');
+}
+function townSwitchClip(n,kind){
+  if(!n.animOn||!n.mixer)return;
+  if(n.clip===kind)return;
+  const key=n.data.movementStyle+'_'+kind;
+  const clip=clipMap[key]||clipMap['Casual_'+kind];
+  if(!clip)throw Error('Missing E.3 animation: '+key);
+  const prior=n.action;
+  const action=n.mixer.clipAction(clip,n.rig);
+  action.reset();action.enabled=true;action.paused=false;
+  action.setLoop(THREE.LoopRepeat,Infinity).setEffectiveWeight(1);
+  // E.3's original Walk clips are tuned near 1.25 m/s: keep gait in step with wandering speed.
+  action.setEffectiveTimeScale(kind==='Walk'?townClamped(n.speed/1.25,.55,1.20):1);
+  action.play();
+  if(prior&&prior!==action)prior.fadeOut(.22);
+  if(prior&&prior!==action)action.fadeIn(.22);
+  n.action=action;n.clip=kind;
+}
+async function townSpawn(input,demo=false,mode="automatic"){
+  if(!active||!animRoot||!scene)throw Error('Finish loading the island first');
+  const data=townProfilesafe(input);
+  if(townNPCs.has(data.id))throw Error('This character is already in town');
+  if(townNPCs.size>=2)throw Error('Two exact NPCs maximum for initial iPhone integration test');
+  const root=new THREE.Group();root.name='G21_NPC_'+data.id;
+  townDiag('GAME: NPC requested',data.firstName+' | mode '+mode);
+  let rig=null,exact=false;
+  if(mode==='marker'){
+    townDiag('GAME: lightweight geometry control');
+    rig=new THREE.Group();
+    rig.add(new THREE.Mesh(new THREE.CapsuleGeometry(.22,.88,4,8),new THREE.MeshLambertMaterial({color:0x85a999})));
+  }else{
+    townDiag('GAME: before exact Phase F capture');
+    rig=await window.parent.LANPASU_G21_CAPTURE(input.profile||input);
+    if(!rig?.userData?.lanpasuExactPhaseF)throw Error('The saved character did not produce an exact Phase F mesh');
+    exact=true;
+    townDiag('GAME: exact rig received',rig.userData.lanpasuCapture);
+  }
+  if(!active||townNPCs.has(data.id))throw Error('Test Town changed while the avatar loaded');
+  // v007 always reveals a repaired exact mesh in the automatic mode; capture-only is left for internal debug.
+  const attached=mode!=='capture';
+  if(attached){if(exact)townRehomeRigGeometry(rig);root.add(rig);}
+  const spot=townFindGround(2.8,Math.random()*Math.PI*2);
+  if(!spot){rig.traverse(o=>{if(o.isMesh){o.geometry?.dispose();for(const m of (Array.isArray(o.material)?o.material:[o.material]))m?.dispose?.();}});throw Error('No safe walkable ground nearby');}
+  const fullName=(data.firstName+' '+data.lastName).trim()||'Unnamed Resident';
+  root.add(townNameplate(fullName));root.position.copy(spot);
+  const animOn=(mode==='automatic'||mode==='full')&&exact;
+  const resident={data,demo,name:fullName,root,rig,mixer:exact?new THREE.AnimationMixer(rig):null,clip:'',action:null,exact,attached,animOn,
+   mood:'idle',target:null,think:1+Math.random()*3,speed:.55+Math.random()*.45,angle:Math.random()*6.28};
+  // Validate walking clips BEFORE the character is admitted to the live scene.
+  // This prevents a failed animation setup from leaving a gliding ghost behind.
+  try{if(animOn){townAuditClipTargets(resident);townSwitchClip(resident,'Idle');resident.mixer.update(0);}}
+  catch(e){
+   resident.mixer?.stopAllAction();
+   rig.traverse(o=>{if(!o.isMesh)return;o.geometry?.dispose?.();for(const m of (Array.isArray(o.material)?o.material:[o.material]))m?.dispose?.();});
+   const plate=root.children.find(o=>o.name==='TownNPCName');plate?.material?.map?.dispose?.();plate?.material?.dispose?.();
+   throw e;
+  }
+  scene.add(root);townNPCs.set(data.id,resident);
+  townDiag('GAME: NPC live with skeleton',exact?'exact '+(animOn?'Idle/Walk enabled':'animation disabled'):'marker control');
+  townRenderTrace=2;
+  townEmit('residents',{residents:townShowNPCs()});
+  return townShowNPCs();
+}
+function townRecoverFromRenderError(e){
+ const name=String(e?.name||'Error'), message=String(e?.message||e||'unknown');
+ const stack=String(e?.stack||'stack not provided');
+ townDiag('GAME RENDER EXCEPTION',name+': '+message);
+ townDiag('GAME RENDER STACK',stack.slice(0,220));
+ try{window.parent.LANPASU_G21_RENDER_ERROR={name,message,stack,at:new Date().toISOString()};}catch(e2){}
+ townRenderTrace=0;
+ const n=[...townNPCs.values()].reverse().find(x=>x.exact&&x.attached);
+ if(n){
+  try{n.mixer?.stopAllAction();}catch(stopError){}
+  n.animOn=false;n.clip='';n.attached=false;
+  try{
+   scene.remove(n.root);townNPCs.delete(n.data.id);
+   townDiag('RENDER RECOVERY','Removed broken exact NPC, not the original player or island.');
+   townEmit('npcError',{id:n.data.id,message});
+   townEmit('residents',{residents:townShowNPCs()});
+  }catch(detachError){townDiag('RENDER RECOVERY ERROR',String(detachError?.message||detachError));}
+ }else townDiag('RENDER RECOVERY','No attached exact mesh to detach');
+}
+function townHairToggle(rig,enabled){
+ let count=0;
+ rig.traverse(o=>{
+  if(!o.isMesh)return;
+  const type=(o.name||'')+' '+(o.parent?.name||'');
+  if(/hair/i.test(type) || o.userData?.isHair===true){
+   if(o.userData.g21HairOriginalVisibility===undefined)o.userData.g21HairOriginalVisibility=!!o.visible;
+   o.visible=enabled?o.userData.g21HairOriginalVisibility:false;count++;
+  }
+ });
+ return count;
+}
+function townRevealNoHair(){
+ const n=[...townNPCs.values()][0];if(!n||!n.exact)throw Error('First add one exact character with B · Build mesh');
+ const count=townHairToggle(n.rig,false);
+ townDiag('C1: HAIR HIDDEN',count+' detected hair meshes');
+ townReveal();return true;
+}
+function townShowHair(){
+ const n=[...townNPCs.values()][0];if(!n||!n.exact||!n.attached)throw Error('First reveal the mesh with C1');
+ const count=townHairToggle(n.rig,true);
+ townRenderTrace=3;townDiag('C2: HAIR SHOWN',count+' hair meshes; next frame will render');return true;
+}
+
+// G.2.1 v006: Phase F runs inside a distinct iframe/window. Although a
+// Float32Array from that iframe is a valid ArrayBuffer view, `instanceof
+// Float32Array` can be false in the game window. Three r170 WebGLAttributes
+// checks native typed-array constructors, so cross-frame attributes cause
+// "THREE.WebGLAttributes: Unsupported buffer data format" on first draw.
+// Rebuild ONLY BufferGeometry and attribute typed arrays in the GAME realm.
+// Preserve all vertex values, indices, morph data, skin weights and groups.
+function townLocalTypedCopy(array,sourceLabel){
+ const tag=Object.prototype.toString.call(array).slice(8,-1);
+ const constructors={Float32Array:Float32Array,Float64Array:Float32Array,
+  Uint8Array:Uint8Array,Uint8ClampedArray:Uint8Array,Int8Array:Int8Array,
+  Uint16Array:Uint16Array,Int16Array:Int16Array,Uint32Array:Uint32Array,Int32Array:Int32Array};
+ const Type=constructors[tag];
+ if(!Type)throw Error('Unsupported NPC geometry attribute type '+tag+' at '+sourceLabel);
+ // `new Type(foreignTypedArray)` copies values AND creates this realm's buffer.
+ const copy=new Type(array);
+ if(!(copy instanceof Type))throw Error('Unable to convert cross-frame attribute at '+sourceLabel);
+ return copy;
+}
+function townLocalAttribute(a,name){
+ if(!a||typeof a.itemSize!=='number'||!a.array)throw Error('Unsupported NPC attribute '+name);
+ let values;
+ if(a.isInterleavedBufferAttribute){
+  const source=a.data?.array||a.array,tag=Object.prototype.toString.call(source).slice(8,-1);
+  const Ctor={Float32Array:Float32Array,Uint8Array:Uint8Array,Int8Array:Int8Array,
+   Uint16Array:Uint16Array,Int16Array:Int16Array,Uint32Array:Uint32Array,Int32Array:Int32Array}[tag]||Float32Array;
+  values=new Ctor(a.count*a.itemSize);
+  const stride=a.data.stride;
+  for(let i=0;i<a.count;i++)for(let j=0;j<a.itemSize;j++)values[i*a.itemSize+j]=source[i*stride+a.offset+j];
+ }else values=townLocalTypedCopy(a.array,name);
+ const out=a.isInstancedBufferAttribute
+  ?new THREE.InstancedBufferAttribute(values,a.itemSize,!!a.normalized,a.meshPerAttribute||1)
+  :new THREE.BufferAttribute(values,a.itemSize,!!a.normalized);
+ if(typeof a.usage==='number')out.setUsage(a.usage);
+ if(a.name)out.name=a.name;
+ if(typeof a.gpuType==='number')out.gpuType=a.gpuType;
+ return out;
+}
+function townRehomeRigGeometry(rig){
+ if(rig.userData.g21GeometryRehomed)return rig.userData.g21GeometryRepair;
+ const seen=new Map();let meshes=0,attributes=0,vertices=0,bytes=0,converted=0;
+ rig.traverse(o=>{
+  if(!o.isMesh||!o.geometry)return;
+  const src=o.geometry;
+  if(seen.has(src)){o.geometry=seen.get(src);meshes++;return;}
+  const g=src.isInstancedBufferGeometry?new THREE.InstancedBufferGeometry():new THREE.BufferGeometry();
+  if(src.isInstancedBufferGeometry)g.instanceCount=src.instanceCount;
+  g.name=src.name||'';
+  for(const [key,a] of Object.entries(src.attributes||{})){
+   if(a?.array&&!(a.array instanceof Float32Array)&&Object.prototype.toString.call(a.array)==='[object Float32Array]')converted++;
+   g.setAttribute(key,townLocalAttribute(a,key));attributes++;
+  }
+  if(src.index)g.setIndex(townLocalAttribute(src.index,'index'));
+  for(const [key,arr] of Object.entries(src.morphAttributes||{})){
+   g.morphAttributes[key]=arr.map((a,i)=>townLocalAttribute(a,key+'['+i+']'));
+  }
+  g.morphTargetsRelative=!!src.morphTargetsRelative;
+  for(const group of src.groups||[])g.addGroup(group.start,group.count,group.materialIndex||0);
+  if(src.drawRange)g.setDrawRange(src.drawRange.start,src.drawRange.count);
+  g.userData={...src.userData};
+  // New local GPU buffers; no silhouette, facial morph or bone data is altered.
+  o.geometry=g;seen.set(src,g);
+  meshes++;vertices+=g.attributes.position?.count||0;
+  for(const a of Object.values(g.attributes))bytes+=a.array.byteLength;
+ });
+ rig.userData.g21GeometryRehomed=true;
+ const stats={meshes,attributes,vertices,bytes,foreignFloatArrays:converted};
+ rig.userData.g21GeometryRepair=stats;
+ townDiag('GAME: BUFFER REALM REPAIRED',stats);
+ return stats;
+}
+function townReveal(){const n=[...townNPCs.values()][0];if(!n)throw Error('Add one NPC first');
+ if(!n.exact)throw Error('Marker is only a control. Remove it and choose capture mode.');
+ if(n.attached)return true;
+ townDiag('GAME: repairing cross-frame attribute buffers before reveal');
+ townRehomeRigGeometry(n.rig);
+ townDiag('GAME: attaching exact mesh to rendered scene');
+ n.root.add(n.rig);n.attached=true;n.rig.visible=true;townRenderTrace=3;
+ townDiag('GAME: mesh now attached; next frame will draw it');return true;}
+function townAnimate(){const n=[...townNPCs.values()][0];if(!n)throw Error('Add one NPC first');
+ if(!n.exact)throw Error('Marker has no skeleton to animate');
+ if(!n.attached)throw Error('First tap C · Reveal mesh');
+ townDiag('GAME: enabling exact skeleton animations');
+ n.animOn=true;n.clip='';townSwitchClip(n,'Idle');townRenderTrace=3;
+ townDiag('GAME: animation action created');return true;}
+function townRemove(id){
+  const n=townNPCs.get(String(id));if(!n)return false;
+  n.mixer?.stopAllAction();scene.remove(n.root);
+  n.rig.traverse(o=>{if(!o.isMesh)return;o.geometry?.dispose?.();for(const m of (Array.isArray(o.material)?o.material:[o.material]))if(m&&m.dispose)m.dispose()});
+  const plate=n.root.children.find(o=>o.name==='TownNPCName');if(plate){plate.material.map?.dispose();plate.material.dispose();}
+  townNPCs.delete(n.data.id);townEmit('residents',{residents:townShowNPCs()});return true;
+}
+function townWalk(dt,n){
+  n.think-=dt;
+  if(n.think<=0){
+    const canWalk=Math.random()>.28;
+    n.mood=canWalk?'walk':'idle';n.think=(canWalk?3.5:1.8)+Math.random()*3.6;
+    n.angle=Math.random()*Math.PI*2;
+  }
+  let walking=n.mood==='walk';
+  if(walking){
+    const heading=new V(Math.cos(n.angle),0,Math.sin(n.angle));
+    const curr=n.root.position;
+    const next=curr.clone().addScaledVector(heading,n.speed*dt);
+    const floor=floorProbe(new V(next.x,curr.y,next.z),.45,1.05);
+    const wall=cast(curr.clone().add(new V(0,.60,0)),heading,.43);
+    let blocked=!floor||Math.abs((floor?.y??curr.y)-curr.y)>.25||!!wall;
+    if(curr.distanceToSquared(foot)>2600)blocked=true;
+    if(!blocked){for(const x of townNPCs.values())if(x!==n&&next.distanceToSquared(x.root.position)<.53* .53){blocked=true;break;}}
+    if(next.distanceToSquared(foot)<.8*.8)blocked=true;
+    if(blocked){n.mood='idle';n.think=.3+Math.random()*1.5;walking=false;}
+    else{
+      curr.x=next.x;curr.z=next.z;curr.y+=(floor.y-curr.y)*Math.min(1,dt*10);
+      const facing=Math.atan2(heading.x,heading.z);
+      let d=angleDelta(facing,n.root.rotation.y);
+      n.root.rotation.y+=d*(1-Math.exp(-dt*6));
+    }
+  }
+  if(n.animOn){townSwitchClip(n,walking?'Walk':'Idle');n.mixer?.update(dt);}
+}
+function townUpdate(dt){
+  if(!active)return;
+  const elapsed=Math.min(.08,Math.max(0,dt||0));
+  for(const n of [...townNPCs.values()]){
+    try{townWalk(elapsed,n)}catch(e){
+      // Never let one broken saved NPC animation terminate the playable E.3 game loop.
+      const message=String(e?.message||e);
+      townDiag('GAME: NPC animation failed',n.name+' | '+message);
+      try{n.mixer?.stopAllAction()}catch(_){}
+      scene.remove(n.root);townNPCs.delete(n.data.id);
+      townEmit('npcError',{id:n.data.id,message});
+      townEmit('residents',{residents:townShowNPCs()});
+    }
+  }
+  townLastSend+=elapsed;townPulse+=elapsed;townFrameCount++;
+  if(townPulse>4){townDiag('GAME: frames alive',townFrameCount+' frames / last '+townPulse.toFixed(1)+'s');townPulse=0;townFrameCount=0}
+  if(townLastSend>6){townLastSend=0;townEmit('pulse',{count:townNPCs.size})}
+}
+function townReady(){
+  // Keep the original neutral player rig, E.3 controller, and all 32 animations unchanged.
+  // NPCs are created from Phase F v036 exact meshes; the player remains the neutral E.3 default.
+  // Do not recolor or resize the original neutral player.
+  window.LANPASU_TOWN_API={
+    version:TOWN_API_VERSION,
+    add:(profile,demo=false,mode='automatic')=>townSpawn(profile,!!demo,mode),
+    reveal:townReveal,revealNoHair:townRevealNoHair,showHair:townShowHair,animate:townAnimate,
+    remove:townRemove, list:townShowNPCs,
+    status:()=>({ready:active,count:townNPCs.size,maxNPC:2,player:'Neutral (Intersex) · 18 Kimah',
+      engine:'Original E.3 physics + movement / Phase F exact NPC meshes',exactCreatorGeometry:true}),
+    resetResidents:()=>{for(const id of [...townNPCs.keys()])townRemove(id);return true;}
+  };
+  townEmit('ready',{version:TOWN_API_VERSION,engine:'E.3',player:'Neutral (Intersex) · 18 Kimah'});
+}
+</script>
+</body>
+</html>
