@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#dbeadf">
+<title>LANPASU · G.2.2 Performance Optimization · v012</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:linear-gradient(145deg,#b9dfda,#edf0de 60%,#e5cda9);color:#153e38;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+body{display:grid;place-items:center;padding:18px}.loading{width:min(520px,100%);background:#fbfbf2ed;border:1px solid #ffffffb8;border-radius:24px;padding:25px;box-shadow:0 24px 90px #264a3c2d}.sun{font-size:38px}.eyebrow{font-size:11px;letter-spacing:.17em;text-transform:uppercase;font-weight:850;color:#478174}.loading h1{font-family:Georgia,serif;font-size:32px;line-height:1.04;margin:10px 0}.loading p{font-size:13px;line-height:1.5;color:#48635b}.bar{height:7px;background:#dfe9dd;border-radius:99px;overflow:hidden;margin:18px 0 10px}.bar:after{content:"";display:block;width:42%;height:100%;background:#54b9a5;border-radius:99px;animation:load 1.2s ease-in-out infinite alternate}@keyframes load{to{width:88%}}#status{font-size:12px;color:#426d60;font-weight:750;overflow-wrap:anywhere}.features{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}.features span{background:#e3eee4;border:1px solid #bbd5c5;padding:6px 9px;border-radius:99px;font-size:10px;font-weight:800;color:#316353}
+</style>
+</head>
+<body>
+<main class="loading">
+ <div class="sun">🌴</div><div class="eyebrow">LANPASU · G.2.2 · PERFORMANCE</div>
+ <h1>Preparing a smoother island…</h1>
+ <p>Loading your existing G.2.1 town, then applying adaptive performance improvements. Your saved Character Library and 95-resident roster are preserved.</p>
+ <div class="bar"></div><div id="status">Connecting to the existing town file…</div>
+ <div class="features"><span>95 full-detail resident slots</span><span>Offscreen culling</span><span>Adaptive render scale</span><span>iPhone-aware updates</span></div>
+</main>
+<script type="module">
+const SOURCE_FILE='LANPASU_G21_Full_Detail_95_Resident_Slots_v011.html';
+const statusNode=document.getElementById('status');
+const status=(message)=>{statusNode.textContent=message;};
+window.LANPASU_G21_DIAG=(stage,detail='')=>{try{console.info('[LANPASU G.2.2]',stage,detail)}catch{}};
+function replaceOnce(source,before,after,label){
+ const count=source.split(before).length-1;
+ if(count!==1)throw new Error(label+': expected one source match, found '+count);
+ return source.replace(before,after);
+}
+function applyG22(source){
+ source=source.replaceAll('G.2.1 Population Integration · v011','G.2.2 Performance Optimization · v012')
+  .replaceAll('G.2.1 v011 · 95 Full-Detail Resident Slots','G.2.2 v012 · Adaptive Performance · 95 Full-Detail Resident Slots')
+  .replaceAll('G.2.1 v011 · 95 Full-Detail Slots & Resource Status','G.2.2 v012 · Performance & Resource Status')
+  .replaceAll('G.2.1 v011 95 FULL-DETAIL RESIDENT REPORT','G.2.2 v012 PERFORMANCE REPORT')
+  .replaceAll('G.2.1-v011-95-full-detail-slots','G.2.2-v012-adaptive-performance-95-residents')
+  .replaceAll('PAGE: v009 automatic NPC integration loaded','PAGE: G.2.2 v012 adaptive performance loaded')
+  .replaceAll('This separate v011 population integration uses your existing E.3 game and Phase F creator without editing either. Resident capacity: 95. Full-detail active 3D NPC capacity: 95.','G.2.2 keeps all 95 individual full-detail resident slots while adapting offscreen simulation, NPC update rates, and render resolution to protect frame rate. Your original E.3 game and Phase F creator remain unchanged.')
+  .replaceAll('Real saved citizens stroll independently · Walk / Run / Jump to explore','95 full-detail residents · Adaptive rendering · Offscreen citizens use lightweight updates')
+  .replaceAll('This island has 95 individual full-detail resident slots. Each registered resident can be loaded as their own complete Phase F 3D character in the living town.','This island keeps 95 individual full-detail resident slots. Nearby visible residents receive full-rate updates; distant and offscreen residents keep their complete models but use lower-cost simulation and are temporarily excluded from drawing.')
+  .replaceAll('Animations and exact meshes turn on automatically. Use this only if you need to share an error report.','Performance is measured in real time. Offscreen culling does not delete residents or reduce their saved character detail. Use this only if you need to share an error report.');
+ source=replaceOnce(source,'</style>','#perfReadout{display:none;position:fixed;z-index:9;right:8px;top:calc(max(9px,env(safe-area-inset-top)) + 118px);max-width:calc(100vw - 16px);padding:7px 10px;border-radius:10px;background:#123d34e8;border:1px solid #d5edcf80;color:#faffee;font-size:10px;font-weight:800;letter-spacing:.01em;pointer-events:none;box-shadow:0 5px 18px #102c2a38}\n@media(max-width:430px){#perfReadout{top:calc(max(9px,env(safe-area-inset-top)) + 105px);font-size:9px;padding:6px 8px}}\n</style>','performance readout CSS');
+ source=replaceOnce(source,'<div class="floating" id="floating">95 full-detail residents · Adaptive rendering · Offscreen citizens use lightweight updates</div>','<div class="floating" id="floating">95 full-detail residents · Adaptive rendering · Offscreen citizens use lightweight updates</div>\n<div id="perfReadout" role="status" aria-live="polite">Preparing performance monitor…</div>','performance readout element');
+ source=replaceOnce(source," if(m.kind==='pulse')$('activeCount').textContent=m.count+' active · '+MAX_ACTIVE_NPC+' full-detail slots';"," if(m.kind==='pulse')$('activeCount').textContent=m.count+' active · '+MAX_ACTIVE_NPC+' full-detail slots';\n if(m.kind==='perf'){const p=$('perfReadout');if(p){p.textContent='FPS '+m.fps+' · '+m.visible+'/'+m.active+' on-screen · '+m.scale+'% render scale · '+m.calls+' draw calls';p.style.display='block';}}",'performance message handler');
+ const helpers=String.raw`
+const townPerfCellSize=1.5;
+const townPerfGrid=new Map();
+let townPerfGridTimer=0,townPerfVisibilityTimer=0;
+let townPerfWindowStart=performance.now(),townPerfWindowFrames=0,townPerfLastFPS=0;
+let townPerfLevel=0,townPerfBasePixelRatio=null,townPerfOriginalShadows=null;
+let townPerfBadWindows=0,townPerfGoodWindows=0;
+function townPerfCellKey(x,z){return Math.floor(x/townPerfCellSize)+','+Math.floor(z/townPerfCellSize)}
+function townPerfRebuildGrid(){
+ townPerfGrid.clear();
+ for(const n of townNPCs.values()){
+  const key=townPerfCellKey(n.root.position.x,n.root.position.z);
+  let bucket=townPerfGrid.get(key);if(!bucket){bucket=[];townPerfGrid.set(key,bucket);}bucket.push(n);
+ }
+}
+function townPerfNearbyBlocked(pos,self){
+ const cx=Math.floor(pos.x/townPerfCellSize),cz=Math.floor(pos.z/townPerfCellSize),r2=.53*.53;
+ for(let dx=-1;dx<=1;dx++)for(let dz=-1;dz<=1;dz++){
+  const bucket=townPerfGrid.get((cx+dx)+','+(cz+dz));if(!bucket)continue;
+  for(const other of bucket)if(other!==self&&pos.distanceToSquared(other.root.position)<r2)return true;
+ }
+ return false;
+}
+function townPerfRefreshVisibility(){
+ if(!camera)return;
+ camera.updateMatrixWorld();
+ const projected=new V();
+ for(const n of townNPCs.values()){
+  const pos=n.root.position,d2=camera.position.distanceToSquared(pos);
+  n._townDistanceSq=d2;
+  projected.set(pos.x,pos.y+1.0,pos.z).project(camera);
+  const visible=d2<68*68&&projected.z>-1.05&&projected.z<1&&Math.abs(projected.x)<1.24&&Math.abs(projected.y)<1.32;
+  n._townVisible=visible;
+  if(n.root.visible!==visible)n.root.visible=visible;
+ }
+}
+function townPerfAdaptiveQuality(now){
+ townPerfWindowFrames++;
+ const span=now-townPerfWindowStart;
+ if(span<2400)return;
+ const fps=Math.round(townPerfWindowFrames*1000/Math.max(1,span));
+ townPerfLastFPS=fps;townPerfWindowFrames=0;townPerfWindowStart=now;
+ if(townPerfBasePixelRatio===null){townPerfBasePixelRatio=renderer?.getPixelRatio?.()||1;townPerfOriginalShadows=!!renderer?.shadowMap?.enabled;}
+ if(!renderer)return;
+ if(fps<27){townPerfBadWindows++;townPerfGoodWindows=0;}
+ else if(fps>51){townPerfGoodWindows++;townPerfBadWindows=0;}
+ else{townPerfBadWindows=0;townPerfGoodWindows=0;}
+ let next=townPerfLevel;
+ if(townPerfBadWindows>=1)next=Math.min(3,townPerfLevel+1);
+ else if(townPerfGoodWindows>=3)next=Math.max(0,townPerfLevel-1);
+ if(next!==townPerfLevel){
+  townPerfLevel=next;townPerfBadWindows=0;townPerfGoodWindows=0;
+  const factors=[1,.88,.78,.70];
+  renderer.setPixelRatio(Math.max(.70,townPerfBasePixelRatio*factors[townPerfLevel]));
+  renderer.setSize(innerWidth,innerHeight,false);
+  if(renderer.shadowMap){
+   const enabled=townPerfLevel<2&&townPerfOriginalShadows;
+   renderer.shadowMap.enabled=!!enabled;
+   if(enabled&&worldSun?.shadow)worldSun.shadow.needsUpdate=true;
+  }
+  townDiag('PERFORMANCE: adaptive quality','FPS '+fps+' · level '+townPerfLevel+' · pixel ratio '+renderer.getPixelRatio().toFixed(2)+' · shadows '+(renderer.shadowMap?.enabled?'on':'off'));
+ }
+ let visible=0;for(const n of townNPCs.values())if(n._townVisible)visible++;
+ const calls=renderer.info?.render?.calls||0;
+ townEmit('perf',{fps,visible,active:townNPCs.size,scale:Math.round((renderer.getPixelRatio()/(townPerfBasePixelRatio||1))*100),calls});
+}
+`;
+ source=replaceOnce(source,'function townWalk(dt,n){',helpers+'\nfunction townWalk(dt,n,updateVisual=true){','NPC performance helpers');
+ source=replaceOnce(source,'if(!blocked){for(const x of townNPCs.values())if(x!==n&&next.distanceToSquared(x.root.position)<.53* .53){blocked=true;break;}}','if(!blocked&&townPerfNearbyBlocked(next,n))blocked=true;','spatial resident collision');
+ source=replaceOnce(source,"if(n.animOn){townSwitchClip(n,walking?'Walk':'Idle');n.mixer?.update(dt);}","if(updateVisual&&n.animOn){townSwitchClip(n,walking?'Walk':'Idle');n.mixer?.update(dt);}",'offscreen animation throttling');
+ const updateBlock=String.raw`function townUpdate(dt){
+ if(!active||document.hidden)return;
+ const elapsed=Math.min(.08,Math.max(0,dt||0));
+ const now=performance.now();
+ townPerfAdaptiveQuality(now);
+ townPerfVisibilityTimer-=elapsed;
+ if(townPerfVisibilityTimer<=0){townPerfRefreshVisibility();townPerfVisibilityTimer=.25;}
+ townPerfGridTimer-=elapsed;
+ if(townPerfGridTimer<=0){townPerfRebuildGrid();townPerfGridTimer=.25;}
+ for(const n of townNPCs.values()){
+  const d2=n._townDistanceSq??camera?.position?.distanceToSquared(n.root.position)??0;
+  const visible=!!n._townVisible;
+  const interval=visible?(d2<22*22?0:d2<45*45?.04:.13):.62;
+  n._townPerfAccum=(n._townPerfAccum||0)+elapsed;
+  if(interval>0&&n._townPerfAccum<interval)continue;
+  const step=Math.min(.70,n._townPerfAccum);n._townPerfAccum=0;
+  try{townWalk(step,n,visible);}
+  catch(e){
+   const message=String(e?.message||e);
+   townDiag('GAME: NPC animation failed',n.name+' | '+message);
+   try{n.mixer?.stopAllAction()}catch(_){}
+   scene.remove(n.root);townNPCs.delete(n.data.id);
+   townEmit('npcError',{id:n.data.id,message});
+   townEmit('residents',{residents:townShowNPCs()});
+  }
+ }
+ townLastSend+=elapsed;townPulse+=elapsed;townFrameCount++;
+ if(townPulse>4){townDiag('GAME: frames alive',townFrameCount+' frames / last '+townPulse.toFixed(1)+'s');townPulse=0;townFrameCount=0;}
+ if(townLastSend>6){townLastSend=0;townEmit('pulse',{count:townNPCs.size});}
+}
+function townReady(){`;
+ const oldUpdate=/function townUpdate\(dt\)\{[\s\S]*?\n\}\nfunction townReady\(\)\{/;
+ if(!oldUpdate.test(source))throw new Error('Could not safely find the existing townUpdate() function.');
+ source=source.replace(oldUpdate,updateBlock);
+ return source;
+}
+
+try{
+ status('Downloading and optimizing the existing G.2.1 source…');
+ const response=await fetch('./'+SOURCE_FILE,{cache:'no-store'});
+ if(!response.ok)throw new Error('Could not load '+SOURCE_FILE+' (HTTP '+response.status+').');
+ let source=await response.text();
+ if(!source.includes('const TOWN_MAX_ACTIVE_NPC=95;')||!source.includes('function townUpdate(dt)'))throw new Error('The existing v011 town file is not the expected source version.');
+ source=applyG22(source);
+ if(!source.includes('townPerfNearbyBlocked(next,n)')||!source.includes('id="perfReadout"')||!source.includes('renderer.setPixelRatio(Math.max(.70'))throw new Error('A G.2.2 performance check failed.');
+ status('Performance layer ready. Opening your 95-resident test town…');
+ const baseTag='<base href="'+new URL('./',location.href).href+'">';
+ source=source.replace(/<head>/i,'<head>'+baseTag);
+ document.open();document.write(source);document.close();
+}catch(error){
+ status('Could not start G.2.2: '+(error?.message||error)+'. Keep v011 unchanged and share this message.');
+ console.error(error);
+}
+</script>
+</body>
+</html>
