@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#dbeadf">
+<title>LANPASU · G.2.6 Full-Body Animation Fidelity · v016</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:linear-gradient(145deg,#b9dfda,#edf0de 60%,#e5cda9);color:#153e38;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+body{display:grid;place-items:center;padding:18px}.loading{width:min(540px,100%);background:#fbfbf2ed;border:1px solid #ffffffb8;border-radius:24px;padding:25px;box-shadow:0 24px 90px #264a3c2d}.sun{font-size:38px}.eyebrow{font-size:11px;letter-spacing:.17em;text-transform:uppercase;font-weight:850;color:#478174}.loading h1{font-family:Georgia,serif;font-size:30px;line-height:1.04;margin:10px 0}.loading p{font-size:13px;line-height:1.5;color:#48635b}.bar{height:7px;background:#dfe9dd;border-radius:99px;overflow:hidden;margin:18px 0 10px}.bar:after{content:"";display:block;width:42%;height:100%;background:#54b9a5;border-radius:99px;animation:load 1.2s ease-in-out infinite alternate}@keyframes load{to{width:88%}}#status{font-size:12px;color:#426d60;font-weight:750;overflow-wrap:anywhere}.features{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}.features span{background:#e3eee4;border:1px solid #bbd5c5;padding:6px 9px;border-radius:99px;font-size:10px;font-weight:800;color:#316353}
+</style>
+</head>
+<body>
+<main class="loading">
+ <div class="sun">🌴</div><div class="eyebrow">LANPASU · G.2.6 · FULL-BODY ANIMATION</div>
+ <h1>Matching every character to the original movement…</h1>
+ <p>This update keeps the original 32 E.3 clips and 95-resident town. It applies the authored body-joint rotations—not just the arms and legs—to each resident’s matching skeleton. Root travel remains controlled by the town movement system so characters do not drift away from their paths.</p>
+ <div class="bar"></div><div id="status">Loading the current town and upgrading animation retargeting…</div>
+ <div class="features"><span>8 movement styles</span><span>32 original clips preserved</span><span>Full-body joint rotations</span><span>95 resident slots retained</span></div>
+</main>
+<script>
+(async()=>{
+ const statusNode=document.getElementById('status');
+ const status=m=>statusNode.textContent=m;
+ try{
+  status('Loading the existing G.2.5 town…');
+  const response=await fetch('./LANPASU_G25_Bilateral_NPC_Animation_Fix_v015.html',{cache:'no-store'});
+  if(!response.ok)throw new Error('Could not load the existing G.2.5 file (HTTP '+response.status+').');
+  let page=await response.text();
+  const startToken='const bilateralBlock = `';
+  const endToken='`;\n const blockRe=';
+  const a=page.indexOf(startToken), b=page.indexOf(endToken,a+startToken.length);
+  if(a<0||b<0)throw new Error('Could not find the G.2.5 animation bridge to upgrade. Keep the existing files unchanged.');
+  const fullBodyBlock = `// G.2.6 full-body animation retarget bridge.
+// Transfer authored rotations across the complete matching skeleton, not only limb bones.
+// Exact bone-name matches are preferred; bilateral limb semantics are a fallback.
+// Root/world translation and bone scale are intentionally excluded to preserve town navigation and character proportions.
+function townLimbSemantic(rawName){
+ let s=String(rawName||'').toLowerCase();
+ s=s.replace(/^(?:mixamorig|armature|skeleton|root)[_:\\-]*/,'').replace(/[^a-z0-9]/g,'');
+ const tokens=['upperarm','lowerarm','forearm','shoulder','clavicle','upleg','upperleg','lowerleg','thigh','shin','calf','foot','ankle','toe','hand','wrist','arm','leg'];
+ let side='',part='';
+ if(s.startsWith('left')){side='L';s=s.slice(4);}
+ else if(s.startsWith('right')){side='R';s=s.slice(5);}
+ else if((s[0]==='l'||s[0]==='r')&&tokens.some(t=>s.slice(1).startsWith(t))){side=s[0].toUpperCase();s=s.slice(1);}
+ else if((s.endsWith('l')||s.endsWith('r'))&&tokens.some(t=>s.slice(0,-1).endsWith(t))){side=s.slice(-1).toUpperCase();s=s.slice(0,-1);}
+ if(!side)return '';
+ if(/^(?:thigh|upleg|upperleg)$/.test(s))part='Thigh';
+ else if(/^(?:shin|calf|lowerleg|leg)$/.test(s))part='Shin';
+ else if(/^(?:foot|ankle)$/.test(s))part='Foot';
+ else if(/^(?:toe|toes|toebase)$/.test(s))part='Toe';
+ else if(/^(?:upperarm|arm)$/.test(s))part='UpperArm';
+ else if(/^(?:lowerarm|forearm)$/.test(s))part='LowerArm';
+ else if(/^(?:hand|wrist)$/.test(s))part='Hand';
+ else if(/^(?:shoulder|clavicle)$/.test(s))part='Shoulder';
+ return part?side+'_'+part:'';
+}
+function townTrackBoneName(trackName){
+ const name=String(trackName||'');
+ const dot=name.lastIndexOf('.');
+ const path=dot>=0?name.slice(0,dot):name;
+ const bracket=path.match(/\\[([^\\]]+)\\]$/);
+ return bracket?bracket[1]:path.split('.').pop();
+}
+function townSavedBodyPose(rig){
+ const bones=new Map(),bySemantic=new Map(),duplicates=new Set(),byName=new Map();
+ rig.traverse(node=>{
+  if(!node.isBone)return;
+  const saved={bone:node,position:node.position.clone(),quaternion:node.quaternion.clone(),scale:node.scale.clone()};
+  if(!bones.has(node.name))bones.set(node.name,saved);
+  byName.set(node.name,saved);
+  const semantic=townLimbSemantic(node.name);
+  if(semantic){
+   if(bySemantic.has(semantic))duplicates.add(semantic);
+   else bySemantic.set(semantic,saved);
+  }
+ });
+ bones.bySemantic=bySemantic;bones.byName=byName;bones.duplicates=[...duplicates];
+ if(!bySemantic.has('L_Thigh')||!bySemantic.has('R_Thigh'))throw Error('Phase F rig is missing a left/right thigh pair');
+ return bones;
+}
+function townRestoreExactPose(n){
+ if(!n.rest)return;
+ try{n.mixer?.stopAllAction()}catch(e){}
+ for(const value of n.rest.values()){
+  value.bone.position.copy(value.position);
+  value.bone.quaternion.copy(value.quaternion);
+  value.bone.scale.copy(value.scale);
+ }
+ n.rig.updateMatrixWorld(true);
+ n.action=null;n.clip='';
+}
+function townSafeRotationClip(n,kind){
+ const key=n.data.movementStyle+'_'+kind;
+ if(n.safeClips.has(key))return n.safeClips.get(key);
+ const original=clipMap[key]||clipMap['Casual_'+kind];
+ if(!original?.tracks?.length)throw Error('Missing original E.3 '+kind+' animation');
+ const tracks=[],covered=new Set(),usedTargets=new Set();
+ let ignored=0,unmapped=0,duplicates=0,exactMatches=0,semanticMatches=0;
+ for(const track of original.tracks){
+  if(!String(track.name||'').endsWith('.quaternion')){ignored++;continue;}
+  const sourceName=townTrackBoneName(track.name);
+  let target=n.rest.byName?.get(sourceName);
+  if(target)exactMatches++;
+  else{
+   const semantic=townLimbSemantic(sourceName);
+   target=semantic?n.rest.bySemantic?.get(semantic):null;
+   if(target)semanticMatches++;
+  }
+  if(!target){unmapped++;continue;}
+  if(usedTargets.has(target.bone.name)){duplicates++;continue;}
+  const src=track.values,times=track.times;
+  if(!src||src.length<4||src.length%4!==0||!times?.length||src.length!==times.length*4){ignored++;continue;}
+  const initial=new THREE.Quaternion().fromArray(src,0).normalize();
+  const initialInv=initial.clone().invert();
+  const sample=new THREE.Quaternion(),delta=new THREE.Quaternion(),targetQ=new THREE.Quaternion();
+  const values=new Float32Array(src.length);
+  for(let i=0;i<src.length;i+=4){
+   sample.fromArray(src,i).normalize();
+   delta.copy(initialInv).multiply(sample);
+   targetQ.copy(target.quaternion).multiply(delta).normalize();
+   values[i]=targetQ.x;values[i+1]=targetQ.y;values[i+2]=targetQ.z;values[i+3]=targetQ.w;
+  }
+  tracks.push(new THREE.QuaternionKeyframeTrack(target.bone.name+'.quaternion',new Float32Array(times),values));
+  covered.add(sourceName);usedTargets.add(target.bone.name);
+ }
+ const has=(side,parts)=>parts.some(part=>[...covered].some(name=>townLimbSemantic(name)===side+'_'+part));
+ const coverage={
+  leftThigh:has('L',['Thigh']),rightThigh:has('R',['Thigh']),
+  leftArm:has('L',['UpperArm','LowerArm','Hand','Shoulder']),
+  rightArm:has('R',['UpperArm','LowerArm','Hand','Shoulder']),
+  leftLowerLeg:has('L',['Shin','Foot','Toe']),
+  rightLowerLeg:has('R',['Shin','Foot','Toe']),
+  exactMatches,semanticMatches,rotations:tracks.length,ignored,unmapped,duplicateTargets:duplicates
+ };
+ townDiag('G.2.6: FULL BODY '+kind,coverage);
+ if(!coverage.leftThigh||!coverage.rightThigh)throw Error(kind+' clip is missing a left/right thigh pair. '+JSON.stringify(coverage));
+ if((kind==='Walk'||kind==='Run')&&(!coverage.leftArm||!coverage.rightArm||!coverage.leftLowerLeg||!coverage.rightLowerLeg))throw Error(kind+' clip is missing complete bilateral limb animation. '+JSON.stringify(coverage));
+ if(tracks.length<6)throw Error(kind+' clip has too few mapped joint rotations ('+tracks.length+').');
+ const safe=new THREE.AnimationClip('G26FullBody_'+key,original.duration,tracks);
+ safe.userData={fullBodyCoverage:coverage,sourceClip:original.name};
+ n.safeClips.set(key,safe);
+ return safe;
+}
+`;
+  page=page.slice(0,a+startToken.length)+fullBodyBlock+page.slice(b+1);
+  // Make the nested loader and all visible version labels identify this build.
+  page=page.replaceAll('G.2.5','G.2.6').replaceAll('v015','v016').replaceAll('G25Bilateral_','G26FullBody_');
+  // Set the runtime API version after the existing G.2.5 transformations have completed.
+  const inject="source=applyG22(source);";
+  if(!page.includes(inject))throw new Error('Could not locate the G.2.5 final source transformation.');
+  page=page.replace(inject,inject+"\n source=source.replaceAll('G.2.5','G.2.6').replaceAll('v015','v016');");
+  status('Full-body retarget bridge prepared. Opening G.2.6…');
+  document.open();document.write(page);document.close();
+ }catch(e){
+  status('G.2.6 could not start: '+(e?.message||e));
+  console.error(e);
+ }
+})();
+</script>
+</body>
+</html>
